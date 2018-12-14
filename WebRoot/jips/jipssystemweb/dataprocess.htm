@@ -1,0 +1,729 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JMTC PORTAL</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+    <script type="text/javascript" src="../../jetsenclient/javascript/gridlist.js"></script>
+    <script type="text/javascript" src="../../jetsenclient/javascript/crud.js"></script>
+    
+    <script type="text/javascript" src="javascript/base.js"></script>
+    <script type="text/javascript" src="javascript/dataprocess.js"></script>
+    <script type="text/javascript" src="javascript/datasource.js"></script>
+    <script type="text/javascript" src="../../jmtc/mtcsystemweb/javascript/wfm/actconfig.js"></script>
+     <script type="text/javascript" src="../../jmtc/mtcsystemweb/javascript/wfm/flowoperator.js"></script>
+    <script type="text/javascript" src="../../jmtc/mtcsystemweb/javascript/wfm/wfmvariable.js"></script>
+    <script type="text/javascript" src="javascript/classtods.js"></script>
+    <script type="text/javascript">
+    	Layoutit('#divLabelManager', {vLayout:[50,300,35]});
+    	/* Layoutit("#divPageFrame", {vLayout:[{value:220,vLayout:[35, 'auto', 35]}, 
+    	                                      {value:180,vLayout:[35, 'auto']},
+    	                                      {value:'auto',hLayout:[
+    	                                                             280, 
+    	                                                             {value:'auto',vLayout:[35, 'auto', 35]}]}
+    	                                     ]});  */
+    </script>
+    <link href="css/base.css" rel="stylesheet" type="text/css" />
+   
+</head>
+<body onload="pageInit();">
+    <div id="divPageFrame">
+	    <div id="divTop" class="panel panel-sm panel-default">
+		      <div class="panel-heading" style="padding: 5px 15px;">
+		        <div class="btn-group btn-group-sm pull-left">
+		        	<!-- <span>任务列表</span> -->
+		        	 <div class="input-group input-group-xs pull-left input3">
+			          <input type="text" class="form-control" id="txtTaskName" onkeydown="jetsennet.keyEvent(loadTaskByValChange)" placeholder="任务名称">
+			            <span class="input-group-btn">
+			              <button type="submit" class="btn btn-default" onclick="loadTaskByValChange();">
+			                <span class="glyphicon glyphicon-search"></span>
+			              </button>
+			            </span>
+			          </input>
+			        </div>
+		        </div>
+		        <div class="btn-group btn-group-sm pull-right">
+		            <span style="cursor:pointer;" onclick="createTask()"><img src="images/new.png" style="height:18px;"/><span>&nbsp;创建任务</span></span>&nbsp;&nbsp;
+		            <span style="cursor:pointer;" onclick="editTask()"><img src="images/edit.png" style="height:18px;"/><span>&nbsp;编辑任务</span></span>&nbsp;&nbsp;
+		            <span style="cursor:pointer;" onclick="gTaskCrud.remove()"><img src="images/del.png" style="height:18px;"/><span>&nbsp;删除任务</span></span>&nbsp;&nbsp;
+		            <span style="cursor:pointer;" id="savespan" onclick="saveTaskProcess();"><img src="images/save.png" style="height:18px;"/><span>&nbsp;保存</span></span>&nbsp;
+		            <span style="cursor:pointer;" id="activespan" onclick="activeTaskProcess(11);"><img src="images/activate.png" style="height:18px;"/><span>&nbsp;启动任务(激活)</span></span>&nbsp;
+			        <span style="cursor:pointer;" id="noactivespan" onclick="activeTaskProcess(100);"><img src="images/cel_del.png" style="height:18px;"/><span>&nbsp;停止任务(取消激活)</span></span>&nbsp;
+			     <!--   <span style="cursor:pointer;" onclick="stopWorkflow();"><img src="images/disable.png" style="height:18px;"/><span>&nbsp;终止流程</span></span>&nbsp;&nbsp; -->
+		        </div>
+		      </div>
+		      <div id="divTaskList" class="table-unbordered">数据加载中...</div>
+		      <div class="panel-sm">
+		        <div id="divTaskPage" class="panel-footer"></div>
+		      </div>
+	    </div>
+	    <div id="divDesignPanel" class="panel panel-default panel-sm">
+	    	<div class="panel-heading" style="padding: 10px 15px;">
+				<span>流程展现</span>
+		    </div>
+		    <div class="drawing" id="divDesign" style="height:100%; width:100%"></div>
+	    </div>
+	    
+	    <div id="divBottom" class="panel panel-sm panel-default">
+	    	<div id="divBottomLeft" class="panel panel-sm panel-default">
+	    		<div class="panel-heading" style="padding: 1px 10px;">
+	    			<div class="pull-left" style="padding:5px">
+						<span>数据源</span>
+					</div>
+					<div class="btn-group btn-group-sm pull-right">
+						<table border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr class="tableRowHeight20">
+				            	<td class="rightAlign">
+					               <span>类别:&nbsp;</span>
+					            </td>
+					            <td width="163px;">
+					               <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+									  <input id="txtClass" onclick="jetsennet.ui.DropDownList.show(this)"  class="form-control input-sm"/>
+									  <i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+									</label>
+					            </td>
+							</tr>
+						</table>
+					</div>
+				</div>
+		    	<div id="divDataTree" style="overflow: auto;"></div>
+	    	</div>
+			<div id="divBottomRight" class="panel panel-sm panel-default">
+				<div class="panel-heading" style="padding: 5px 15px;">
+		        <div class="pull-left">
+		        	<!-- <span>数据源列表</span> -->
+		        	<div class="input-group input-group-xs pull-left input3">
+			          <input type="text" class="form-control" id="txtDSName" onkeydown="jetsennet.keyEvent(searchDSList)" placeholder="数据源名称/参数">
+			            <span class="input-group-btn">
+			              <button type="submit" class="btn btn-default" onclick="searchDSList();">
+			                <span class="glyphicon glyphicon-search"></span>
+			              </button>
+			            </span>
+			          </input>
+			        </div>
+		        </div>
+		        <div class="btn-group btn-group-sm pull-right">
+		            <span style="cursor:pointer;" onclick="gDataSourceCrud.add()"><img src="images/new.png" style="height:18px;"/><span>&nbsp;创建数据源</span></span>&nbsp;&nbsp;
+		            <span style="cursor:pointer;" onclick="gDataSourceCrud.edit()"><img src="images/edit.png" style="height:18px;"/><span>&nbsp;编辑数据源</span></span>&nbsp;&nbsp;
+		            <span style="cursor:pointer;" onclick="gDataSourceCrud.remove()"><img src="images/del.png" style="height:18px;"/><span>&nbsp;删除数据源</span></span>&nbsp;&nbsp;
+		        </div>
+		      </div>
+		      <div id="divDataSourceList" class="table-unbordered" >数据加载中...</div>
+		      <div class="panel-sm">
+		        <div id="divDataSourcePage" class="panel-footer"></div>
+		      </div>
+			</div>
+	    </div>
+    </div>
+  <!-- 任务添加、编辑 -->
+    <div id="divTask" style="display: none;">
+	    <form class="form-horizontal mg-lg">
+		  <div class="form-group">
+        	<label for="ddlParentGroup" class="col-sm-2 control-label">任务名称:</label>
+        	<div class="col-sm-5">
+          		<div class="input-group input-group-sm">
+            		<input  type="text" class="form-control input-sm" id="txt_TASK_NAME"   validatetype="NotEmpty,filenameext" maxlength="20"/>
+					<span class="input-group-addon" style="color: Red">*</span>
+          		</div>
+        	</div>
+        	<label for="ddlParentGroup" class="col-sm-2 control-label">流程模版:</label>
+	        <div class="col-sm-3">
+	        	<input id="txt_TASK_TEMPLATE" onclick="jetsennet.ui.DropDownList.show(this)" class="form-control input-sm" selectedvalue="-1"/>
+	        	<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 24px;"></i>
+	        </div>
+	      </div>
+	      <div class="form-group">
+	        <label for="ddlParentGroup" class="col-sm-2 control-label">任务描述:</label>
+	        <div class="col-sm-10">
+	             <input  type="text" id="txt_TASK_DESC"  maxlength="50" class="form-control input-sm"/>
+	        </div>
+	      </div>
+	      <div class="form-group" id="divGroup">
+	      	<div align="center" class="drawing" id="divTemplate" style="display: none;padding: 1px; padding-top: 1px; padding-left: 60px;"></div>
+	   <!--   	<div class="drawing" id="divTemplate" style="display: none;padding: 1px; padding-top: 1px; padding-left: 60px;"></div>
+ 			<div id="divTemplate" class="drawing" style="padding: 1px; position: absolute; left: 60px; width: 600px; height: 135px;"></div> -->
+	      </div>
+	      
+		</form>
+  	</div>
+  	<!--新增-修改  数据源弹出框  -->
+		<div id="divDataSourceDialog" style="display: none;">
+		<form class="form-horizontal mg-lg">
+	    	<div class="form-group">
+		        <label for="txt_DataSourceName" class="col-sm-2 control-label">名称:</label>
+		        <div class="col-sm-10 ">
+		        	<div class="input-group input-group-sm">
+		        		<input type="text" class="form-control input-sm" id="txt_DataSourceName" maxlength="20" validatetype="NotEmpty,filenameext" onblur="validateName();"/>
+		        		<span class="input-group-addon" style="color: Red">*</span>
+		        	</div>
+		        </div>
+	      	</div>
+	      	<!-- 源路径 12.09-->
+	      	<div class="form-group">
+		        <label for="txt_SourcePath" class="col-sm-2 control-label">参数:</label>
+		        <div class="col-sm-10">
+		          <div class="input-group input-group-sm">
+		            <input type="text" class="form-control" id="txt_SourcePath" validatetype="NotEmpty" maxlength="50" /> 
+		            <span class="input-group-addon" style="color: Red">*</span>
+		          </div>
+		        </div>
+	      	</div>
+	      	<!-- 访问方式 -->
+	      	<div class="form-group" >
+		        <label for="txt_DSType" class="col-sm-2 control-label">访问方式:</label>
+		        <div class="col-sm-10 ">
+		        	<input type="hidden" id="dbTypeValue" /> 
+		        	<input id="lableSelectDSType" onclick="jetsennet.ui.DropDownList.show(this)" style="width:100%;height:30px;" class="form-control input-sm" selectedvalue="10" 
+		        	 readonly="readonly"	handing="文件~10|数据库表~20"/>
+					<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 5%;"></i>
+		        </div>
+	      	</div>
+			<!-- 数据库类型 -->
+	      	<div class="form-group" style="display:none" id="dbType">
+		        <label for="dbType" class="col-sm-2 control-label">数据库类型:</label>
+		        <div class="col-sm-10 ">
+		        	<div class="input-group input-group-sm">
+		               <select id="txt_DbType" class="form-control input-sm">
+						   <option value="Oracle">Oracle库</option>
+			               <option value="GBase">南通库</option>
+			               <option value="JFDB">飓风库</option>
+		               </select>
+		               <span class="input-group-addon" style="color: Red">*</span>
+	               </div>
+		        </div>
+	      	</div>
+	      	<div class="form-group" id="emlType">
+		        <label for="txt_DataSourceType" class="col-sm-2 control-label">类型:</label>
+		        <div class="col-sm-10 ">
+		           <div class="input-group input-group-sm">
+		               <select id="txt_DataSourceType" class="form-control input-sm">
+			               <option value="801">邮件</option>
+			               <option value="802">口令</option>
+			               <option value="803">认证</option>
+			               <option value="808">话音</option>
+			               <option value="810">文件</option>
+			               <option value="811">传真</option>
+			               <option value="812">文本</option>
+			               <option value="815">IP</option>
+		               </select>
+		               <span class="input-group-addon" style="color: Red">*</span>
+	               </div>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+	      		<label for="txt_State" class="col-sm-2 control-label">状态:</label>
+		        <div class="col-sm-10 ">
+		        	<input type="hidden" id="hidStateId" /> 
+		        	<input id="lableSelectState" onclick="jetsennet.ui.DropDownList.show(this)" style="width:100%" class="form-control input-sm" 
+		        	 readonly="readonly"	handing="公共~0|指派单位~1|未分配~2"	validatetype="NotEmpty"/>
+					 <i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 5%;"></i>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+		        <label for="txt_DataSourceDesc" class="col-sm-2 control-label">描述:</label>
+		        <div class="col-sm-10 ">
+		         <textarea id="txt_DataSourceDesc" name="DataSourceDescXml" style="width: 100%;height: 50px" maxlength="50" class="form-control"></textarea>
+		        </div>
+	      	</div>
+	      	<div class="form-group" style="display: none" id="gratFunToUsers">
+		        <label for="gratFunToUsers" class="col-sm-2 control-label">授权单位:</label>
+		        <div class="col-sm-10 ">
+		        	 <div class="input-group" id="validateGrantUser">
+	                	 <select id="selMember" class="form-control" name="select" multiple></select> 
+	                     <span class="input-group-addon"> 
+	                     <input type="button" value=" 添加 " class="btn btn-primary btn-sm margin-bottom-xs" id="btnAdd" onclick="gUserCrud.showSelectDlg('divSelectUser', 'selMember', {size : {width : 520, height : 410}});" style="display: block;" /> 
+	                     <input type="button" value=" 删除 " class="btn btn-danger btn-sm" id="btnDel" onclick="jetsennet.Crud.selectOptionsDel('selMember');" />
+	                     </span>
+              		 </div>
+		        </div>
+	      	</div>
+	    </form>
+  	</div>  	
+  <!-- 标签管理 -->
+  <div id="divLabelManager" style="display: none;">
+	<form class="form-horizontal mg-lg">	<!-- <div style="padding: 6px;border-bottom: 1px solid #dddddd"> -->
+  	 <div class="form-group" id="controlLabel" style="padding-right: 30px;">
+		<label for="lableName1" class="col-sm-2 control-label">标签:</label>
+	    <div class="col-sm-5 ">
+	        <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+				<input id="lableNamesType1" name="lableNamesType" onclick="jetsennet.ui.DropDownList.show(this)" readonly="readonly" style="width:180px;" class="form-control input-sm" selectedvalue="-1"/>
+				<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+			</label>
+		</div>
+		<div class="col-sm-5 " style="padding-left: 0px;">
+		 	<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+		        <input type="text" id="lableName_lableNamesType1" style="width:180px;" class="form-control input-sm" /> 
+		    </label>&nbsp;
+		    <span style="cursor:pointer;" onclick="selectTag();" title="查询"><img src="images/search.png" style=" padding-bottom:7px;"/></span>
+	        <span style="cursor:pointer;" onclick="addTag();" title="添加"><img src="images/add.gif" style=" padding-bottom:7px;"/></span>
+		</div>
+	</div>
+	</form>
+  	<div class="table-unbordered" id="divLabelContent" style="border-top: 1px solid #dddddd">内容加载中......</div>
+  	<div id="divLabelPage" style="padding-top: 5px;padding-left: 5px;"></div>
+  </div>
+	<!-- 模板详情 -->
+	<div id="divLabelDetail" style="display: none">
+		<form class="form-horizontal mg-lg">
+	    	<div class="form-group">
+	    		<label for="txtSourcePathDetail" class="col-sm-3 control-label">参数:</label>
+		        <div class="col-sm-6 ">
+		        	<div class="input-group input-group-sm">
+		        		<input id="txtSourcePathDetail" type="text" class="form-control input-sm" maxlength="50" style="width: 300px;" readonly/>
+		        	</div>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+	    		<label for="lableClassDetails" class="col-sm-3 control-label">所属标签:</label>
+		        <div class="col-sm-6 ">
+		        	<div class="input-group input-group-sm">
+		        		<select id="lableClassDetails" style="width: 300px; height: 150px" class="form-control" name="selectClass" multiple></select>
+		        	</div>
+		        </div>
+	      	</div>
+	      	<div class="form-group" id="userDisplay" >
+	    		<label for="lableUserDetails" class="col-sm-3 control-label">所属用户:</label>
+		        <div class="col-sm-6 ">
+		        	<div class="input-group input-group-sm">
+		        		<select id="lableUserDetails"  style="width: 300px; height: 150px" class="form-control" name="selectUser" multiple></select>
+		        	</div>
+		        </div>
+	      	</div>
+   		</form>
+	</div>
+	<!-- 选择用户结束 -->
+	 <div id="divSelectUser" style="display: none">
+    	<div id="divSelectUserList">数据正在加载...</div>
+    	<div id="divSelectUserPage" style="padding-top: 5px;"></div>
+  	</div>
+	<!-- 参数配置 -->
+	<div id="divParamConfig" style="display: none; height: 100%;">
+        <div id="nodeParam" style="height: 100%">
+            <div id="divNodeName">
+                <table border="0" cellpadding="0" cellspacing="0" class="table-info">
+                    <colgroup>
+                        <col class="width-5w" />
+                        <col width="auto" />
+                    </colgroup>
+                    <tr>
+                        <td class="field-head">
+                            节点名称：
+                        </td>
+                        <td>
+                            <input class="input2" type="text" id="txt_ActName" validatetype="notempty,maxlength"
+                                maxlength="25" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field-head">
+                            模板名称：
+                        </td>
+                        <td>
+                        <!--<form action="../../../templateImport" method="post" id="templateImport" target="hiddenframe" enctype="multipart/form-data">
+                       		<input type="file" id="templateImportName" name="templateImportName" onkeydown="return false" onpaste="return false" class="input4" style="height: 25px;"/>
+                       		<input type="hidden" id="hiddenPath" name="hiddenPath" value=""/>
+                       		<input type="hidden" id="hiddenProcId" name="hiddenProcId" value=""/>
+                       		<input type="hidden" id="hiddenFlag" name="hiddenFlag" value=""/>
+                		</form>
+                        --></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="transCodeParam" style="display: none;">
+                <table border="0" cellpadding="0" cellspacing="0" class="table-info">
+                    <colgroup>
+                        <col class="width-5w" />
+                        <col width="200px" />
+                        <col class="width-6w" />
+                        <col width="auto" />
+                    </colgroup>
+                    <tr>
+                        <td class="field-head">
+                            MapReduce：
+                        </td>
+                        <td>
+                            <input type="checkbox" id="chkTransCode" onclick="transCodeMapChange();" />
+                        </td>
+                        <td class="field-head" id="txtTransCodeMapTitle">
+                            Map个数：
+                        </td>
+                        <td id="txtTransCodeMapTd">
+                            <input id="txtTransCodeMap" class="input" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field-head">
+                            目标路径：
+                        </td>
+                        <td>
+                            <input id="txtTransCodePath" class="input2" />
+                        </td>
+                        <td class="field-head">
+                            文件后缀：
+                        </td>
+                        <td>
+                            <input id="txtSuffixName" class="input2" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field-head">
+                            对象编号：
+                        </td>
+                        <td>
+                            <input id="txtTransCodeCmIndex" class="select2" onclick="jetsennet.ui.DropDownList.show(this)" />
+                        </td>
+                        <td class="field-head">
+                            数据源：
+                        </td>
+                        <td>
+                            <input id="txtTransCodeDatasource" class="select2" onclick="jetsennet.ui.DropDownList.show(this)" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field-head">
+                            源码流：
+                        </td>
+                        <td>
+                            <input id="txtSourceGroupType" class="input2" />
+                        </td>
+                        <td class="field-head">
+                            码流：
+                        </td>
+                        <td>
+                            <input id="txtTransCodeGroupType" class="input2" />
+                        </td>
+                    </tr>
+                    <tr style="height: 10px">
+                    </tr>
+                </table>
+                <!-- 模板显示 -->
+                <div>
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table-info-1">
+                        <tr>
+                            <td class="table-info">
+                                <table border="0" cellpadding="0" cellspacing="0" class="table-info-1">
+                                    <colgroup>
+                                        <col class="width-6w" />
+                                        <col width="auto" />
+                                    </colgroup>
+                                    <tr>
+                                        <td>
+                                            &nbsp;文件参数
+                                        </td>
+                                        <td>
+                                            <input type="button" value="导入模板" onclick="openTemplate();" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="100%" border="0" cellpadding="1" cellspacing="1" class="table-info-2">
+                                    <colgroup>
+                                        <col class="width-5w" />
+                                        <col width="200px" />
+                                        <col class="width-6w" />
+                                        <col width="auto" />
+                                    </colgroup>
+                                    <tr>
+                                        <td class="field-head" id="fileFormatTitle">
+                                            文件格式：
+                                        </td>
+                                        <td id="fileFormatTd">
+                                            <select id="fileFormat" class="select2" onchange="initAvInfo(this.value)">
+                                            </select>
+                                        </td>
+                                        <td class="field-head" id="muxPMTIDTitle">
+                                            PMT ID：
+                                        </td>
+                                        <td id="muxPMTIDTd">
+                                            <input type="text" class="input2" class="width-2w" id="muxPMTID" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="field-head" id="fileProfileTitle">
+                                            预置：
+                                        </td>
+                                        <td id="fileProfileTd">
+                                            <select class="select2" id="fileProfile" onchange="initFileProfile(this.value)">
+                                            </select>
+                                        </td>
+                                        <td class="field-head" id="muxBitRateTitle">
+                                            复合码率(kbps)：
+                                        </td>
+                                        <td id="muxBitRateTd">
+                                            <input type="text" class="input2" class="width-4w" id="muxBitRate" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px">
+                        </tr>
+                    </table>
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table-info-3">
+                        <colgroup>
+                            <col class="width-5w" />
+                            <col width="200px" />
+                            <col class="width-6w" />
+                            <col width="auto" />
+                        </colgroup>
+                        <tr>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table-info-2">
+                                    <colgroup>
+                                        <col class="width-5w" />
+                                        <col width="200px" />
+                                        <col class="width-6w" />
+                                        <col width="auto" />
+                                    </colgroup>
+                                    <tr>
+                                        <td>
+                                            &nbsp;
+                                            <input type="checkbox" id="videoParam" checked="checked" />
+                                            视频参数
+                                        </td>
+                                    </tr>
+                                    <tr class="rera">
+                                        <td class="field-head-1" id="videoFormatTitle">
+                                            视频格式：
+                                        </td>
+                                        <td class="field-head" id="videoFormatTd">
+                                            <select id="videoFormat" class="select2" onchange="initVideoFormat(this.value)">
+                                            </select>
+                                        </td>
+                                        <td>
+                                    </tr>
+                                    <tr class="rera-1">
+                                        <td class="field-head" id="videoProfileTitle">
+                                            预置：
+                                        </td>
+                                        <td class="field-head" id="videoProfileTd">
+                                            <select class="select2" id="videoProfile" onchange="initVideoProfile(this.value)">
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="field-head-4" id="frameSizeTitle">
+                                            帧大小(W*H)：
+                                        </td>
+                                        <td class="field-head-3" id="frameSizeTd">
+                                            <input type="text" class="input2" class="width-4w" id="frameSize" />
+                                        </td>
+                                    </tr>
+                                    <tr class="rera-1">
+                                        <td class="field-head-2">
+                                            <span class="field-head-2" id="videoBitRateSpan">视频码率(kbps)：<input type="text" class="input2"
+                                                class="width-2w" id="videoBitRate" /></span>
+                                        </td>
+                                    </tr>
+                                    <tr class="rera">
+                                        <td class="field-head-2">
+                                            <span class="field-head-2" id="fameSpeedSpan">帧速率：<input type="text" class="input2"
+                                                class="width-2w" id="fameSpeed" /></span>
+                                        </td>
+                                    </tr>
+                                    <tr class="rera-3">
+                                        <td class="field-head-2">
+                                            <span class="field-head-5" id="scanTypeSpan">扫描方式：
+                                                <select class="select2" id="scanType">
+                                                    <option>逐行</option>
+                                                    <option>隔行-上场先</option>
+                                                    <option>隔行-底场先</option>
+                                                </select>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr class="rera-3">
+                                        <td class="field-head-5">
+                                            <span class="field-head-5" id="vidColorSpan">颜色空间：
+                                                <select class="select2" id="vidColor">
+                                                    <option>4:2:0</option>
+                                                    <option>4:2:2</option>
+                                                </select>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr class="rera-1">
+                                        <td class="field-head-2" align="center">
+                                            <tr class="rera-4">
+                                                <td class="field-head-5">
+                                                    <span class="field-head-5" id="chkVidVarBitrateSpan">
+                                                        <input type="checkbox" id="chkVidVarBitrate" onclick="changeVidVarBitrate();" />
+                                                        可变码率</span>
+                                                </td>
+                                            </tr>
+                                            <tr class="rera-4">
+                                                <td class="field-head-1">
+                                                    <span class="field-head-2" id="chkVid2PassSpan" style="visibility: hidden">
+                                                        <input type="checkbox" id="chkVid2Pass" />
+                                                        二次编码</span>
+                                                </td>
+                                            </tr>
+                                            <tr class="rera-1">
+                                                <td class="field-head-2">
+                                                    <span class="field-head-2" id="gopSpan"><span id="gopSpanLabel">关键帧(I)间隔：</span><input
+                                                        type="text" class="input2" class="width-2w" id="gop" /></span>
+                                                </td>
+                                            </tr>
+                                            <tr class="rera-3">
+                                                <td class="field-head-5">
+                                                    <span class="field-head-5" id="bFrameSpan">B帧个数：<input type="text" class="input2"
+                                                        class="width-2w" id="bFrame" /></span>
+                                                </td>
+                                            </tr>
+                                            <tr class="rera-3">
+                                                <td class="field-head-5">
+                                                    <span class="field-head-2" id="idrsSpan">IDR帧间隔：<input type="text" class="input2"
+                                                        class="width-2w" id="idrs" /></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="rera-3">
+                                                    <tr class="rera-1">
+                                                        <td class="field-head-2">
+                                                            <span class="field-head-2" id="videoMaxBitRateSpan">最大码率(kbps)：<input type="text"
+                                                                class="input2" class="width-2w" id="videoMaxBitRate" /></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="rera-3">
+                                                        <td class="field-head-2">
+                                                            <span class="field-head-2" id="refsSpan">参考帧数：<input type="text" class="input2" class="width-2w"
+                                                                id="refs" /></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4" align="center" id="speedorQualityTd">
+                                                            <tr class="rera-3">
+                                                                <td class="field-head-5">
+                                                                    <span class="field-head-2" id="speedorQualitySpan">质量(1-100)：<input type="text" class="input2"
+                                                                        class="width-2w" validatetype="integer,minvalue,maxvalue" minvalue="1" maxvalue="100"
+                                                                        id="speedorQuality" /></span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="rera-3">
+                                                                <td class="field-head-2">
+                                                                    <span class="field-head-2" id="autoQualitySpan">
+                                                                        <input type="checkbox" id="autoQuality" onclick="changeAutoQuality();" />自动质量</span>
+                                                                </td>
+                                                            </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px">
+                        </tr>
+                        <tr>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="100%" border="0" cellpadding="1" cellspacing="1" class="table-info-2">
+                                    <colgroup>
+                                        <col class="width-5w" />
+                                        <col width="200px" />
+                                        <col class="width-6w" />
+                                        <col width="auto" />
+                                    </colgroup>
+                                    <tr>
+                                        <td>
+                                            &nbsp;<input type="checkbox" id="audioParam" checked="checked" />
+                                            音频参数
+                                        </td>
+                                    </tr>
+                                    <tr class="rera">
+                                        <td class="field-head" id="audioFormatTitle">
+                                            音频格式：
+                                        </td>
+                                        <td id="audioFormatTd">
+                                            <select style="width: 200px" id="audioFormat" onchange="initAudioFormat(this.value)">
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="rera">
+                                        <td class="field-head" id="audioProfileTitle">
+                                            预置：
+                                        </td>
+                                        <td id="audioProfileTd">
+                                            <select style="width: 200px" id="audioProfile" onchange="initAudioProfile(this.value)">
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="rera">
+                                        <td class="field-head" id="audioBitRateTitle">
+                                            音频码率(kbps)：
+                                        </td>
+                                        <td id="audioBitRateTd">
+                                            <input type="text" class="input2" class="width-4w" id="audioBitRate" />
+                                        </td>
+                                    </tr>
+                                    <tr class="rera-4">
+                                        <td>
+                                            <span class="field-head-2" id="audVarBitrateSpan">
+                                                <input type="checkbox" id="audVarBitrate" />
+                                                可变码率</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="rera-3">
+                                        <td class="field-head-2" align="center">
+                                            <tr class="rera-3">
+                                                <td class="field-head-2">
+                                                    <span id="audioFreqSpan" style="visibility: hidden">采样频率：<input type="text" class="input2"
+                                                        class="width-4w" id="audioFreq" /></span>
+                                                </td>
+                                            </tr>
+                                            <tr class="rera-3">
+                                                <td class="field-head-2">
+                                                    <span id="channelsSpan">声道数：<input class="input2" type="text" class="width-4w" id="channels" /></span>
+                                                </td>
+                                            </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="height: 95px">
+                            <td>
+                                <div id="templateInfo">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divActConfig" style="display: none;">
+    </div>
+    
+    <div id="divAssignRule" style="display: none;">
+        <div style="width: 100%;height: 30px;padding: 10px;" id="controlAssignDiv"></div>
+        <div style="width: 100%;height: 110px;padding: 30px;" id="assignSetDiv"></div>
+    </div>
+    
+    <div id="divConditionVariableWin" style="display: none; height: 100%;">
+	    <div id="divVariableConditionList" style="width: 100%;height: 99%;"></div> 
+    </div>
+    <div id="divVariableWin" style="display: none;">
+       <div id="divVariableList" style="width: 100%; height:320px;"></div>
+	</div>
+	
+	<div id="divVariableDetail" style="display: none; height: 100%; border: 0px">
+	   <form class="form-horizontal mg-lg">
+	       <label class="col-sm-4 control-label" id="span_VariableName"></label>
+	       <div class="col-sm-4">
+	          <input id="txt_VariableOperate" class="form-control input-sm" handing="≠~≠|≤~≤|≥~≥|&lt;~&lt;|&gt;~&gt;|=~=" onclick="jetsennet.ui.DropDownList.show(this)" readonly/>
+	       </div>
+	       <div class="col-sm-4">
+	          <input class="form-control input-sm" type="text"  id="txt_VeriableValue_Str" maxlength="100"/>
+	          <input class="form-control input-sm" type="text"  id="txt_VeriableValue_Int" maxvalue="10000000"/>
+	           <label style="position: relative;font-weight: normal;margin-bottom: 0;" id="txt_VeriableValue_Date_span">
+					<input id="txt_VeriableValue_Date" type="text" class="form-control input-sm" onclick="jetsennet.pickDate(this)" readonly/>
+					<i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;/* color: ivory; */"></i>
+				</label>
+	       </div>
+	   </form>
+    </div>
+       
+</body>
+</html>

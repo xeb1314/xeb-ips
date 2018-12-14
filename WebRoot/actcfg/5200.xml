@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<!-- 转码 -->
+<actConfig>
+  <!-- <item name="templateName" desc="转码模板名称" deafult="" allowVariable="true"  allowEmpty="false" dataType="string" maxLength="100" source="0"/> -->
+ <item name="sourceGroupType" desc="源文件组" deafult="1" type="1" allowEmpty="false" dataType="int" maxLength="5" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="2203"/>
+ <item name="destGroupType" desc="目标文件组" deafult="30" type="1" allowEmpty="false" dataType="int" maxLength="5" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="2203"/>
+ <item name="execMode" desc="执行模式" deafult="0" allowEmpty="false" dataType="int" maxLength="5" source="1" sourceString="普通模式~0|分片模式~10"/>
+ <item name="destPath" desc="目标路径" deafult="" title="转码后的文件存储目录" allowEmpty="false" dataType="string" allowVariable="true" maxLength="100" source="0"/>
+</actConfig>
+<!--soure 0:自输入，1：下拉自定义，2：受控词，3：变量-->

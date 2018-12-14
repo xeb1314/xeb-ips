@@ -1,0 +1,11 @@
+.panel-heading-1 {
+	background-color: #eff3f6;
+    border-color: #d0d4e0;
+    color: #333333;
+    padding-left: 10px;
+    padding-top: 4px; 
+    height:40px;
+ /*    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px; */
+}

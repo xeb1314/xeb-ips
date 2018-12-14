@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>身份认证日志</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+  <script type="text/javascript" src="javascript/identification.js"></script>
+  <link href="css/base.css" rel="stylesheet" type="text/css" />
+  <!--[if lt IE 9]> 
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+  <![endif]-->
+</head>
+<body onload="pageInit();">
+      <!-- <div class="panel-group" role="panel-group" desc="面板组" > -->
+      <div id="divPageFrame" >
+	    <div class="panel panel-sm  panel-default" style="border-bottom-width:0">
+	        <div class="panel-heading" style="padding: 10px 15px;height: 45px">
+	            <span>查询条件</span>
+	        </div>
+	        <div class="panel-collapse div-collapse">
+	           <table  align="center" cellpadding="0" cellspacing="0" >
+	                <tr class="tableRowHeight60" >
+	                	<td class="rightAlign" width="100px">
+				            <span>文件名:&nbsp;</span>
+				         </td>
+				         <td width="170px;">
+					        <input id="txtKeyWord" type="text" class="form-control input-sm input-date"/>
+			             </td>
+			           <td class="rightAlign">
+				           <span>时间:&nbsp;</span>
+				        </td>
+				        <td colspan="3">
+				        
+				        <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+				            <input id="txtStartTime" type="text" class="form-control input-sm input-date">
+				            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+				        </label>
+				         &nbsp;<span>至</span>&nbsp;
+				        <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+				            <input id="txtEndTime" type="text" class="form-control input-sm input-date">
+				            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+				        </label>
+				        &nbsp;<a href="javascript:void(0)" ><span onclick="el('txtStartTime').value=el('txtEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=gLastWeekDate.toDateString();el('txtEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=el('txtEndTime').value='';">清空</a>
+
+				        <!-- 
+				           <input id="txtStartTime" type="text" class="input-sm input-date selectdate"/>
+	                            &nbsp;<span>至</span>&nbsp;
+	                            <input id="txtEndTime" class="input-sm input-date selectdate"/>
+	                            &nbsp;<a href="javascript:void(0)" ><span onclick="el('txtStartTime').value=el('txtEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=gLastWeekDate.toDateString();el('txtEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=el('txtEndTime').value='';">清空</a> -->
+			            </td>
+			            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			               <button type="button" class="btn btn-primary btn-sm" onClick="searchlog();">
+						       <span class="glyphicon glyphicon-search"></span>查询
+						   </button>
+			            </td>
+			        </tr>
+	           </table>
+	        </div>
+	    </div>
+	    
+	   <div class="panel panel-sm panel-default">
+		      <div class="panel-heading" style="padding: 10px 15px">
+		            <div class="pull-left">
+		                <span>数据信息 </span>
+		            </div>
+			        <!-- <div class='pull-right'>
+			           <span style="cursor:pointer;" onclick="gCrud.remove()"><img src="images/del.png" style="height:18px;">&nbsp;删除</img></span>
+			        </div>  -->
+		      </div>
+		      <div id="divList" class="table-unbordered" >数据加载中...</div>
+	    </div>
+	    
+	    <div class="panel-sm">
+	        <div id="divPageBar" class="panel-footer"></div>
+	    </div>
+	    
+    </div>
+  
+    <div id="divIdentification" style="display: none">
+    <form class="form-horizontal mg-lg">
+      <div class="form-group">
+        <label for="txtName" class="col-sm-2 control-label">文件名:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control input-sm" id="txtName" />
+        </div>
+      </div>
+      <div class="form-group">
+       	<label for="txtheckedMark" class="col-sm-2 control-label">选择标示:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtheckedMark" />
+        </div>
+        <label for="txtBEGINTIME" class="col-sm-2 control-label">开始时间:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtBEGINTIME" />
+        </div>
+        <label for="txtSTYPEName" class="col-sm-2 control-label">细分类型名:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtSTYPEName" />
+        </div>
+      </div>
+      <div class="form-group">
+      	<label for="txtUserName" class="col-sm-2 control-label">用户名:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtUserName" />
+        </div>
+        <label for="txtPASSWORD" class="col-sm-2 control-label">密码:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtPASSWORD" />
+        </div>
+        <label for="txtLightLayer" class="col-sm-2 control-label">光层:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtLightLayer" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtElectricityLayer" class="col-sm-2 control-label">电层:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtElectricityLayer" />
+        </div>
+        <label for="txtFileNum" class="col-sm-2 control-label">文件号:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtFileNum" />
+        </div>
+        <label for="txtFileLength" class="col-sm-2 control-label">文件长度:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtFileLength" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtFTPIP" class="col-sm-2 control-label">FTPIP:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtFTPIP"  />
+        </div>
+        <label for="txtSourceIP" class="col-sm-2 control-label">源IP地址:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtSourceIP" />
+        </div>
+        <label for="txtGoal_IP" class="col-sm-2 control-label">目的IP地址:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtGoal_IP" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtSourceIPAttribute" class="col-sm-2 control-label">源IP属性:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtSourceIPAttribute"  />
+        </div>
+        <label for="txtGoalAttribute" class="col-sm-2 control-label">目的IP属性:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtGoalAttribute" />
+        </div>
+        <label for="txtSourcePort" class="col-sm-2 control-label">源端口:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtSourcePort" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtDEST_PORT" class="col-sm-2 control-label">目的端口:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtDEST_PORT"  />
+        </div>
+        <label for="txtSTYPE" class="col-sm-2 control-label">细分类型:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtSTYPE" />
+        </div>
+        <label for="txtSlotTime" class="col-sm-2 control-label">时隙:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtSlotTime" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtSLINENO" class="col-sm-2 control-label">虚级连号:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtSLINENO"  />
+        </div>
+        <label for="txtIsImportanceIP" class="col-sm-2 control-label">是否重要IP地址:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtIsImportanceIP" />
+        </div>
+        <label for="txtTask" class="col-sm-2 control-label">任务归属:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtTask" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtAreaCode" class="col-sm-2 control-label">分区号:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtAreaCode"  />
+        </div>
+        <label for="txtIsFull" class="col-sm-2 control-label">是否完整:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtIsFull" />
+        </div>
+        <label for="txtIsPlaintextData" class="col-sm-2 control-label">是否为明文身份认证数据:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtIsPlaintextData" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtIsEnabledPassWord" class="col-sm-2 control-label">是否为有效口令:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtIsEnabledPassWord"  />
+        </div>
+        <label for="txtIsDoubleData" class="col-sm-2 control-label">是否为双数据:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtIsDoubleData" />
+        </div>
+        <label for="txtToLightLayer" class="col-sm-2 control-label">对方光层:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtToLightLayer" />
+        </div>
+      </div>
+	  <div class="form-group">
+       <label for="txtToElectricityLayer" class="col-sm-2 control-label">对方电层:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtToElectricityLayer"  />
+        </div>
+        <label for="txtToSlotTime" class="col-sm-2 control-label">对方时隙:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtToSlotTime"  />
+        </div>
+        <label for="txtToSLINENO" class="col-sm-2 control-label">对方虚级联号:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtToSLINENO" />
+        </div>
+       </div>
+       <div class="form-group">
+        <label for="txtFiltrate" class="col-sm-2 control-label">筛选标示:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtFiltrate" />
+        </div>
+         <label for="txtFrameHeader" class="col-sm-2 control-label">帧头:</label>
+         <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtFrameHeader" />
+         </div>
+         <label for="txtServerIp" class="col-sm-2 control-label">数据服务器IP地址:</label>
+         <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtServerIp" />
+         </div>
+       </div>
+    </form>
+  </div>
+    
+</body>
+</html>

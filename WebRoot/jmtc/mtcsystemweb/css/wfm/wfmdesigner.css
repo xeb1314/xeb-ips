@@ -1,0 +1,163 @@
+@charset "utf-8";
+/* CSS Document */
+
+.cantent01{min-width:980px; _width:980px;}
+.clf:after{display:block; clear:both; content:""; visibility:hidden; height:0;}
+.clf{zoom:1;}
+.content01-left{  width:25%; height:800px; position:relative; float:left; margin-bottom:15px;background:#2f2d2e;-moz-box-shadow:1px 1px 2px #090808;              /* For Firefox3.6+ */
+	-webkit-box-shadow: 1px 1px 2px #090808;box-shadow: 1px 1px 2px #090808;            /* For Latest Opera */ }
+
+.menu{ margin:40px 0 40px 20px; }
+
+.menu-2{  width:90%; height:33px;line-height:33px;}
+.menu-3 { background:url(../../images/tr887_03.png) no-repeat left; margin: 20px;}
+.menu-3 span{ margin-left:40px;font-size:14px; font-weight:500; line-height:33px;}
+.menu-4 { background:url(../../images/tr88o_03.png) no-repeat left; margin: 20px;}
+.menu-4 span{ margin-left:40px;font-size:14px; font-weight:500; line-height:33px;}
+.menu-1 ul{  margin-top:20px; }
+.menu-1{ margin-bottom:40px; color:#fff;}
+.menu-1 li{ width:100%; height:35px; line-height:35px; margin-left:60px;  }
+.rodd{ background:url(../../images/uytt_07.png) no-repeat bottom; width:100%; }
+.rodd:hover{background:#2c597a;-moz-box-shadow: 1px 1px 5px #0d2b3f inset; -webkit-box-shadow: 1px 1px 5px #0d2b3f inset;box-shadow: 1px 1px 5px #0d2b3f inset; width: 90%;}
+.rdde{ background:url(../../images/oop_09.png) no-repeat left;}
+.rdde-1{ background:url(../../images/oop_23.png) no-repeat left;}
+.rdde-2{ background:url(../../images/oop_03.png) no-repeat left;}
+.rdde-3{ background:url(../../images/oop_11.png) no-repeat left;}
+.menu-1 p{ margin-left:14%;line-height: 35px;white-space:nowrap; 
+text-overflow:ellipsis; 
+-o-text-overflow:ellipsis; overflow: hidden;}
+
+.conten01-right{ float:right; width:74.5%; position:relative;}
+
+.tool{ right:10px; line-height: 35px;position:absolute;}
+.tool input{ border:none;  }
+.tool-1{ background:url(../../images/oop_07.png) no-repeat left; width:55px; height:22px;text-indent:15px;color: #fff}
+.tool-2{ background:url(../../images/oop_05.png) no-repeat left; width:62px; height:22px;text-indent:15px;color: #fff}
+.tool-3{ background:url(../../images/rtsey_03.png) no-repeat left; width:55px; height:22px;text-indent:15px;color: #fff}
+.tool-4{ background:url(../../images/rtsey_06.png) no-repeat left; width:55px; height:22px;text-indent:15px;color: #fff}
+.tool-5{ background: url(../../images/oop_14.png) no-repeat left; width:55px; height:22px;text-indent:15px;color: #fff}
+.tool-6{ background: url(../../images/oop_20.png) no-repeat left; width:55px; height:22px;text-indent:15px;color: #fff}
+.tool-7{ background: url(../../images/oop_17.png) no-repeat left; width:55px; height:22px;text-indent:15px;color: #fff}
+.tool-8{ background: url(../../images/oop_03.png) no-repeat left; width:55px; height:22px;text-indent:15px;color: #fff}
+.tool-9{ background: url(../../images/oop_23.png) no-repeat left; width:65px; height:22px;text-indent:15px;color: #fff}
+.tool-10{ background: url(../../images/oop_11.png) no-repeat left; width:62px; height:22px;text-indent:15px;color: #fff}
+.tool-11{ background: url(../../images/oop_09.png) no-repeat left; width:75px; height:22px;text-indent:20px;color: #fff}
+.tool value{ margin-left:20px;}
+.actlist{ width:100%; position:relative; height:85px;margin-bottom:5px;padding-top:10px;z-index:1;-moz-box-shadow:1px 1px 2px #090808;              /* For Firefox3.6+ */
+	-webkit-box-shadow: 1px 1px 2px #090808;box-shadow: 1px 1px 2px #090808;            /* For Latest Opera */  }
+.icon{background:url(../../images/tleac_06.png) no-repeat center; height:50px; width:50px; margin:0 auto;text-alian:center; margin-top:5px;}
+.icon-1{ background:url(../../images/tleac_08.png)no-repeat center; height:43px; width:43px; margin:0 auto; margin-top:5px;}
+.icon-2{ background:url(../../images/tleac_10.png)no-repeat center; height:43px; width:43px; margin:0 auto; margin-top:5px;}
+.icon-3{ background:url(../../images/tleac_12.png)no-repeat center; height:43px; width:43px; margin:0 auto; margin-top:5px;}
+.icon-4{ background:url(../../images/tleac_20.png)no-repeat center; height:43px; width:43px; margin:0 auto; margin-top:5px;}
+.icon-5{ background:url(../../images/tleac_42.png)no-repeat center; height:43px; width:43px; margin:0 auto; margin-top:5px;}
+.icon-6{  background:url(../../images/tleac_31.png)no-repeat center; height:43px; width:43px; margin:0 auto; margin-top:5px;}
+.icon-7{ background:url(../../images/tleac_03.png)no-repeat center; height:43px; width:43px; margin:0 auto; margin-top:5px;}
+.icon-8{ background:url(../../images/tleac_46.png)no-repeat center; height:43px; width:43px; margin:0 auto; margin-top:5px;}
+.icon-9{ background:url(../../images/tleac_36.png)no-repeat center; height:43px; width:43px; margin:0 auto; margin-top:5px;}
+.icon-10{ background:url(../../images/tleac_20.png)no-repeat center; height:43px; width:43px; margin:0 auto; margin-top:5px;}
+.icon-11{ background:url(../../images/tleac_08.png)no-repeat center; height:43px; width:43px; margin:0 auto; margin-top:5px;}
+.drawing{ width:100%; position: absolute; baoverflow:hidden;}
+tr .control-label {
+    text-align: right;
+    margin-bottom: 0;
+    width: 70%;
+    float: left;
+  }
+.accrodion-close,
+.accrodion-open
+{
+	text-align: left;font: 14px Tahoma, Verdana, sans-serif;
+	background:url(../../images/menu.png);-moz-box-shadow:1px 1px 2px #090808;              /* For Firefox3.6+ */
+	-webkit-box-shadow: 1px 1px 2px #090808;box-shadow: 1px 1px 2px #090808; 	
+	cursor: pointer;vertical-align: middle;padding-left:5px;
+	letter-spacing: 0px;height: 23px;width:20px;margin-right:1px;
+	-moz-user-select: none;
+	-webkit-user-select:none;
+}
+.accrodion-content{margin: 0px;font-size: 12px;cursor: default;}
+.accrodion-btndiv{position:absolute;margin:0px;padding:0px;z-index:1;}
+.accrodion-btndiv img {position:absolute;}
+.accrodion-item{width:22px;height:22px;}
+
+.table-info td {
+	background-color: #eee;
+}
+table {
+	border-collapse: inherit;
+	border-spacing: 1px;
+}
+/*
+body {
+	height: initial;
+}*/
+
+ul.line-tree,
+ul.line-tree ul{
+list-style-type: none;
+}
+ul.line-tree .item {
+cursor: pointer;
+}
+ul.line-tree .item > span {
+padding: 2px;
+line-height: 25px;
+}
+ul.line-tree .item > img {
+width: 18px;
+}
+ul.line-tree .item > span.selected {
+background-color: #8ECBFF;
+color: whitesmoke;
+}
+.line-tree > li {
+border-left: 2px solid #8ECBFF;
+}
+.line-tree > li > div{
+margin-left: -10px;
+}
+.line-tree > li > div > i{
+font-size: 1.5em;
+line-height: 0.9em;
+vertical-align: -15%;
+background-color: white;
+color: #35A2FF;
+}
+.line-tree > li > ul {
+/*margin-left: -18px;  */
+}
+tr .form-control{
+	width:80%;
+	display: table-cell;
+height: 30px;
+padding: 5px 10px;
+font-size: 12px;
+line-height: 1.5;
+border-radius: 3px;
+float: left;
+}
+
+.leftmove{
+	width: 30px;
+	float: left;
+	height: 120px;
+}
+.spanleft{
+	text-align:center;
+	padding-left:10px;
+	padding-top: 53px;
+	cursor: pointer;
+}
+
+.spanright{
+	padding-right:10px;
+	padding-top: 53px;
+	cursor: pointer;
+}
+
+.tabpage{
+	float:left;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
+}
+
+#tab_qualityInfo label{height: 18px;}
+#tab_qualityAudioInfo label{height: 18px;}

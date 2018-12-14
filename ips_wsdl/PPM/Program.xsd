@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://TVNetwork/Schema/PPM/1.0" xmlns:nspub="http://TVNetwork/Schema/CommonSimpleTypes/1.0" xmlns:nspubc="http://TVNetwork/Schema/CommonComplexTypes/1.0" targetNamespace="http://TVNetwork/Schema/PPM/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://TVNetwork/Schema/CommonComplexTypes/1.0" schemaLocation="../CommonTypes/CommonComplexTypes.xsd"/>
+	<xs:import namespace="http://TVNetwork/Schema/CommonSimpleTypes/1.0" schemaLocation="../CommonTypes/CommonSimpleTypes.xsd"/>
+	<xs:element name="programCodeSearchRequest" type="tns:ProgramCodeSearchRequestType"/>
+	<xs:element name="programCodeSearchResponse" type="tns:ProgramCodeSearchResponseType"/>
+	<xs:element name="lockProgramCodeRequest" type="tns:LockProgramCodeRequestType"/>
+	<xs:element name="lockProgramCodeResponse" type="tns:LockProgramCodeResponseType"/>
+	<xs:complexType name="ProgramCodeSearchRequestType">
+		<xs:annotation>
+			<xs:documentation>节目基本信息查询条件类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="programCode" type="nspub:ProgramCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>节目代码</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="audioLanguage" type="tns:LanguageType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>音频语言版本</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subtitleLanguage" type="tns:LanguageType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>字幕语言版本</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="columnCode" type="nspub:ColumnCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>栏目代码</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="columnName" type="nspub:ColumnNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>栏目名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProgramCodeSearchResponseType">
+		<xs:annotation>
+			<xs:documentation>节目基本信息查询结果类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="programCodeSearchItem" type="tns:ProgramCodeSearchItemType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>节目基本信息列表</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="wsResult" type="nspubc:WsResultType">
+				<xs:annotation>
+					<xs:documentation>通用返回信息</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProgramCodeSearchItemType">
+		<xs:annotation>
+			<xs:documentation>节目基本信息类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="programBasicInfo" type="tns:ProgramBasicInfoType">
+				<xs:annotation>
+					<xs:documentation>节目基本信息</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progTechReviewSummary" type="tns:ProgTechReviewSummaryType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>技审概要</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LockProgramCodeRequestType">
+		<xs:annotation>
+			<xs:documentation>锁定、解锁节目代码</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="lockInfo" type="tns:LockInfoType">
+				<xs:annotation>
+					<xs:documentation>节目锁定信息</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LockProgramCodeResponseType">
+		<xs:annotation>
+			<xs:documentation>锁定、解锁节目代码结果</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="lockInfoResult" type="tns:LockInfoResultType">
+				<xs:annotation>
+					<xs:documentation>节目锁定结果</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="wsResult" type="nspubc:WsResultType">
+				<xs:annotation>
+					<xs:documentation>通用返回信息</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProgramBasicInfoType">
+		<xs:annotation>
+			<xs:documentation>节目基本信息类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="programCode" type="nspub:ProgramCodeType">
+				<xs:annotation>
+					<xs:documentation>节目代码，年份_栏目_节目序号</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progMakeYear" type="xs:gYear">
+				<xs:annotation>
+					<xs:documentation>节目制作年份, YYYY</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ownershipColumns" type="nspub:ColumnCodeType">
+				<xs:annotation>
+					<xs:documentation>归属栏目：所归属的制作栏目（包含常态、特别栏目）</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="audioLanguage" type="tns:LanguageType">
+				<xs:annotation>
+					<xs:documentation>音频语言版本</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subtitleLanguage" type="tns:LanguageType">
+				<xs:annotation>
+					<xs:documentation>字幕语言版本</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progClass" type="tns:ContentCategoryType">
+				<xs:annotation>
+					<xs:documentation>节目类别,五大类、十八小类，编码规则参见“栏目”之“栏目类别</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isNewsFlag" type="nspub:IsNewsFlagType">
+				<xs:annotation>
+					<xs:documentation>新闻消息类标志, 0非新闻消息类,1新闻消息类</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="keyTopicCode" type="nspub:KeyTopicCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>重点选题编号</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="specialProgNo" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>特别节目项目编号</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progCreativeAttribute" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>节目原创属性, 原创、改编、汇编</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progHeadline" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>节目正标题, 揭示一个或一组节目内容的正式名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progSubheading" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>节目副标题, 从属于正题名的解释或补充说明容的正式名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>题名说明, 对正标题、副标题的文字说明</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="episodeHeadline" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>系列分级题名, 在一组系列节目中，揭示其中一集节目内容的名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="numberOfEpisodes" type="xs:positiveInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>总集（期）数, 系列节目的集数总和</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="episodeSeq" type="xs:positiveInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>分集（期）数, 系列节目的分集序号</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="programName" type="nspub:ProgramNameType">
+				<xs:annotation>
+					<xs:documentation>节目中文名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="programNameInForeignLang" type="nspub:ProgramNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>节目外文名称：应支持多种语言</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progDuration" type="nspub:DurationType">
+				<xs:annotation>
+					<xs:documentation>节目时间长度</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isFirstBroadcastLive" type="nspub:IsLiveType">
+				<xs:annotation>
+					<xs:documentation>计划首次播出方式,
+						 0.录播
+						 1.直播
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isAbridgment" type="nspub:IsAbridgmentType" default="0">
+				<xs:annotation>
+					<xs:documentation>完整或精简标志：缺省值：0
+						0：完整版
+						1：精简版</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="departmentCode" type="nspub:DepartmentCodeType">
+				<xs:annotation>
+					<xs:documentation>节目制作部门</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progProducingManager" type="nspub:UserIDType">
+				<xs:annotation>
+					<xs:documentation>节目制作负责人</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progProductionStatus" type="nspub:ProgProductionStatusType">
+				<xs:annotation>
+					<xs:documentation>节目生产状态, 
+						1.制作中	
+						2.内容修改中
+						3.内容审看完
+						4.技术审查完
+						5.版权稽核完	
+						6.媒资入库完	
+						9.节目制作终
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="recentContentCensorTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>最近内容审看时间</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="recentContentCensorResult" type="nspub:ReviewResultType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>最近内容审看结果</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="recentTechCensorTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>最近技术审查时间, YYYYMMDDHHMMSS</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="recentTechCensorResult" type="nspub:ReviewResultType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>最近技术审查结果</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="recentRightsAuditTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>最近版权稽核时间</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="recentRightsAuditResult" type="nspub:ReviewResultType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>最近版权稽核结果</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="actualCompletionTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>入库完成时间, YYYYMMDDHHMMSS</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progSegmentSum" type="nspub:ProgSegmentSumType">
+				<xs:annotation>
+					<xs:documentation>节目分段总数</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="breakPointSum" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>广告插播点总数</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="video" type="nspub:VideoType">
+				<xs:annotation>
+					<xs:documentation>高标清标志</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="afd" type="nspub:AFDType">
+				<xs:annotation>
+					<xs:documentation>AFD信息：0空；1信封；2切边</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="audio" type="nspub:AudioType">
+				<xs:annotation>
+					<xs:documentation>声道信息</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mediaType" type="nspub:MediaType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>成品节目交付介质类型</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="primaryPlayChannal" type="nspub:ChannelCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>计划首播频道</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="completionDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>节目入库完成是节目制作完成的标志，用于综合制作系统、媒资管理系统安排制作、审查和入库任务
+示例：20101001。在申请节目代码时手工填写，应早于此节目的首播时间（由人工检查）</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="planBroadcastDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>节目计划播出日期</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="planBroadcastTime" type="nspub:PlayTimeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>节目计划播出时间</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="internalUseFlag" type="nspub:IsInternalUse">
+				<xs:annotation>
+					<xs:documentation>内参标志</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="incomingFlag" type="nspub:IsIncoming">
+				<xs:annotation>
+					<xs:documentation>外送标志</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="importantLiveFlag" type="nspub:IsImportantLive">
+				<xs:annotation>
+					<xs:documentation>重大直播标志</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="acquisitionProgram" type="tns:AcquisitionProgramSimpleType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>引进节目</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lockInfoResult" type="tns:LockInfoResultType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>锁定信息</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProgTechReviewSummaryType">
+		<xs:annotation>
+			<xs:documentation>节目技审概要类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="programCode" type="nspub:ProgramCodeType">
+				<xs:annotation>
+					<xs:documentation>节目代码</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="audioLanguage" type="tns:LanguageType">
+				<xs:annotation>
+					<xs:documentation>音频语言版本</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subtitleLanguage" type="tns:LanguageType">
+				<xs:annotation>
+					<xs:documentation>字幕语言版本</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progSegmentSum" type="nspub:ProgSegmentSumType">
+				<xs:annotation>
+					<xs:documentation>节目分段总数</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progSegmentIndex" type="nspub:ProgSegmentSumType">
+				<xs:annotation>
+					<xs:documentation>本次技审分段数</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="progSegmentName" type="nspub:ProgramNameType">
+				<xs:annotation>
+					<xs:documentation>节目分段名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="programAuditBillID" type="nspub:ProgramAuditBillIDType">
+				<xs:annotation>
+					<xs:documentation>节目技审单号ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="techInspectDeptID" type="nspub:DepartmentCodeType">
+				<xs:annotation>
+					<xs:documentation>技术审查部门ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="techInspectorID" type="nspub:UserIDType">
+				<xs:annotation>
+					<xs:documentation>技术审查人ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="techReviewFragmentLength" type="nspub:DurationType">
+				<xs:annotation>
+					<xs:documentation>本次技审分段时长</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="auditResult" type="nspub:ReviewResultType">
+				<xs:annotation>
+					<xs:documentation>分段技术审查完成结果</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="techInspectTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>技术审查完成时间</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="techInspectFinalResult" type="nspub:TechnicalReviewSummaryStatusType" default="0">
+				<xs:annotation>
+					<xs:documentation>节目最终技术审查结果</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LanguageType">
+		<xs:annotation>
+			<xs:documentation>语言版本类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="langCode" type="xs:string"/>
+			<xs:element name="langName">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="32"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContentCategoryType">
+		<xs:annotation>
+			<xs:documentation>栏目、节目内容类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contentCategoryCode" type="xs:integer" nillable="false"/>
+			<xs:element name="contentCategoryName" nillable="false">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="32"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AcquisitionProgramSimpleType">
+		<xs:annotation>
+			<xs:documentation>引进节目简单描述类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="acquisitionProgramCode" type="nspub:AcquisitionProgramCodeType">
+				<xs:annotation>
+					<xs:documentation>引进节目代码</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="acquisitionProgramName" type="nspub:ProgramNameType">
+				<xs:annotation>
+					<xs:documentation>引进节目中文名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LockInfoResultType">
+		<xs:sequence>
+			<xs:element name="lockResult" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>TRUE 操作成功  FALSE操作失败</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lockStatus" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>当前锁定状态  TRUE 锁定FALSE 空闲</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="programCode" type="nspub:ProgramCodeType">
+				<xs:annotation>
+					<xs:documentation>节目代码</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="audioLanguage" type="tns:LanguageType">
+				<xs:annotation>
+					<xs:documentation>音频语言版本</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subtitleLanguage" type="tns:LanguageType">
+				<xs:annotation>
+					<xs:documentation>字幕语言版本</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="locker" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>锁定者</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lockerID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>锁定者ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lockSystem" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>锁定者所在系统</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lockDateTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>锁定或解锁的时间</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LockInfoType">
+		<xs:sequence>
+			<xs:element name="lock" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>TRUE 锁定  FALSE解锁</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="programCode" type="nspub:ProgramCodeType">
+				<xs:annotation>
+					<xs:documentation>节目代码</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="audioLanguage" type="tns:LanguageType">
+				<xs:annotation>
+					<xs:documentation>音频语言版本</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subtitleLanguage" type="tns:LanguageType">
+				<xs:annotation>
+					<xs:documentation>字幕语言版本</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="locker" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>锁定者</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lockerID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>锁定者ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lockSystem" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>锁定者所在系统</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

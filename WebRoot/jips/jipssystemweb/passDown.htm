@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>口令下载日志</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+  <script type="text/javascript" src="javascript/passDown.js"></script>
+  <link href="css/base.css" rel="stylesheet" type="text/css" />
+  <!--[if lt IE 9]> 
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+  <![endif]-->
+</head>
+<body onload="pageInit();">
+      <!-- <div class="panel-group" role="panel-group" desc="面板组" > -->
+      <div id="divPageFrame" >
+	    <div class="panel panel-sm  panel-default" style="border-bottom-width:0">
+	        <div class="panel-heading" style="padding: 10px 15px;height: 45px">
+	            <span>查询条件</span>
+	        </div>
+	        <div class="panel-collapse div-collapse">
+	           <table  align="center" cellpadding="0" cellspacing="0" >
+	                <tr class="tableRowHeight60" >
+	                	<td class="rightAlign" width="100px">
+				            <span>文件名:&nbsp;</span>
+				         </td>
+				         <td width="170px;">
+					        <input id="txtKeyWord" type="text" class="form-control input-sm input-date"/>
+			             </td>
+			           <td class="rightAlign">
+				           <span>时间:&nbsp;</span>
+				        </td>
+				        <td colspan="3">
+				        
+				        <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+				            <input id="txtStartTime" type="text" class="form-control input-sm input-date">
+				            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+				        </label>
+				         &nbsp;<span>至</span>&nbsp;
+				        <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+				            <input id="txtEndTime" type="text" class="form-control input-sm input-date">
+				            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+				        </label>
+				        &nbsp;<a href="javascript:void(0)" ><span onclick="el('txtStartTime').value=el('txtEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=gLastWeekDate.toDateString();el('txtEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=el('txtEndTime').value='';">清空</a>
+
+				        <!-- 
+				           <input id="txtStartTime" type="text" class="input-sm input-date selectdate"/>
+	                            &nbsp;<span>至</span>&nbsp;
+	                            <input id="txtEndTime" class="input-sm input-date selectdate"/>
+	                            &nbsp;<a href="javascript:void(0)" ><span onclick="el('txtStartTime').value=el('txtEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=gLastWeekDate.toDateString();el('txtEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=el('txtEndTime').value='';">清空</a> -->
+			            </td>
+			            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			               <button type="button" class="btn btn-primary btn-sm" onClick="searchlog();">
+						       <span class="glyphicon glyphicon-search"></span>查询
+						   </button>
+			            </td>
+			        </tr>
+	           </table>
+	        </div>
+	    </div>
+	    
+	   <div class="panel panel-sm panel-default">
+		      <div class="panel-heading" style="padding: 10px 15px">
+		            <div class="pull-left">
+		                <span>数据信息 </span>
+		            </div>
+			        <!-- <div class='pull-right'>
+			           <span style="cursor:pointer;" onclick="gCrud.remove()"><img src="images/del.png" style="height:18px;">&nbsp;删除</img></span>
+			        </div>  -->
+		      </div>
+		      <div id="divList" class="table-unbordered" >数据加载中...</div>
+	    </div>
+	    
+	    <div class="panel-sm">
+	        <div id="logPageBar" class="panel-footer"></div>
+	    </div>
+	    
+    </div>
+  
+    <div id="divPassDown" style="display: none">
+    <form class="form-horizontal mg-lg">
+      <div class="form-group">
+        <label for="txtName" class="col-sm-2 control-label">文件名:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control input-sm" id="txtName" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtBEGINTIME" class="col-sm-2 control-label">BEGINTIME:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtBEGINTIME" />
+        </div>
+        <label for="txtSTYPE" class="col-sm-2 control-label">STYPE:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtSTYPE" />
+        </div>
+        <label for="txtUSERNAME" class="col-sm-2 control-label">USERNAME:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtUSERNAME" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtPASSWORD" class="col-sm-2 control-label">PASSWORD:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtPASSWORD" />
+        </div>
+        <label for="txtIISCRACTED" class="col-sm-2 control-label">IISCRACTED:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtIISCRACTED" />
+        </div>
+        <label for="txtCVALID" class="col-sm-2 control-label">CVALID:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtCVALID" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtLINENO1" class="col-sm-2 control-label">LINENO1:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtLINENO1" />
+        </div>
+        <label for="txtLINENO2" class="col-sm-2 control-label">LINENO2:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtLINENO2" />
+        </div>
+        <label for="txtFILEID" class="col-sm-2 control-label">FILEID:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtFILEID" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtFILELEN" class="col-sm-2 control-label">FILELEN:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtFILELEN"  />
+        </div>
+        <label for="txtFTPIP" class="col-sm-2 control-label">FTPIP:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtFTPIP" />
+        </div>
+        <label for="txtFROM_IP" class="col-sm-2 control-label">FROM_IP:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtFROM_IP" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtTO_IP" class="col-sm-2 control-label">TO_IP:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtTO_IP"  />
+        </div>
+        <label for="txtSFROMIP" class="col-sm-2 control-label">SFROMIP:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtSFROMIP" />
+        </div>
+        <label for="txtSTOIP" class="col-sm-2 control-label">STOIP:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtSTOIP" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtSOURE_PORT" class="col-sm-2 control-label">SOURE_PORT:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtSOURE_PORT"  />
+        </div>
+        <label for="txtDEST_PORT" class="col-sm-2 control-label">DEST_PORT:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtDEST_PORT" />
+        </div>
+        <label for="txtLINENO3" class="col-sm-2 control-label">LINENO3:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtLINENO3" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtSLINENO4" class="col-sm-2 control-label">LINENO4:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtSLINENO4"  />
+        </div>
+        <label for="txtGRADE0" class="col-sm-2 control-label">GRADE0:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtGRADE0" />
+        </div>
+        <label for="txtGRADE1" class="col-sm-2 control-label">GRADE1:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtGRADE1" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtPUNIT" class="col-sm-2 control-label">PUNIT:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtPUNIT"  />
+        </div>
+        <label for="txtXTYPE" class="col-sm-2 control-label">XTYPE:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtXTYPE" />
+        </div>
+        <label for="txtDATAFROMSYS" class="col-sm-2 control-label">DATAFROMSYS:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtDATAFROMSYS" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtPARTNO" class="col-sm-2 control-label">PARTNO:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtPARTNO"  />
+        </div>
+        <label for="txtDATASERVERIP" class="col-sm-2 control-label">DATASERVERIP:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtDATASERVERIP" />
+        </div>
+        <label for="txtFROMUSER" class="col-sm-2 control-label">FROMUSER:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control input-sm" id="txtFROMUSER" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtDOWNLOADFILENAME" class="col-sm-3 control-label">DOWNLOADFILENAME:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control input-sm" id="txtDOWNLOADFILENAME" />
+        </div>
+      </div>
+    </form>
+  </div>
+    
+</body>
+</html>

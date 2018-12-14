@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+* {margin:0;padding:0;text-decoration:none;list-style:none; color:#FFF;}
+body{background:#2f2d2d; position:relative; width:100%; height:100%;}
+.logon{ width:30%; height:375px; position: absolute; top:256px; left:32%;background: url(../images/rte4h_03.png) no-repeat;
+
+min-width: 400px; width: expression(document.body.clientWidth < 760? "760px": "100%" )/*最小宽度设置*/;
+width:30%;}
+.none{ display:none;}
+.logo{ width:100%; height:80px; background:url(../images/logo01_03.png) no-repeat center; }
+.logo span{ display:none;}
+.logon01{width:600px; height:350px; position:relative;background: url(../images/rte4h_03.png) no-repeat bottom;  }
+.user{ width:100%; height:50px; position:absolute; top:100px; left:15%;}
+.user_1{background: url(../images/mereg_03.png) repeat-x; font-size:14px;box-shadow: 2px 2px 2px #292828; width:80px; height:44px; line-height:40px; float:left; }
+.user span{  font-weight:400; margin-left:25%;  }
+.user input{ width:55%; height:40px; line-height:40px; color:#666;border: solid 1px #232425;-moz-box-shadow:0px 0px 8px #000 inset;               /* For Firefox3.6+ */
+-webkit-box-shadow:0px 0px 8px #000 inset;            /* For Chrome5+, Safari5+ */
+box-shadow:0px 0px 8px #000 inset;                    /* For Latest Opera */padding-left: 5px;}
+.password{ width:100%; height:50px; position:absolute; top:170px; left:15%;}
+.password input{ width:55%; height:43px; line-height:43px; color:#666;border: solid 1px #232425;-moz-box-shadow:0px 0px 8px #000 inset;               /* For Firefox3.6+ */
+-webkit-box-shadow:0px 0px 8px #000 inset;            /* For Chrome5+, Safari5+ */
+box-shadow:0px 0px 8px #000 inset;                    /* For Latest Opera */padding-left: 5px;}
+.password_1 {background: url(../images/mereg_03.png) repeat-x; font-size:14px;box-shadow: 2px 2px 2px #292828; width:80px; height:44px; line-height:40px; float:left;}
+.password_1 span{ font-weight:400; margin-left:25%;}
+.user_2{ position:absolute; top:250px; left:15%; width:80px; }
+
+.user_2 input{float:left;margin-right: 10px;}
+.user_2 p{ font-size:12px; float: left;}
+.password_2{ position:absolute; top:266px; left:15%; background: url(../images/password1_03%20.png) no-repeat left; height:30px; line-height:30px;}
+.password_2 p{ margin-left:25px; font-size:12px; }
+.logoning{ position:absolute; top:246px; right:90px;}
+.logoning input{  background: url(../images/button_06.png) no-repeat; width:125px; height:33px; color:#FFF; text-shadow: 0 1px 0 #181717;  border:none; font-size:14px; }
+.footer{ position:absolute; bottom:20px; left:50px;}
+.copyright{ font-size:12px;}
+

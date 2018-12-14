@@ -1,0 +1,17 @@
+/* shared CSS for widgets, required */
+.fl { float: left; }
+.fr { float: right; }
+.clear { clear: both; }
+.hidden { display: none; }
+
+/* icons from JQueryUI, required by widgets */
+.icon {
+	overflow: hidden; float: left; width: 16px; height: 16px;
+	background-image: url(images/icons.png);
+}
+.icon-none { background: none; }
+.icon-triangle-1-e { background-position: -32px -16px; }
+.icon-triangle-1-n { background-position: 0 -16px; }
+.icon-triangle-1-s { background-position: -64px -16px; }
+.icon-minus { background-position: -48px -128px; }
+.icon-plus { background-position: -16px -128px; }

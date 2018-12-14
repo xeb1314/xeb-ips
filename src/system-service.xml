@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://cxf.apache.org/jaxrs
+	http://cxf.apache.org/schemas/jaxrs.xsd 
+	http://cxf.apache.org/jaxws 
+	http://cxf.apache.org/schemas/jaxws.xsd">
+	
+	<!-- 系统配置管理 -->
+	<bean id="sysconfigBusiness" name="jetsennet.jsystem.schema.NetSysconfig" class="jetsennet.jsystem.business.SysConfigBusiness" parent="baseBusiness">
+	</bean>
+	
+	<!-- 日志管理 -->
+	<bean id="logBusiness" class="jetsennet.jsystem.business.LogBusiness" parent="baseBusiness">
+		<property name="userAuthentication" ref="userAuth"/>
+		<property name="logPersisteTool" ref="logTool"/>
+	</bean>
+	
+	<!-- 受控词管理 -->
+	<bean id="ctrlwordBusiness" name="jetsennet.jsystem.schema.Ctrlword" class="jetsennet.jsystem.business.CtrlwordBusiness" parent="baseBusiness"></bean>
+	
+	<!-- SystemService -->
+	<bean id="/SystemService" class="jetsennet.jsystem.services.SystemService" parent="/BaseService">
+    	<property name="sysconfigBusiness" ref="sysconfigBusiness"/>
+    	<property name="ctrlwordBusiness" ref="ctrlwordBusiness" />
+	</bean>
+</beans>

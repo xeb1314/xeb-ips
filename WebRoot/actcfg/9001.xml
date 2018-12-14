@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+<!--服务调用-->
+<actConfig>
+  <item name="WsUrlPath" desc="服务地址" deafult="" allowEmpty="false" dataType="string" maxLength="200" source="0"/>
+  <item name="WsMethod" desc="服务方法" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0"/>
+  <item name="WsBackMethod" desc="服务方法(打回时)" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0"/>
+  <item name="WsResult" desc="调用结果存储" deafult="" dataType="string" allowVariable="true"  maxLength="100" source="0"/>
+  <item name="WsVarParam" desc="传参方式" deafult="0" allowEmpty="false" dataType="int" maxLength="5" source="1" sourceString="不含流程变量~0|含流程变量~1"/>
+</actConfig>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://cxf.apache.org/jaxrs
+	http://cxf.apache.org/schemas/jaxrs.xsd 
+	http://cxf.apache.org/jaxws 
+	http://cxf.apache.org/schemas/jaxws.xsd">
+	
+	<bean id="activityBusiness" name="ActivityBusiness"  class="jetsennet.wfm.business.ActivityBusiness" parent="wfmBaseBusiness">
+	</bean>
+	
+	<bean id="processTypeBusiness" name="ProcessTypeBusiness"  class="jetsennet.wfm.business.ProcessTypeBusiness" parent="wfmBaseBusiness">
+	</bean>
+	
+	<bean id="variableBusiness" name="VariableBusiness"  class="jetsennet.wfm.business.VariableBusiness" parent="wfmBaseBusiness">
+	</bean>
+	
+	<bean id="processBusiness" name="ProcessBusiness"  class="jetsennet.wfm.business.ProcessBusiness" parent="wfmBaseBusiness">
+	</bean>
+	
+	
+	<bean id="flowProcessBusiness" name="FlowProcessBusiness"  class="jetsennet.wfm.business.FlowProcessBusiness" parent="wfmBaseBusiness">
+	</bean>
+	
+	<bean id="flowStatisticsBusiness" name="FlowStatisticsBusiness"  class="jetsennet.wfm.business.FlowStatisticsBusiness" parent="wfmBaseBusiness">
+	</bean>
+	
+	<bean id="procactBusiness" name="ProcactBusiness"  class="jetsennet.wfm.business.ProcactBusiness" parent="wfmBaseBusiness">
+	</bean>
+	
+	<bean id="sysConfigBusiness" name="SysConfigBusiness"  class="jetsennet.wfm.business.SysConfigBusiness" parent="wfmBaseBusiness">
+	</bean>
+	
+	<bean id="dbSourceBusiness" name="DbSourceBusiness"  class="jetsennet.wfm.business.DbSourceBusiness" parent="wfmBaseBusiness">
+	</bean>
+	
+	<!-- <bean id="ctrlWordBusiness" name="CtrlWordBusiness"  class="jetsennet.wfm.business.CtrlWordBusiness" parent="wfmBaseBusiness">
+	</bean> -->
+	
+	<bean id="taskAssignRuleBusiness" name="TaskAssignRuleBusiness"  class="jetsennet.wfm.business.TaskAssignRuleBusiness" parent="wfmBaseBusiness">
+	</bean>
+	
+	<bean id="procLogBusiness" name="ProcLogBusiness"  class="jetsennet.wfm.business.ProcLogBusiness" parent="wfmBaseBusiness">
+	</bean>
+	
+	<bean id="flowInterfaceBusiness" name="FlowInterfaceBusiness"  class="jetsennet.wfm.business.FlowInterfaceBusiness" parent="wfmBaseBusiness">
+	</bean>
+	
+	<bean id="/WFMSystemService" class="jetsennet.wfm.services.WFMSystemService" parent="/BaseService">
+	    <property name="baseBusiness" ref="wfmBaseBusiness" />
+		<property name="processBusiness" ref="processBusiness"/>
+		<property name="flowProcessBusiness" ref="flowProcessBusiness"/>
+		<property name="flowStatisticsBusiness" ref="flowStatisticsBusiness"/>
+	</bean>
+	
+	<bean id="/RuntimeSystemService" class="jetsennet.wfm.services.RuntimeSystemService" parent="/BaseService">
+	    <property name="baseBusiness" ref="wfmBaseBusiness" />
+		<property name="flowProcessBusiness" ref="flowProcessBusiness"/>
+	</bean>
+	
+	<!-- web service -->
+	<bean id="/WfmWebService" class="jetsennet.wfm.webservices.WfmWebService" parent="/BaseService">
+	    <property name="baseBusiness" ref="wfmBaseBusiness" />
+		<property name="flowInterfaceBusiness" ref="flowInterfaceBusiness"/>
+	</bean>
+</beans>

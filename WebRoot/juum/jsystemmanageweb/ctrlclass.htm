@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>分类设置</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+<script type="text/javascript">
+	Layoutit("#divPageFrame", {hLayout:[{value: 200, vLayout:[46, "auto"]}, {vLayout: [46, "auto", 40]}]});
+</script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+<![endif]-->
+</head>
+<body onload="pageInit();">
+
+<div id="divPageFrame" class="panels" style="overflow: hidden;">
+    <div class="h-panel">
+        <div class="panel-heading">
+            <div id="divButtons" class="pull-right" style=" display: inline-block; margin-top: -2px; ">
+            	<span style="cursor:pointer;margin-right: 10px;" title="新建" onclick="gTreeCrud.add();">
+		          <i class="fa fa-plus"></i>
+		          <span>&nbsp;新建</span>
+		        </span>
+            	<span style="cursor:pointer;margin-right: 10px;" title="编辑" onclick="gTreeCrud.edit();">
+            	  <i class="fa fa-pencil-square-o"></i>
+		          <span>&nbsp;编辑</span>
+		        </span>
+            	<span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gTreeCrud.remove();">
+		          <i class="fa fa-times"></i>
+		          <span>&nbsp;删除</span>
+		        </span>
+            </div>
+        </div>
+        <div id="divTree" class="table-unbordered ztree" style="overflow: auto;"></div>
+    </div>
+    <div class="h-panel">
+        <div class="panel-heading">
+            <div class="input-group input-group-xs pull-left input3">
+	          <input type="text" class="form-control" id="txtClassName" onkeydown="jetsennet.keyEvent(searchData)" placeholder="分组名称/分组代号">
+	            <span class="input-group-btn">
+	              <button type="submit" class="btn btn-default" onclick="javascript:searchData();">
+	                <span class="glyphicon glyphicon-search"></span>
+	              </button>
+	            </span>
+	          </input>
+	        </div>
+            
+            <div id="divButtons" class="pull-right" style=" display: inline-block; margin-top: -2px; ">
+            	<span style="cursor:pointer;margin-right: 10px;" title="新建" onclick="gCrud.add();">
+		          <i class="fa fa-plus"></i>
+		          <span>&nbsp;新建</span>
+		        </span>
+            	<span style="cursor:pointer;margin-right: 10px;" title="编辑" onclick="gCrud.edit();">
+            	  <i class="fa fa-pencil-square-o"></i>
+		          <span>&nbsp;编辑</span>
+		        </span>
+            	<span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gCrud.remove();">
+		          <i class="fa fa-times"></i>
+		          <span>&nbsp;删除</span>
+		        </span>
+            	<span style="cursor:pointer;margin-right: 10px;" title="刷新" onclick="document.location.reload();">
+		          <i class="fa fa-refresh"></i>
+		          <span>&nbsp;刷新</span>
+		        </span>
+            </div>
+        </div>
+        
+        <div class="table-unbordered" id="divContent">内容加载中......</div>
+        
+        <div class="panel-footer" id="divPage"></div>
+    </div>
+</div>
+
+  <!-- 框架布局结束 -->
+  <!-- 新增  编辑窗口 开始 -->
+  <div id="div-New-Edit" style="display: none;">
+    <form class="form-horizontal mg-lg">
+      <div class="form-group">
+        <label for="CLASS_NAME" class="col-sm-2 control-label">名称:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="CLASS_NAME" validatetype="NotEmpty,filenameext,removespaces" placeholder="必填项" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="PARENT_NAME" class="col-sm-2 control-label">所属分类:</label>
+        <div class="col-sm-10">
+          <input type="text" id="PARENT_NAME" class="form-control selecttree" readonly="readonly" validatetype="NotEmpty,filenameext,removespaces" onclick="popHiddenTree(el('divSelectTree'), this);" placeholder="必填项" /> 
+          <input type="hidden" id="PARENT_ID" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="CLASS_TYPE" class="col-sm-2 control-label">分类值:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="CLASS_TYPE" validatetype="NotEmpty" disable placeholder="必填项" />
+        </div>
+      </div>
+      <div class="form-group clsHidden">
+        <label for="VIEW_NAME" class="col-sm-2 control-label">显示名称:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="VIEW_NAME" validatetype="NotEmpty,filenameext,removespaces" placeholder="必填项" />
+        </div>
+      </div>
+      <div class="form-group clsHidden">
+        <label for="VIEW_VALUE" class="col-sm-2 control-label">显示值:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="VIEW_VALUE" validatetype="NotEmpty" placeholder="必填项" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="VIEW_VALUE" class="col-sm-2 control-label">显示:</label>
+        <div class="col-sm-10">
+          <label class="checkbox-inline"> 
+            <input type="checkbox" id="STATUS" name="STATUS" value="1" checked="checked" />
+          </label> 
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- 分类类别窗口树 -->
+  <div id="divSelectTree" style="display: none; border: solid 1px #ccc; background: #fff; height: 200px; overflow: auto">
+    <div id="divHiddenTree" class="ztree"></div>
+  </div>
+  <!-- 新增  编辑窗口 结束 -->
+<script type="text/javascript" src="javascript/ctrlclass.js"></script>  
+</body>
+</html>

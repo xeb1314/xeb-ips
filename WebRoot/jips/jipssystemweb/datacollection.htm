@@ -1,0 +1,1389 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>数据采集任务</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+  <link href="css/base.css" rel="stylesheet" type="text/css" />
+  <!--[if lt IE 9]> 
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+  <![endif]-->
+  <script type="text/javascript">
+	    	Layoutit("#divPageFrame", {vLayout:['7%',{value:'50%',vLayout:[ 40, "auto" , 35]}, 
+    	                                    {value:'43%',vLayout:[ 40, "auto" , 35]}
+    	                                   ]});
+    	</script>
+  
+  <style type="text/css">
+	  .ipinput_input {  
+	  		border-radius: 3px;
+		    border-color : #b99d7f;  
+		    border-style : solid;  
+		    border-width : 0px;  
+		    background-color : #ffffff;  
+		    margin-right : -6px;  
+		    margin-left : 0px;  
+		    margin-top : 5px;  
+		    margin-bottom : 0px;  
+		    width : 20%;  
+		    height : 18px;  
+		}  
+		  
+		.ipinput_separator {  
+		    margin-right : 2px;  
+		    margin-left : 1px;  
+		    font-weight : bolder;  
+		    font-size : 8px;  
+		}  
+		  
+		.ipinput_div {  
+			border-radius: 3px;
+		    border-color : #CCC;  
+		    border-style : solid;  
+		    border-width : 1px;  
+		}  
+  </style>
+</head>
+<body onload="pageInit();">
+      <!-- <div class="panel-group" role="panel-group" desc="面板组" > -->
+      <div id="divPageFrame" >
+      <div class="panel panel-sm  panel-default" style="border-bottom-width:0">
+      	<div class="center-wrapper">
+			<div class="center-area">
+				<form class="form-inline margin-bottom-sm center-content">
+			      <span>所属系统:&nbsp;</span>
+			      <div class="form-group">
+			      	<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+				        <input id="txtSystem" onclick="jetsennet.ui.DropDownList.show(this)" style="width: 200px;" class="form-control input-sm" readonly/>
+				      	<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+			      	</label>
+			      </div>
+			      <span class="margin-left-md">任务名称:</span>
+			      <div class="form-group">
+			        <input id="txtCollocTaskName" type="text" class="form-control input-sm input-date"/>
+			      </div>
+			      <span class="margin-left-md">创建时间:</span>
+			      <div class="form-group">
+			       <!--  <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+			            <input id="txtStartTime" type="text" class="form-control input-sm input-date"/>
+			            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+				    </label>
+			      </div>
+			      <span class="margin-left-md">至</span>
+			      <div class="form-group">
+			      	<label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+			            <input id="txtEndTime" type="text" class="form-control input-sm input-date"/>
+			            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+				    </label>
+			      </div>
+			      <div class="form-group">
+			      	&nbsp;<a href="javascript:void(0)" ><span onclick="el('txtStartTime').value=el('txtEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+                          <a href="javascript:void(0)" onclick="el('txtStartTime').value=gLastWeekDate.toDateString();el('txtEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+                          <a href="javascript:void(0)" onclick="el('txtStartTime').value=el('txtEndTime').value='';">清空</a>&nbsp;&nbsp;&nbsp; -->
+                      <input id="create_time" type="text" class="form-control input-sm input-date" readonly="readonly" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			      </div>
+			      <a href="javascript:void(0)" onclick="el('create_time').value='';el('txtCollocTaskName').value='';">清空</a>&nbsp;&nbsp;&nbsp;
+			      <button type="button" class="btn btn-primary btn-sm" onClick="searchCollocTask();">
+					     <span class="glyphicon glyphicon-search"></span> 查询
+				  </button>
+			    </form>
+	   		</div>
+		  </div>
+    	</div>
+	    <div class="panel panel-sm  panel-default" style="border-bottom-width:0">
+	        <div class="panel-heading" style="padding: 5px 15px">
+		            <div class="pull-left">
+		                 <span>任务列表 </span>
+		        		<!-- <span>任务列表</span> -->
+			        	 <!-- <div class="input-group input-group-xs pull-left input3">
+				          <input type="text" class="form-control" id="txtCollocTaskName" onkeydown="jetsennet.keyEvent(searchCollocTask)" placeholder="任务名称">
+				            <span class="input-group-btn">
+				              <button type="submit" class="btn btn-default" onclick="searchCollocTask();">
+				                <span class="glyphicon glyphicon-search"></span>
+				              </button>
+				            </span>
+				          </input>
+				         </div> -->
+		            </div>
+			        <div class='pull-right'>
+			            <span style="cursor:pointer;" onclick="gTaskCrud.add()"><img src="images/new.png" style="height:18px;"/><span>&nbsp;创建任务</span></span>&nbsp;&nbsp;
+		            	<span style="cursor:pointer;" onclick="gTaskCrud.edit()"><img src="images/edit.png" style="height:18px;"/><span>&nbsp;编辑任务</span></span>&nbsp;&nbsp;
+		            	<span style="cursor:pointer;" onclick="gTaskCrud.remove()"><img src="images/del.png" style="height:18px;"/><span>&nbsp;删除任务</span></span>&nbsp;&nbsp;
+		           	 	<!-- <span style="cursor:pointer;" id="savespan" onclick="saveTaskProcess();"><img src="images/save.png" style="height:18px;"/><span>&nbsp;保存</span></span>&nbsp; -->
+		            	<span style="cursor:pointer;" id="activespan" onclick="activeTaskProcess();"><img src="images/activate.png" style="height:18px;"/><span>&nbsp;启动任务</span></span>&nbsp;
+			       		<span style="cursor:pointer;" id="noactivespan" onclick="stopTask();"><img src="images/cel_del.png" style="height:18px;"/><span>&nbsp;终止任务</span></span>&nbsp;
+			        </div>
+		      </div>
+		      <div id=divTaskList class="table-unbordered" ></div>
+		      <div class="panel-sm">
+	           	<div id="divTaskPage" class="panel-footer"></div>
+	    	  </div>
+	    </div>
+	    <div class="panel panel-sm panel-default">
+	      <div class="panel-heading" style="padding: 10px 15px">
+	            <div class="pull-left">
+	            	<span>规则列表：</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	            </div>
+	            <div class="pull-center">
+	            	<div class="input-group input-group-xs pull-left input3" id="ruleDivId" style="display: none;">
+			          <input type="text" class="form-control" id="txtTaskRule" onkeydown="jetsennet.keyEvent(searchRule)" placeholder="规则名称/规则">
+			            <span class="input-group-btn">
+			              <button type="submit" class="btn btn-default" onclick="searchRule();">
+			                <span class="glyphicon glyphicon-search"></span>
+			              </button>
+			            </span>
+			          </input>
+			        </div>
+	            </div>
+	            <div class='pull-right'>
+	               <span style="cursor:pointer;margin-right: 10px;" title="新增" onclick="addTaskRule();">
+					  <i class="fa fa-plus"></i>
+					  <span>&nbsp;新增</span>
+				   </span>
+				   <span style="cursor:pointer;margin-right: 10px;" title="编辑" onclick="editTaskRule();">
+	            	  <i class="fa fa-pencil-square-o"></i>
+			          <span>&nbsp;编辑</span>
+			       </span>
+				   <span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gRuleCrud.remove();">
+						<i class="fa fa-times"></i>
+						<span>&nbsp;删除</span>
+				   </span>
+	            </div>
+	      </div>
+	      <div id=divRuleList class="table-unbordered" ></div>
+		  <div class="panel-sm">
+	       	<div id="divRulePage" class="panel-footer"></div>
+	      </div>
+	    </div>
+    </div>
+      <!-- 任务添加、编辑 -->
+    <div id="divTask" style="display: none">
+	    <form class="form-horizontal mg-lg">
+		  <div class="form-group">
+        	<label for="TASK_NAME" class="col-sm-2 control-label">任务名称:</label>
+        	<div class="col-sm-10">
+          		<div class="input-group input-group-sm">
+            		<input  type="text" class="form-control input-sm" id="txt_TASK_NAME"   validatetype="NotEmpty,filenameext" maxlength="50"/>
+					<span class="input-group-addon" style="color: Red">*</span>
+          		</div>
+        	</div>
+          </div>
+          <div class="form-group">
+        	<label for="SERVICE" class="col-sm-2 control-label">采集系统:</label>
+	        <div class="col-sm-5">
+	        	<input id="txt_COLLECSYSTEM" onclick="jetsennet.ui.DropDownList.show(this)" class="form-control input-sm" selectedvalue="-1"/>
+	        	<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 24px;"></i>
+	        </div>
+	        <div class="col-sm-5">
+	        	<input id="txt_SERVICE" onclick="jetsennet.ui.DropDownList.show(this)" class="form-control input-sm" selectedvalue="-1"/>
+	        	<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 24px;"></i>
+	        </div>
+	      </div>
+	      <div class="form-group">
+	        <label for="TASK_DESC" class="col-sm-2 control-label">任务描述:</label>
+	        <div class="col-sm-10">
+				 <!--<input  type="text" id="txt_TASK_DESC"  maxlength="50" class="form-control input-sm" /> -->
+	             <textarea name="sysDesc" id="txt_TASK_DESC" style="width: 100%;height: 50px" class="form-control"></textarea>
+	        </div>
+	      </div>
+	      <div class="form-group">
+        	<label for="txt_ZDID" class="col-sm-2 control-label">终端ID:</label>
+        	<div class="col-sm-10">
+          		<div class="input-group input-group-sm">
+            		<input  type="text" class="form-control input-sm" id="txt_ZDID" />
+					<span class="input-group-addon" style="color: Red">*</span>
+          		</div>
+        	</div>
+          </div>
+		</form>
+  	</div>
+  	<div >
+  	</div>
+  	<!--class="jetsen-tabs" 
+  	class="jetsen-tabon" onclick="jetsennet.util.tabpaneEvent(this,'divBody','jetsen-tab');selectTab('tabon');"
+  	class="jetsen-taboff" onclick="jetsennet.util.tabpaneEvent(this,'divBody','jetsen-tab');selectTab('taboff');"
+  	-->
+  	<div id="divIPTempl1" style="display: none" >
+        <form class="form-horizontal mg-lg">
+        	<div class="form-group">
+		        <label for="txt_RuleName1" class="col-sm-2 control-label">规则名称:</label>
+		        <div class="col-sm-10 ">
+		        	<input type="text" class="form-control input-sm" id="txt_RuleName1" maxlength="200" validatetype="filenameext"/>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+	      		<div class="col-sm-12">
+	      			<span>----------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+	      		</div>
+	      	</div>
+        	<div class="panel-collapse div-collapse">
+	        <table  align="center" cellpadding="1" cellspacing="10" >
+		        <tr class="tableRowHeight20" >
+		       		<td class="centerAlign" colspan="5">
+		       			<div align="center" style="border:1px #CCCCFF solid;" id="chkStates1">
+						<span style="color: Red; padding-bottom: 0px;">*</span>&nbsp;&nbsp;<input type="radio" name="chkState1" val="0" value="0" class="checkboxMid" />&nbsp;<span>ST</span>&nbsp;&nbsp;
+                    	<input type="radio" name="chkState1" val="1" value="1" class="checkboxMid" />&nbsp;<span>IP</span>&nbsp;&nbsp;
+                    	<input type="radio" name="chkState1" val="2" value="2" class="checkboxMid" />&nbsp;<span>LI</span>&nbsp;&nbsp;
+                    	<input type="radio" name="chkState1" val="3" value="3" class="checkboxMid" />&nbsp;<span>IP</span>&nbsp;&nbsp;
+                    	<input type="radio" name="chkState1" val="4" value="4" class="checkboxMid" />&nbsp;<span>RE</span>&nbsp;&nbsp;
+                    	<input type="checkbox" name="chkState1-5" id="chkStates11" val="5" value="5" class="checkboxMid" />&nbsp;<span>RE</span>&nbsp;&nbsp;
+                    	</div>
+					</td>
+					<td colspan="3" class="rightAlign" width="60px" >
+						<span>保存类型:</span>
+					</td>
+					<td class="centerAlign" colspan="1">
+						<div align="center" style="border:1px #CCCCFF solid;" id="chkStates2">
+						<span style="color: Red">*</span>&nbsp;&nbsp;<input type="radio" name="chkState2" val="0" value="0" class="checkboxMid"/>&nbsp;&nbsp;
+		        		<input type="radio" name="chkState2" val="1" value="1" class="checkboxMid" />&nbsp;&nbsp;
+		        		</div>
+					</td>
+					<td colspan="2"></td>
+		        </tr>
+		        <tr class="tableRowHeight20">
+		         	<td colspan="11">
+		         		<span>【STAT：统计; IPFF：IP记录; LINK：连接数据记录; IPIP：IP地址对数据记录; RELA：关联数据】</span>
+		         	</td>
+		        </tr>
+		        <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span>五元组</span>
+		         	</td>
+		         	<td width="70px">
+		         		<input  type="text" class="form-control input-sm" id="txt_PROTOCOL" style="width: 60px;" validatetype="Integer"/>
+		         	</td>
+		         	<td width="2px">
+		         		<span>@</span>
+		         	</td>
+		         	<!--  width: 60px;-->
+		         	<td style="width: 132px;">
+		         	<!-- <input  type="text" class="form-control input-sm" id="txt_SRC_IP" style="width: 80px;"/> -->
+		         		<div class="form-control input-sm">
+		         			<input type="text" id="ipOne1" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipOne1" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne1,ipOne1,ipTwo1)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipTwo1" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipTwo1" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne1,ipTwo1,ipThree1)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipThree1" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipThree1" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipTwo1,ipThree1,ipFour1)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipFour1" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipFour1" onkeydown="keyDownEvent(this)" onkeyup="keyUpEventForIp4(ipThree1,ipFour1)"/>
+	         			</div>
+		         	</td>
+		         	<td width="15px">
+		         		&nbsp;<span>:</span>&nbsp;
+		         	</td>
+		         	<td width="70px">
+		         		<input  type="text" class="form-control input-sm" id="txt_SRC_PORT" style="width: 60px;" validatetype="Integer,maxlength" maxlength="200"/>
+		         	</td>
+		         	<td width="15px"></td>
+		         	<td width="15px"></td>
+		         	<!--  class="rightAlign" style="width: 60px;"-->
+		         	<td style="width: 132px;">
+		         		<!-- <input  type="text" class="form-control input-sm" id="txt_DEST_IP" style="width: 80px;"/> -->
+		         		<div class="form-control input-sm">
+			         		<input type="text" id="ipOne3" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipOne3" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne3,ipOne3,ipTwo3)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipTwo3" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipTwo3" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne3,ipTwo3,ipThree3)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipThree3" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipThree3" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipTwo3,ipThree3,ipFour3)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipFour3" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipFour3" onkeydown="keyDownEvent(this)" onkeyup="keyUpEventForIp4(ipThree3,ipFour3)"/>
+	         			</div>
+		         	</td>
+		         	<td width="15px">
+		         		&nbsp;<span>:</span>&nbsp;
+		         	</td>
+		         	<td width="70px">
+		         		<input  type="text" class="form-control input-sm" id="txt_DEST_PORT" style="width: 60px;" validatetype="Integer,maxlength" maxlength="200"/>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td colspan="2"></td>
+		         	<td width="2px">/</td>
+		         	<!--  width: 60px;-->
+		         	<td style="width: 132px;">
+		         		<!-- <input  type="text" class="form-control input-sm" id="txt_SRC_IP" style="width: 80px;"/> -->
+		         		<div class="form-control input-sm">
+			         		<input type="text" id="ipOne2" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipOne2" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne2,ipOne2,ipTwo2)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipTwo2" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipTwo2" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne2,ipTwo2,ipThree2)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipThree2" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipThree2" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipTwo2,ipThree2,ipFour2)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipFour2" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipFour2" onkeydown="keyDownEvent(this)" onkeyup="keyUpEventForIp4(ipThree2,ipFour2)"/>
+	         			</div>
+		         	</td>
+		         	<td></td>
+		         	<td >
+		         		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		         		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		         		<span style="color: Red; padding-top: 10px;">*</span>&nbsp;
+		         	</td>
+		         	<td style="width: 55px;border:1px #CCCCFF solid;" id="chkStates3">
+		         		<input type="radio" name="chkState3" val="0" value="0" class="checkboxMid"/>&nbsp;&nbsp;
+		         		<span>&gt;</span><br />
+		         		<input type="radio" name="chkState3" val="1" value="1" class="checkboxMid" style="padding: 0px 0px 0px"/>&nbsp;&nbsp;
+		         		<span>&lt;&gt;</span>&nbsp;
+		         	</td>
+		         	<td width="2px">/</td>
+		         	<!--  width: 60px;-->
+		         	<td style="width: 132px;" >
+		         		<!-- <input  type="text" class="form-control input-sm" id="txt_DEST_IP" style="width: 80px;"/> -->
+		         		<div class="form-control input-sm">
+			         		<input type="text" id="ipOne4" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipOne4" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne4,ipOne4,ipTwo4)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipTwo4" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipTwo4" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne4,ipTwo4,ipThree4)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipThree4" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipThree4" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipTwo4,ipThree4,ipFour4)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipFour4" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipFour4" onkeydown="keyDownEvent(this)" onkeyup="keyUpEventForIp4(ipThree4,ipFour4)"/>
+	         			</div>
+		         	</td>
+		         	<td ></td>
+		         	<td ></td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td colspan="11">
+		         		<span>----------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td colspan="3"></td>
+		         	<td colspan="5" class="centerAlign" >
+		         		<div align="center" style="border:1px #CCCCFF solid;">
+                    	<input type="radio" name="chkState4" val="0" value="0" class="checkboxMid" onclick="showInput1(false);" />&nbsp;&nbsp;&nbsp;&nbsp;
+                    	<input type="radio" name="chkState4" val="1" value="0" class="checkboxMid" onclick="showInput1(false);"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                    	<input type="radio" name="chkState4" val="2" class="checkboxMid" onclick="showInput1(false);" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    	<span style="cursor:pointer;margin-right: 10px;" title="清空" onclick="chkRadio(1);">
+				          	<i class="fa fa-refresh"></i>
+				        	<span>&nbsp;清空</span>
+				       	</span>
+                    	</div>
+					</td>
+					<td colspan="3"></td>
+		         </tr>
+		         <tr class="tableRowHeight20">
+		         	<td colspan="3"></td>
+		         	<td colspan="6" class="centerAlign">
+		         		<span>【#：单包匹配; $:连接内匹配; %:连接内大部分包匹配】</span>
+		         	</td>
+		         	<td colspan="3"></td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span>固定特征<span style="color: Red; padding-bottom: 0px;">1</span></span>
+		         	</td>
+		         	<td width="70px">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_1" style="width: 60px;" validatetype="Integer"/>
+		         	</td>
+		         	<td colspan="3">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_1_EXTEND" style="width: 200px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         	<td>
+		         		<span style="color: Red; padding-left: 60px;">2</span>
+		         	</td>
+		         	<td width="60px" colspan="2">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_2" style="width: 60px;" validatetype="Integer"/>
+		         	</td>
+		         	<td colspan="3">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_2_EXTEND" style="width: 230px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span style="color: Red; padding-bottom: 0px; padding-left:47px;">3</span>
+		         	</td>
+		         	<td width="70px" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_3" style="width: 60px;" validatetype="Integer"/>
+		         	</td>
+		         	<td colspan="3" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_3_EXTEND" style=" width: 200px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         	<td>
+		         		<span style="color: Red; padding-left: 60px;">4</span>
+		         	</td>
+		         	<td style="padding-top:5px;" width="60px" colspan="2">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_4" style="width: 60px;" validatetype="Integer"/>
+		         	</td>
+		         	<td colspan="3" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_4_EXTEND" style=" width: 230px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span>浮动特征<span style="color: Red; padding-bottom: 0px;">1</span></span>
+		         	</td>
+		         	<td colspan="4" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FLOAT_FEATURE1" style="width: 270px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         	<td>
+		         		<span style="color: Red; padding-left: 60px;">2</span>&nbsp;&nbsp;&nbsp;
+		         	</td>
+		         	<td colspan="5" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FLOAT_FEATURE2" style="width: 300px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         </tr>
+	           	 <tr class="tableRowHeight30">
+	         	 	<td width="55px">
+	         			<span style="color: Red; padding-bottom: 0px; padding-left:47px;">3</span>
+	         		</td>
+	         		<td colspan="4" style="padding-top:5px;">
+	         			<input  type="text" class="form-control input-sm" id="txt_FLOAT_FEATURE3" style="width: 270px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         	<td>
+		         		<span style="color: Red; padding-left: 60px;">4</span>&nbsp;&nbsp;&nbsp;
+		         	</td>
+		         	<td colspan="5" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FLOAT_FEATURE4" style="width: 300px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+	         	 </tr>
+	         	 <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span style="color: Red; padding-bottom: 0px; padding-left:47px;">5</span>
+		         	</td>
+		         	<td colspan="4" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FLOAT_FEATURE5" style="width: 270px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         	<td>
+		         		<span style="color: Red; padding-left: 60px;">6</span>&nbsp;&nbsp;&nbsp;
+		         	</td>
+		         	<td colspan="5" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FLOAT_FEATURE6" style="width: 300px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight20">
+		         	<td></td>
+		         	<td class="centerAlign" colspan="4">
+		         		<div align="center" style="border:1px #CCCCFF solid;">
+		         			<input type="radio" name="chkState5" val="0" value="0" class="checkboxMid" onclick="showOrHiden(['txt_BYTE'],false);" />&nbsp;<span class="checkboxMid">LE</span>&nbsp;&nbsp;
+                    		<input type="radio" name="chkState5" val="1" value="1" class="checkboxMid" onclick="showOrHiden(['txt_BYTE'],false);"/>&nbsp;<span class="checkboxMid">LE</span>&nbsp;&nbsp;
+                    		<input type="radio" name="chkState5" val="2" value="2" class="checkboxMid" onclick="showOrHiden(['txt_BYTE'],false);"/>&nbsp;<span class="checkboxMid">LE</span>&nbsp;&nbsp;
+                    		<input type="radio" name="chkState5" val="3" value="3" class="checkboxMid" onclick="showOrHiden(['txt_BYTE'],false);"/>&nbsp;<span class="checkboxMid">LE</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    		<span style="cursor:pointer;margin-right: 10px;" title="清空" onclick="clearLE(1);">
+				          	<i class="fa fa-refresh"></i>
+				        	<span>&nbsp;清空</span>
+				       	</span>
+		         		</div>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td  style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_BYTE" style="width: 120px;" validatetype="Integer"/>
+		         	</td>
+		         	<td colspan="2">
+		         		<span>字节</span>
+		         	</td>
+				</tr>
+				<tr class="tableRowHeight30">
+		         	<td colspan="11">
+		         		<span>----------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span style="color: Red; padding-bottom: 0px; padding-left:37px;">*</span>
+		         	</td>
+		         	<td width="70px" >
+		         		<span>说明(分组)：</span>
+		         	</td>
+		         	<td colspan="3" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_DESC_PACKET" style=" width: 200px;" validatetype="NotEmpty,maxlength" maxlength="200"/>
+		         	</td>
+		         	<td></td>
+		         	<td style="padding-top:5px;" width="60px" colspan="2">
+		         		<span>优先级：</span>
+		         	</td>
+		         	<td colspan="3" style="padding-top:5px;">
+		         		<select id="txt_LEVEL" class="form-control" style=" width: 230px;">
+			               <option value="0">一般</option>
+			               <option value="1">低</option>
+			               <option value="2">高</option>
+		               </select>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span style="color: Red; padding-bottom: 0px; padding-left:37px;">*</span>
+		         	</td>
+		         	<td width="70px" >
+		         		<span>路径：</span>
+		         	</td>
+		         	<td colspan="3" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_PATH" style=" width: 200px;" validatetype="NotEmpty,maxlength" maxlength="200"/>
+		         	</td>
+		         	<td></td>
+		         	<td style="padding-top:5px;" width="60px" colspan="2">
+		         		<span>生命周期：</span>
+		         	</td>
+		         	<td colspan="1" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_LIFE_TIME" style=" width: 132px;" validatetype="Integer"/>
+		         	</td>
+		         	<td>
+		         		&nbsp;&nbsp;&nbsp;&nbsp;<span>天</span>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight40">
+		         	<td></td>
+		         	<td width="70px" >
+		         		<span>描述：</span>
+		         	</td>
+		         	<td colspan="9" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_DESC" style=" width: 582px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         </tr>
+	        </table>
+        </div>
+        </form>
+        </div>
+        <div id="divIPTempl2" style="display: none" >
+        	<form class="form-horizontal mg-lg">
+        	<div class="form-group">
+		        <label for="txt_RuleName2" class="col-sm-2 control-label">规则名称:</label>
+		        <div class="col-sm-10 ">
+		        	<input type="text" class="form-control input-sm" id="txt_RuleName2" maxlength="200" validatetype="filenameext"/>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+	      		<div class="col-sm-12">
+	      			<span>----------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+	      		</div>
+	      	</div>
+        	<div class="panel-collapse div-collapse">
+	        <table  align="center" cellpadding="1" cellspacing="10" >
+		        <tr class="tableRowHeight20" >
+		       		<td class="centerAlign" colspan="11">
+		       			<div align="center" style="border:1px #CCCCFF solid;" id="chkStates10">
+						<span style="color: Red; padding-bottom: 0px;">*</span>&nbsp;&nbsp;<input type="radio" name="chkState10" value="0" val="0" class="checkboxMid"/>&nbsp;<span class="checkboxMid">ST</span>&nbsp;&nbsp;
+                    	<input type="radio" name="chkState10" value="1" val="1" class="checkboxMid" />&nbsp;<span class="checkboxMid">IP</span>&nbsp;&nbsp;
+                    	<input type="radio" name="chkState10" value="1" val="2" class="checkboxMid" />&nbsp;<span class="checkboxMid">LI</span>&nbsp;&nbsp;
+                    	<input type="radio" name="chkState10" value="1" val="3" class="checkboxMid" />&nbsp;<span class="checkboxMid">IP</span>&nbsp;&nbsp;
+                    	<input type="radio" name="chkState10" value="1" val="4" class="checkboxMid" />&nbsp;<span class="checkboxMid">RE</span>&nbsp;&nbsp;
+                    	</div>
+					</td>
+		        </tr>
+		        <tr class="tableRowHeight20">
+		         	<td colspan="11">
+		         		<span>【STAT：统计; IPFF：IP记录; LINK：连接数据记录; IPIP：IP地址对数据记录; RELA：关联数据】</span>
+		         	</td>
+		        </tr>
+		        <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span>五元组</span>
+		         	</td>
+		         	<td width="70px">
+		         		<input  type="text" class="form-control input-sm" id="txt_PROTOCOL2" style="width: 60px;"/>
+		         	</td>
+		         	<td width="2px">
+		         		<span>@</span>
+		         	</td>
+		         	<!--  width: 60px;-->
+		         	<td style="width: 132px;">
+		         	<!-- <input  type="text" class="form-control input-sm" id="txt_SRC_IP" style="width: 80px;"/> -->
+		         		<div class="form-control input-sm">
+		         			<input type="text" id="ipOne10" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipOne10" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne10,ipOne10,ipTwo10)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipTwo10" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipTwo10" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne10,ipTwo10,ipThree10)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipThree10" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipThree10" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipTwo10,ipThree10,ipFour10)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipFour10" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipFour10" onkeydown="keyDownEvent(this)" onkeyup="keyUpEventForIp4(ipThree10,ipFour10)"/>
+	         			</div>
+		         	</td>
+		         	<td width="15px">
+		         		&nbsp;<span>:</span>&nbsp;
+		         	</td>
+		         	<td width="70px">
+		         		<input  type="text" class="form-control input-sm" id="txt_SRC_PORT2" style="width: 60px;" validatetype="Integer,maxlength" maxlength="200"/>
+		         	</td>
+		         	<td width="15px"></td>
+		         	<td width="15px"></td>
+		         	<!--  class="rightAlign" style="width: 60px;"-->
+		         	<td style="width: 132px;">
+		         		<!-- <input  type="text" class="form-control input-sm" id="txt_DEST_IP" style="width: 80px;"/> -->
+		         		<div class="form-control input-sm">
+			         		<input type="text" id="ipOne12" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipOne12" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne12,ipOne12,ipTwo12)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipTwo12" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipTwo12" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne12,ipTwo12,ipThree12)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipThree12" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipThree12" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipTwo12,ipThree12,ipFour12)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipFour12" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipFour12" onkeydown="keyDownEvent(this)" onkeyup="keyUpEventForIp4(ipThree12,ipFour12)"/>
+	         			</div>
+		         	</td>
+		         	<td width="15px">
+		         		&nbsp;<span>:</span>&nbsp;
+		         	</td>
+		         	<td width="70px">
+		         		<input  type="text" class="form-control input-sm" id="txt_DEST_PORT2" style="width: 60px;" validatetype="Integer,maxlength" maxlength="200"/>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td colspan="2"></td>
+		         	<td width="2px">/</td>
+		         	<!--  width: 60px;-->
+		         	<td style="width: 132px;">
+		         		<!-- <input  type="text" class="form-control input-sm" id="txt_SRC_IP" style="width: 80px;"/> -->
+		         		<div class="form-control input-sm">
+			         		<input type="text" id="ipOne11" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipOne11" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne11,ipOne11,ipTwo11)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipTwo11" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipTwo11" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne11,ipTwo11,ipThree11)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipThree11" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipThree11" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipTwo11,ipThree11,ipFour11)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipFour11" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipFour11" onkeydown="keyDownEvent(this)" onkeyup="keyUpEventForIp4(ipThree11,ipFour11)"/>
+	         			</div>
+		         	</td>
+		         	<td></td>
+		         	<td >
+		         		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		         		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		         		<span style="color: Red; padding-top: 10px;">*</span>&nbsp;
+		         	</td>
+		         	<td style="width: 55px;border:1px #CCCCFF solid;" id="chkStates11-1">
+		         		<input type="radio" name="chkState11" val="0" value="11-1" class="checkboxMid" />&nbsp;&nbsp;
+		         		<span>&gt;</span><br />
+		         		<input type="radio" name="chkState11" val="1" value="11-2" class="checkboxMid" style="padding: 0px 0px 0px"/>&nbsp;&nbsp;
+		         		<span>&lt;&gt;</span>&nbsp;
+		         	</td>
+		         	<td width="2px">/</td>
+		         	<!--  width: 60px;-->
+		         	<td style="width: 132px;" >
+		         		<!-- <input  type="text" class="form-control input-sm" id="txt_DEST_IP" style="width: 80px;"/> -->
+		         		<div class="form-control input-sm">
+			         		<input type="text" id="ipOne13" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipOne13" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne13,ipOne13,ipTwo13)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipTwo13" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipTwo13" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne13,ipTwo13,ipThree13)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipThree13" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipThree13" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipTwo13,ipThree13,ipFour13)"/>
+		         			<span class="ipinput_separator">.</span>
+		         			<input type="text" id="ipFour13" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipFour13" onkeydown="keyDownEvent(this)" onkeyup="keyUpEventForIp4(ipThree13,ipFour13)"/>
+	         			</div>
+		         	</td>
+		         	<td ></td>
+		         	<td ></td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td colspan="11">
+		         		<span>----------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td colspan="3"></td>
+		         	<td colspan="5" class="centerAlign" >
+		         		<div align="center" style="border:1px #CCCCFF solid;">
+                    	<input type="radio" name="chkState12" val="0" value="1" class="checkboxMid" onclick="showInput2(false);"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                    	<input type="radio" name="chkState12" val="1" value="1" class="checkboxMid" onclick="showInput2(false);" />&nbsp;&nbsp;&nbsp;&nbsp;
+                    	<input type="radio" name="chkState12" val="2" value="1" class="checkboxMid" onclick="showInput2(false);"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    	<span style="cursor:pointer;margin-right: 10px;" title="清空" onclick="chkRadio(2);">
+				          	<i class="fa fa-refresh"></i>
+				        	<span>&nbsp;清空</span>
+				       	</span>
+                    	</div>
+					</td>
+					<td colspan="3"></td>
+		         </tr>
+		         <tr class="tableRowHeight20">
+		         	<td colspan="3"></td>
+		         	<td colspan="6" class="centerAlign">
+		         		<span>【#：单包匹配; $:连接内匹配; %:连接内大部分包匹配】</span>
+		         	</td>
+		         	<td colspan="3"></td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span>固定特征<span style="color: Red; padding-bottom: 0px;">1</span></span>
+		         	</td>
+		         	<td width="70px">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_10" style="width: 60px;" validatetype="Integer"/>
+		         	</td>
+		         	<td colspan="3">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_1_EXTEND10" style="width: 200px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         	<td>
+		         		<span style="color: Red; padding-left: 60px;">2</span>
+		         	</td>
+		         	<td width="60px" colspan="2">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_12" style="width: 60px;" validatetype="Integer"/>
+		         	</td>
+		         	<td colspan="3">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_2_EXTEND10" style="width: 230px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span style="color: Red; padding-bottom: 0px; padding-left:47px;">3</span>
+		         	</td>
+		         	<td width="70px" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_13" style="width: 60px;" validatetype="Integer"/>
+		         	</td>
+		         	<td colspan="3" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_3_EXTEND10" style=" width: 200px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         	<td>
+		         		<span style="color: Red; padding-left: 60px;">4</span>
+		         	</td>
+		         	<td style="padding-top:5px;" width="60px" colspan="2">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_14" style="width: 60px;" validatetype="Integer"/>
+		         	</td>
+		         	<td colspan="3" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FEATURE_4_EXTEND10" style=" width: 230px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span>浮动特征<span style="color: Red; padding-bottom: 0px;">1</span></span>
+		         	</td>
+		         	<td colspan="4" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FLOAT__FEATURE_11" style="width: 270px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         	<td>
+		         		<span style="color: Red; padding-left: 60px;">2</span>&nbsp;&nbsp;&nbsp;
+		         	</td>
+		         	<td colspan="5" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FLOAT__FEATURE_12" style="width: 300px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         </tr>
+	           	 <tr class="tableRowHeight30">
+	         	 	<td width="55px">
+	         			<span style="color: Red; padding-bottom: 0px; padding-left:47px;">3</span>
+	         		</td>
+	         		<td colspan="4" style="padding-top:5px;">
+	         			<input  type="text" class="form-control input-sm" id="txt_FLOAT__FEATURE_13" style="width: 270px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         	<td>
+		         		<span style="color: Red; padding-left: 60px;">4</span>&nbsp;&nbsp;&nbsp;
+		         	</td>
+		         	<td colspan="5" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FLOAT__FEATURE_14" style="width: 300px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+	         	 </tr>
+	         	 <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span style="color: Red; padding-bottom: 0px; padding-left:47px;">5</span>
+		         	</td>
+		         	<td colspan="4" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FLOAT__FEATURE_15" style="width: 270px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         	<td>
+		         		<span style="color: Red; padding-left: 60px;">6</span>&nbsp;&nbsp;&nbsp;
+		         	</td>
+		         	<td colspan="5" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_FLOAT__FEATURE_16" style="width: 300px;" validatetype="maxlength" maxlength="200"/>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight20">
+		         	<td></td>
+		         	<td class="centerAlign" colspan="4">
+		         		<div align="center" style="border:1px #CCCCFF solid;">
+		         			<input type="radio" name="chkState13" val="0" value="1" class="checkboxMid" onclick="showOrHiden(['txt_BYTE10'],false);"/>&nbsp;<span class="checkboxMid">LE</span>&nbsp;&nbsp;
+                    		<input type="radio" name="chkState13" val="1" value="1" class="checkboxMid" onclick="showOrHiden(['txt_BYTE10'],false);"/>&nbsp;<span class="checkboxMid">LE</span>&nbsp;&nbsp;
+                    		<input type="radio" name="chkState13" val="2" value="1" class="checkboxMid" onclick="showOrHiden(['txt_BYTE10'],false);"/>&nbsp;<span class="checkboxMid">LE</span>&nbsp;&nbsp;
+                    		<input type="radio" name="chkState13" val="3" value="1" class="checkboxMid" onclick="showOrHiden(['txt_BYTE10'],false);"/>&nbsp;<span class="checkboxMid">LE</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		         			<span style="cursor:pointer;margin-right: 10px;" title="清空" onclick="clearLE(2);">
+					          	<i class="fa fa-refresh"></i>
+					        	<span>&nbsp;清空</span>
+				        	</span>
+		         		</div>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td  style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_BYTE10" style="width: 120px;" validatetype="Integer"/>
+		         	</td>
+		         	<td colspan="2">
+		         		<span>字节</span>
+		         	</td>
+				</tr>
+				<tr class="tableRowHeight30">
+		         	<td colspan="11">
+		         		<span>----------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+		         	</td>
+		         </tr>
+		         <tr class="tableRowHeight30">
+		         	<td width="55px">
+		         		<span style="color: Red; padding-bottom: 0px; padding-left:37px;">*</span>
+		         	</td>
+		         	<td width="70px" >
+		         		<span>说明(分组)：</span>
+		         	</td>
+		         	<td colspan="9" style="padding-top:5px;">
+		         		<input  type="text" class="form-control input-sm" id="txt_DESC_PACKET10" style=" width: 550px;" validatetype="NotEmpty,maxlength" maxlength="200"/>
+		         	</td>
+		         </tr>
+	        </table>
+        </div>
+        </form>
+      </div>
+  	<!-- 邮件下载模板 -->
+  	<div id="divEmailTempl" style="display: none;" class="panel-collapse div-collapse">
+        <table  align="center" cellpadding="1" cellspacing="10" >
+	        <tr class="tableRowHeight80" style="border:2px #DDDDDD solid;">
+	       		<td style="padding-left: 10px;">
+	       			<fieldset>
+	       				<legend>任务组</legend>
+	       				<!-- <input  type="text" class="form-control input-sm" id="txt_TASK_GROUP" /> -->
+	       				<select id="txt_TASK_GROUP" class="form-control" style=" width: 200px;">
+			                <option value="任务组一">任务组一</option>
+			                <option value="任务组二">任务组二</option>
+	               		</select>
+                   	 </fieldset>
+				</td>
+				<td style="padding-left: 10px;">
+					<fieldset>
+	       				<legend>任务名称</legend>
+	       				<table  align="center" cellpadding="1" cellspacing="10" >
+	       					<tr>
+	       						<td>
+		       						<select id="txt_TASK_NAME3" class="form-control" style=" width: 150px;">
+					               		<option value="一">一</option>
+					                	<option value="二">二</option>
+					                	<option value="三">三</option>
+					                	<option value="四">四</option>
+					                	<option value="五">五</option>
+					                	<option value="六">六</option>
+					                	<option value="七">七</option>
+					                	<option value="八">八</option>
+					                	<option value="九">九</option>
+					                	<option value="十">十</option>
+		               				</select> 
+		               				<!-- <input  type="text" class="form-control input-sm" id="txt_TASK_NAME3" /> -->
+	       					    </td>
+	       						<td>
+	       							<span style="cursor:pointer;padding-left:3px;" title="添加" onclick="">
+	       								<i class="fa fa-plus"></i>
+	       								<span>&nbsp;添加</span>
+      								</span>
+	       						</td>
+	       					</tr>
+	       				</table>
+	       			</fieldset>
+				</td>
+				<td colspan="2" style="padding-left: 10px;padding-right: 10px;">
+					<fieldset>
+	       				<legend>方向</legend>
+	       				<!-- <input  type="text" class="form-control input-sm" id="txt_DIRECTION" /> -->
+	       				<table  align="center" cellpadding="1" cellspacing="10" >
+	       					<tr>
+	       						<td>
+		       						<select id="txt_DIRECTION" class="form-control" style=" width: 150px;">
+					               		<option value="AAA">AAA</option>
+					                	<option value="BBB">BBB</option>
+					                	<option value="CCC">CCC</option>
+					                	<option value="DDD">DDD</option>
+					                	<option value="EEE">EEE</option>
+		               				</select>
+	       						</td>
+	       						<td>
+	       							<span style="cursor:pointer; padding-left:3px;" title="添加" onclick="">
+	       								<i class="fa fa-plus"></i>
+	       								<span>&nbsp;添加</span>
+      								</span>
+	       						</td>
+	       					</tr>
+	       				</table>
+	       			</fieldset>
+				</td>
+			</tr>
+			<!-- <tr class="tableRowHeight10">
+				<td colspan="3">
+				&nbsp;
+				</td>
+			</tr> -->
+			<tr class="tableRowHeight800" style="padding-top:10px; padding-bottom: 10px;">
+				<td colspan="3">
+					<fieldset>
+	       				<legend>添加规则</legend>
+						<table  align="center" cellpadding="1" cellspacing="10" >
+		       			<tr>
+						  <td>
+							<label for="lableName" class="control-label">规则名称:</label>
+						  </td>
+						  <td colspan="3" style="padding-top:5px;">
+							<input  type="text" class="form-control input-sm" id="txt_RULE_NAME" style=" width: 600px;" validatetype="maxlength,filenameext" maxlength="200"/>
+						  </td>
+						 </tr>
+						 <tr>
+						 	<td>
+								<label for="lableName" class="control-label">源IP:</label>
+							</td>
+							<td style="width: 132px;padding-top:5px;" >
+		         		<!-- <input  type="text" class="form-control input-sm" id="txt_DEST_IP" style="width: 80px;"/> -->
+		         				<div class="form-control input-sm">
+					         		<input type="text" id="ipOne21" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipOne21" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne21,ipOne21,ipTwo21)"/>
+				         			<span class="ipinput_separator">.</span>
+				         			<input type="text" id="ipTwo21" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipTwo21" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne21,ipTwo21,ipThree21)"/>
+				         			<span class="ipinput_separator">.</span>
+				         			<input type="text" id="ipThree21" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipThree21" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipTwo21,ipThree21,ipFour21)"/>
+				         			<span class="ipinput_separator">.</span>
+				         			<input type="text" id="ipFour21" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipFour21" onkeydown="keyDownEvent(this)" onkeyup="keyUpEventForIp4(ipThree21,ipFour21)"/>
+	         					</div>
+		         			</td>
+				         	<td align="right" style="padding-right:0px;">
+								<label for="lableName" class="control-label">目的IP:</label>
+							</td>
+							<td style="width: 132px;padding-top:5px;" >
+				         		<!-- <input  type="text" class="form-control input-sm" id="txt_DEST_IP" style="width: 80px;"/> -->
+				         		<div class="form-control input-sm">
+					         		<input type="text" id="ipOne22" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipOne22" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne22,ipOne22,ipTwo22)"/>
+				         			<span class="ipinput_separator">.</span>
+				         			<input type="text" id="ipTwo22" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipTwo22" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipOne22,ipTwo22,ipThree22)"/>
+				         			<span class="ipinput_separator">.</span>
+				         			<input type="text" id="ipThree22" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipThree22" onkeydown="keyDownEvent(this)" onkeyup="keyUpEvent(ipTwo21,ipThree22,ipFour22)"/>
+				         			<span class="ipinput_separator">.</span>
+				         			<input type="text" id="ipFour22" class="ipinput_input" validatetype="Integer,maxlength" maxlength="3" name="ipFour22" onkeydown="keyDownEvent(this)" onkeyup="keyUpEventForIp4(ipThree22,ipFour22)"/>
+			         			</div>
+			         		</td>
+			         	</tr>
+			         	<tr>
+			         		<td>
+								<label for="lableName" class="control-label">源端口:</label>
+							</td>
+							<td style="width: 132px;padding-top:5px;" >
+		         				<input  type="text" class="form-control input-sm" id="txt_SRC_PORT3" validatetype="Integer,maxlength" maxlength="200"/>
+		         			</td>
+				         	<td align="right" style="padding-right:0px;">
+								<label for="lableName" class="control-label">目的端口:</label>
+							</td>
+							<td style="width: 132px;padding-top:5px;" >
+								<input  type="text" class="form-control input-sm" id="txt_DEST_PORT3" validatetype="Integer,maxlength" maxlength="200"/>
+			         		</td>
+			         	</tr>
+			         	<tr>
+			         		<td>
+								<label for="lableName" class="control-label">协议:</label>
+							</td>
+							<td style="width: 132px;padding-top:5px;" >
+						<!-- 	<input  type="text" class="form-control input-sm" id="txt_PROTOCOL3" /> -->
+								<select id="txt_PROTOCOL3" class="form-control" style=" width: 200px;">
+				               		<option value="SMTP">SMTP</option>
+				                	<option value="POP3">POP3</option>
+				                	<option value="WEBMAIL">WEBMAIL</option>
+				                	<option value="IMAP">IMAP</option>
+				                	<option value="TXT">TXT</option>
+				                	<option value="DOC">DOC</option>
+				                	<option value="PDF">PDF</option>
+	               				</select>
+		         			</td>
+				         	<td align="right" style="padding-right:0px;">
+								<label for="lableName" class="control-label">优先级:</label>
+							</td>
+							<td style="width: 132px;padding-top:5px;" >
+								<select id="txt_LEVEL3" class="form-control" style=" width: 200px;">
+				               		<option value="3">一般</option>
+				               		<option value="1">最低</option>
+				               		<option value="2">低</option>	
+				                	<option value="4">高</option>
+				                	<option value="5">最高</option>
+	               				</select>
+			         		</td>
+			         	</tr>
+			         	<tr>
+						  <td>
+							<label for="lableName" class="control-label">邮箱:</label>
+						  </td>
+						  <td colspan="3" style="padding-top:5px;">
+							<textarea id="txt_EMAIL3" name="DataSourceDescXml" style="width: 600px;height: 50px" class="form-control" validatetype="maxlength" maxlength="200"></textarea>
+						  </td>
+						 </tr>
+						 <tr>
+						  <td>
+							<label for="lableName" class="control-label">关键字:</label>
+						  </td>
+						  <td colspan="3" style="padding-top:5px;">
+							<textarea id="txt_KEYWORD" name="DataSourceDescXml" style="width: 600px;height: 50px" class="form-control" validatetype="maxlength" maxlength="200"></textarea>
+						  </td>
+						</tr>
+						<tr>
+			         		<td>
+								<label for="lableName" class="control-label">十六进制串:</label>
+							</td>
+							<td style="width: 132px;padding-top:5px;" >
+		         				<input  type="text" class="form-control input-sm" id="txt_HEX" validatetype="maxlength" maxlength="200"/>
+		         			</td>
+		         			<td align="right" style="padding-right:0px;">
+		         				<input type="checkbox" name="chkState21" val="0" value="3-1" class="checkboxMid" />&nbsp;<span class="checkboxMid">固定位置</span>&nbsp;&nbsp;
+		         			</td>
+							<td style="width: 132px;padding-top:5px;" >
+								<input  type="text" class="form-control input-sm" id="txt_LOCATION" validatetype="Integer"/>
+			         		</td>
+			         	</tr>
+			         	<tr>
+							  <td>
+								<label for="lableName" class="control-label">附件扩展名:</label>
+							  </td>
+							  <td colspan="3" style="padding-top:5px;">
+							  	<div class="input-group">
+							  		<input  type="text" class="form-control input-sm" id="txt_ANNEX_EXT" style=" width: 565px;" validatetype="maxlength" maxlength="200"/>
+									<span class="input-group-btn">
+        							<button class="btn btn-default" style="height: 30px;" onclick="addExt();" type="button"><i class="fa fa-plus"></i></button>
+      							</span>
+							  	</div>
+								
+							  </td>
+						 </tr>
+						 <tr>
+							  <td>
+								<label for="lableName" class="control-label">系统:</label>
+							  </td>
+							  <td  style="padding-top:5px;">
+							  	<input type="radio" name="chkState22" val="MATCH_1" value="1" class="checkboxMid" checked="checked" />&nbsp;<span class="checkboxMid"></span>&nbsp;&nbsp;
+							  </td>
+							  <td colspan="2" style="padding-top:5px;">
+							  	<input type="radio" name="chkState22" val="MATCH_2" value="1" class="checkboxMid" />&nbsp;<span class="checkboxMid"></span>&nbsp;&nbsp;
+							  </td>
+						 </tr>
+						 <tr>
+							  <td>
+								<label for="lableName" class="control-label">备注信息:</label>
+							  </td>
+							  <td colspan="3" style="padding-top:5px;">
+								<input  type="text" class="form-control input-sm" id="txt_NOTE_INFO" style=" width: 600px;" validatetype="maxlength" maxlength="200"/>
+							  </td>
+						 </tr>
+	         		</table>
+	         	</fieldset>
+	         	</td>
+			</tr>
+		</table>
+	</div>
+	<div id ="divIdentiTempl" style="display: none">
+	    <form class="form-horizontal mg-lg">
+          <div class="form-group">
+            <label for="SERVICE" class="col-sm-2 control-label">任务名称:</label>
+	        <div class="col-sm-10">
+	        	<div class="input-group input-group-sm">
+            		<input  type="text" class="form-control input-sm" id="txt_TASK_IDENTI_NAME"   validatetype="NotEmpty,filenameext" readonly="readonly" maxlength="50"/>
+					<span class="input-group-addon" style="color: Red">*</span>
+          		</div>
+	        </div>
+	      </div>
+		</form>
+	</div>
+	<div id ="divPasswordTempl" style="display: none">
+	    <form class="form-horizontal mg-lg">
+          <div class="form-group">
+            <label for="SERVICE" class="col-sm-2 control-label">任务名称:</label>
+	        <div class="col-sm-10">
+	        	<div class="input-group input-group-sm">
+            		<input  type="text" class="form-control input-sm" id="txt_TASK_PWD_NAME"   validatetype="NotEmpty,filenameext" readonly="readonly" maxlength="100"/>
+					<span class="input-group-addon" style="color: Red">*</span>
+          		</div>
+	        </div>
+	      </div>
+		</form>
+	</div>
+	<div id ="divFerryTempl" style="display: none">
+	    <form class="form-horizontal mg-lg">
+          <div class="form-group">
+            <label for="SERVICE" class="col-sm-2 control-label">输入路径:</label>
+	        <div class="col-sm-10">
+	        	<div class="input-group input-group-sm">
+            		<input  type="text" class="form-control input-sm" id="txt_FERRY_INPUT_PATH"   validatetype="NotEmpty" maxlength="100"/>
+					<span class="input-group-addon" style="color: Red">*</span>
+          		</div>
+	        </div>
+	      </div>
+	      <div class="form-group">
+        	<label for="inputPath" class="col-sm-2 control-label">输出路径:</label>
+        	<div class="col-sm-10">
+          		<div class="input-group input-group-sm">
+            		<input  type="text" class="form-control input-sm" id="txt_FERRY_OUTPUT_PATH"   validatetype="NotEmpty" maxlength="100"/>
+					<span class="input-group-addon" style="color: Red">*</span>
+          		</div>
+        	</div>
+          </div>
+          <div class="form-group">
+        	<label for="FERRY_DATE" class="col-sm-2 control-label">时间选择:</label>
+        	<div class="col-sm-10">
+           		<label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+		            <input id="txtStartFerryTime" type="text" class="form-control input-sm input-date"/>
+		            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+		        </label>
+		         &nbsp;<span>至</span>&nbsp;
+		        <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+		            <input id="txtEndFerryTime" type="text" class="form-control input-sm input-date"/>
+		            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+		        </label>&nbsp;
+	        	<a href="javascript:void(0)" ><span onclick="el('txtStartFerryTime').value=el('txtEndFerryTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+                <a href="javascript:void(0)" onclick="el('txtStartFerryTime').value=gLastWeekDate.toDateString();el('txtEndFerryTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+                <a href="javascript:void(0)" onclick="el('txtStartFerryTime').value=el('txtEndFerryTime').value='';">清空</a>
+        	</div>
+          </div>
+		</form>
+	</div>
+	<div id ="divEmailExt" style="display: none">
+	   <table  align="center" cellpadding="1" cellspacing="10" id="extTable">
+	        <tr>
+	        	<td align="center"><span>添加</span></td>
+	        	<td align="center"><span>扩展名</span></td>
+	        	<td align="center"><span>加密？</span></td>
+	        	<td align="center"><span>删除</span></td>
+	        </tr>
+	        <tr id="rowExt1">
+	        	<td id="format1"><i class="fa fa-plus" onclick="addNextExt();"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	        	<td>
+	        		<select id="txt_format1" class="form-control" style=" width: 240px; ">
+	        			<option value=""></option>
+		           		<option value=".avi">.avi</option>
+		           		<option value=".bmp">.bmp</option>
+		           		<option value=".doc">.doc</option>	
+		            	<option value=".docx">.docx</option>
+		            	<option value=".gif">.gif</option>
+		            	<option value=".htm">.htm</option>
+		           		<option value=".jpeg">.jpeg</option>
+		           		<option value=".jpg">.jpg</option>	
+		            	<option value=".mp2">.mp2</option>
+		            	<option value=".mp4">.mp4</option>
+		            	<option value=".mpeg">.mpeg</option>
+		           		<option value=".mpg">.mpg</option>
+		           		<option value=".pdf">.pdf</option>	
+		            	<option value=".pps">.pps</option>
+		            	<option value=".rar">.rar</option>
+		            	<option value=".rmvb">.rmvb</option>
+		           		<option value=".tif">.tif</option>
+		           		<option value=".txt">.txt</option>	
+		            	<option value=".wma">.wma</option>
+		            	<option value=".wmv">.wmv</option>
+		            	<option value=".xls">.xls</option>
+		            	<option value=".zip">.zip</option>
+	            	</select>
+	        	</td>
+	        	<td>
+	        		<select id="txt_encrypt1" class="form-control" style=" width: 200;">
+			       		<option value=""></option>
+			       		<option value="加密">加密</option>
+			       		<option value="不加密">不加密</option>	
+		        	</select>
+	        	</td>
+	        	<td></td>
+	        </tr>
+	   </table>
+	</div>
+	<!--新增-修改  数据源弹出框  -->
+	<!-- <div id="divDataSourceDialog" style="display: none;">
+		<form class="form-horizontal mg-lg">
+	    	<div class="form-group">
+		        <label for="txt_DataSourceName" class="col-sm-2 control-label">名称:</label>
+		        <div class="col-sm-10 ">
+		        	<input type="text" class="form-control input-sm" id="txt_DataSourceName" maxlength="200" />
+		        </div>
+	      	</div>
+	      	源路径 12.09
+	      	<div class="form-group">
+		        <label for="txt_SourcePath" class="col-sm-2 control-label">参数</label>
+		        <div class="col-sm-10">
+		          <div class="input-group input-group-sm">
+		            <input type="text" class="form-control" id="txt_SourcePath" validatetype="NotEmpty" /> 
+		            <span class="input-group-addon" style="color: Red">*</span>
+		          </div>
+		        </div>
+	      	</div>
+	      	访问方式
+	      	<div class="form-group">
+		        <label for="txt_DSType" class="col-sm-2 control-label">访问方式:</label>
+		        <div class="col-sm-10 ">
+		           <div class="input-group input-group-sm">
+		               <select id="txt_DSType" class="form-control" validatetype="NotEmpty">
+			               <option value="">请选择</option>
+			               <option value="10">文件</option>
+			               <option value="20">数据库表</option>
+		               </select>
+		               <span class="input-group-addon" style="color: Red">*</span>
+	               </div>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+		        <label for="txt_DataSourceType" class="col-sm-2 control-label">类型:</label>
+		        <div class="col-sm-10 ">
+		           <div class="input-group input-group-sm">
+		               <select id="txt_DataSourceType" class="form-control" validatetype="NotEmpty">
+			               <option value="">请选类型</option>
+			               <option value="801">邮件</option>
+			               <option value="802">口令</option>
+			               <option value="803">认证</option>
+		               </select>
+		               <span class="input-group-addon" style="color: Red">*</span>
+	               </div>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+		        <label for="lableName1" class="col-sm-2 control-label">标签1:</label>
+		        <div class="col-sm-5 ">
+			        <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+			        	<input type="hidden" id="hidlableType1" /> 
+						<input id="lableNamesType1" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px" class="form-control selecttree" selectedvalue="-1"/>
+						<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 35%;right: 0%;"></i>
+					</label>
+		    	</div>
+		    	 <div class="col-sm-5 " style="padding-left: 0px;">
+					<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+				        <input type="text" id="lableName1" style="width:205px;" class="form-control selecttree" readonly onclick="popHiddenTree(el('divSubTree1'), this);" /> 
+			            <input type="hidden" id="hidDialogTreeId1" /> 
+		            </label>
+		    	</div>
+	        </div>
+	        <div class="form-group">
+		        <label for="lableName2" class="col-sm-2 control-label">标签2:</label>
+		        <div class="col-sm-5 ">
+			        <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+			        	<input type="hidden" id="hidlableType2" /> 
+						<input id="lableNamesType2" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control selecttree" selectedvalue="-1"/>
+						<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 35%;right: 0%;"></i>
+					</label>
+		    	</div>
+		    	<div class="col-sm-5 " style="padding-left: 0px;">
+					<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+				        <input type="text" id="lableName2" style="width:205px;" class="form-control selecttree" readonly onclick="popHiddenTree(el('divSubTree2'), this);"/> 
+			            <input type="hidden" id="hidDialogTreeId2" /> 
+		            </label>
+		    	</div>
+	        </div>
+	        <div class="form-group">
+		        <label for="lableName3" class="col-sm-2 control-label">标签3:</label>
+		        <div class="col-sm-5 ">
+			        <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+			        	<input type="hidden" id="hidlableType3" /> 
+						<input id="lableNamesType3" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control selecttree" selectedvalue="-1"/>
+						<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 35%;right: 0%;"></i>
+					</label>
+		    	</div>
+		    	 <div class="col-sm-5 " style="padding-left: 0px;">
+					<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+				        <input type="text" id="lableName3" style="width:205px;" class="form-control selecttree" readonly onclick="popHiddenTree(el('divSubTree3'), this);" /> 
+			            <input type="hidden" id="hidDialogTreeId3" /> 
+		            </label>
+		    	</div>
+	        </div>
+	        <div class="form-group">
+		        <label for="lableName4" class="col-sm-2 control-label">标签4:</label>
+		        <div class="col-sm-5 ">
+			        <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+			        	<input type="hidden" id="hidlableType4" /> 
+						<input id="lableNamesType4" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control selecttree" selectedvalue="-1"/>
+						<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 35%;right: 0%;"></i>
+					</label>
+		    	</div>
+		    	 <div class="col-sm-5 " style="padding-left: 0px;">
+					<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+				        <input type="text" id="lableName4" style="width:205px;" class="form-control selecttree" readonly onclick="popHiddenTree(el('divSubTree4'), this);"  /> 
+			            <input type="hidden" id="hidDialogTreeId4" />
+		            </label> 
+		    	</div>
+	        </div>
+	        <div class="form-group">
+		        <label for="lableName5" class="col-sm-2 control-label">标签5:</label>
+		        <div class="col-sm-5 ">
+			        <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+			        	<input type="hidden" id="hidlableType5" /> 
+						<input id="lableNamesType5" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control selecttree" selectedvalue="-1"/>
+						<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 35%;right: 0%;"></i>
+					</label>
+		    	</div>
+		    	 <div class="col-sm-5 " style="padding-left: 0px;">
+					<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+				        <input type="text" id="lableName5" style="width:205px;" class="form-control selecttree" readonly onclick="popHiddenTree(el('divSubTree5'), this);" /> 
+			            <input type="hidden" id="hidDialogTreeId5" /> 
+		            </label>
+		    	</div>
+	        </div>
+	        <div class="form-group">
+		        <label for="txt_State" class="col-sm-2 control-label">状态:</label>
+		        <div class="col-sm-10 ">
+		        	<div class="input-group input-group-sm">
+		        	<input type="hidden" id="hidStateId" /> 
+		        	<input id="lableSelectState" onclick="jetsennet.ui.DropDownList.show(this)" style="width:100%" class="form-control" selectedvalue="" 
+		        	 readonly="readonly"	handing="公共~0|指派用户~1|未分配~2"	validatetype="NotEmpty"
+		        	/>
+		        	<span class="input-group-addon" style="color: Red">*</span>
+					 <i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 5%;"></i>
+		          <div class="input-group input-group-sm">
+		               <select id="txt_State" class="form-control" validatetype="NotEmpty">
+			               <option value="">请选状态</option>
+			               <option value="0">公共</option>
+			               <option value="1">指派用户</option>
+			               <option value="2">未分配</option>
+		               </select> 
+		               <span class="input-group-addon" style="color: Red">*</span>
+	               </div>
+	               </div>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+		        <label for="txt_DataSourceDesc" class="col-sm-2 control-label">描述:</label>
+		        <div class="col-sm-10 ">
+		          <input type="text" class="form-control input-sm" id="txt_DataSourceDesc" maxlength="50" />
+		         <textarea id="txt_DataSourceDesc" name="DataSourceDescXml" style="width: 100%;height: 50px" class="xml"></textarea>
+		        </div>
+	      	</div>
+	      	<div class="form-group" style="display: none" id="gratFunToUsers">
+		        <label for="gratFunToUsers" class="col-sm-2 control-label">授权用户:</label>
+		        <div class="col-sm-10 ">
+		        	 <div class="input-group">
+	                	 <select id="selMember" class="form-control" name="select" multiple></select> 
+	                     <span class="input-group-addon"> 
+	                     <input type="button" value=" 添加 " class="btn btn-primary btn-sm margin-bottom-xs" id="btnAdd" onclick="gUserCrud.showSelectDlg('divSelectUser', 'selMember', {size : {width : 520, height : 400}});" style="display: block;" /> 
+	                     <input type="button" value=" 删除 " class="btn btn-danger btn-sm" id="btnDel" onclick="jetsennet.Crud.selectOptionsDel('selMember');" />
+	                     </span>
+              		 </div>
+		        </div>
+	      	</div>
+	    </form>
+  	</div> -->
+  	<!-- 弹出框输入框的树 -->
+  	<div id="divSubTree1" style="display: none; border: solid 1px #ccc; background: #fff; height: 150px; overflow: auto" class="ztree" minWidth="210px"></div>
+  	<div id="divSubTree2" style="display: none; border: solid 1px #ccc; background: #fff; height: 150px; overflow: auto" class="ztree" minWidth="210px"></div>
+  	<div id="divSubTree3" style="display: none; border: solid 1px #ccc; background: #fff; height: 150px; overflow: auto" class="ztree" minWidth="200px"></div>
+  	<div id="divSubTree4" style="display: none; border: solid 1px #ccc; background: #fff; height: 150px; overflow: auto" class="ztree" minWidth="200px"></div>
+  	<div id="divSubTree5" style="display: none; border: solid 1px #ccc; background: #fff; height: 150px; overflow: auto" class="ztree" minWidth="200px"></div>
+  	<!-- 选择用户结束 -->
+	<div id="divSelectUser" style="display: none">
+	    <form class="form-inline mg-sm">
+	    	<span>用户姓名:</span>
+	      	<div class="form-group">
+	        	<input id="txtUserName" type="text" class="form-control input-sm"/>
+	      	</div>
+	      	<span class="margin-left-md">登录名称:</span>
+	      	<div class="form-group">
+	        	<input id="txtLoginName" type="text" class="form-control input-sm"/>
+	      	</div>
+	      	<button type="button" class="btn btn-primary btn-sm" onClick="searchSelectUserData();">
+	        <span class="glyphicon glyphicon-search"></span> 查询
+	      	</button>
+	    </form>
+    	<div id="divSelectUserList" style="height: 250px;">    数据正在加载...</div>
+    	<div id="divSelectUserPage" class="ml-sm"></div>
+	</div>
+	<!-- 模板详情 -->
+	<div id="divLabelDetail" style="display: none">
+		<form class="form-inline mg-sm">
+			<span>&nbsp;&nbsp;&nbsp;源路径:</span>
+	      	<div class="input-group">
+	        	<input id="txtSourcePathDetail" type="text" class="form-control input-sm" style="width: 300px;"/>
+	      	</div>
+	      	<br />
+	        <br />
+			<span>所属分类:</span>
+			<div class="input-group">
+					<select id="lableClassDetails" style="width: 300px; height: 150px" class="form-control" name="selectClass" multiple></select>
+	        </div>
+	        <br />
+	        <br />
+	        <span>所属用户:</span>
+	        <div class="input-group">
+					<select id="lableUserDetails"  style="width: 300px; height: 150px" class="form-control" name="selectUser" multiple></select>
+			</div> 
+   		</form>
+	</div>
+	<!--新建数据源完成后ui会给这个div赋值，没有该div js会报错  -->
+	<div id="divDataSourceList" style="display: none"></div>
+	<div id="divDataSourcePage" style="display: none"></div>
+	
+  <script type="text/javascript" src="javascript/datacollection.js"></script>
+  <script type="text/javascript" src="javascript/ipvalidate.js"></script>
+  <script type="text/javascript" src="javascript/datasource.js"></script>
+  <script type="text/javascript" src="javascript/class.js"></script>
+</body>
+</html>

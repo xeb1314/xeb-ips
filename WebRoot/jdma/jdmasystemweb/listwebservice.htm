@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>web服务列表</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+  <script type="text/javascript" src="javascript/listwebservice.js"></script>
+  <script type="text/javascript">
+    	Layoutit("#divPageFrame", {vLayout:[100,35, 'auto', 35]});
+  </script>
+  <link href="css/base.css" rel="stylesheet" type="text/css" />
+  <!--[if lt IE 9]> 
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+  <![endif]-->
+</head>
+<body onload="pageInit();">
+      <div id="divPageFrame" >
+      	<div class="panel panel-sm  panel-default" style="border-bottom-width:0">
+	        <div class="panel-heading" style="padding: 10px 15px;height: 35px">
+	            <span>查询条件</span>
+	        </div>
+	        <div class="panel-collapse div-collapse" style="padding-top: 5px">
+	           <table  align="center" cellpadding="0" cellspacing="0" >
+	                <tr class="tableRowHeight60" >
+	                	<td class="rightAlign" width="100px">
+				            <span>服务名称:&nbsp;</span>
+				        </td>
+				        <td width="170px;">
+					        <input id="txtKeyWord" type="text" class="form-control input-sm input-date"/>
+			            </td>
+			            <td class="rightAlign">
+				           <span>时间:&nbsp;</span>
+				        </td>
+				        <td>
+				            <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+					            <input id="txtStartTime" type="text" class="form-control input-sm input-date"/>
+					            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+				            </label>
+				        </td>
+				        <td>
+				         	&nbsp;<span>至</span>&nbsp;
+				        </td>
+				        <td>
+					        <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+					            <input id="txtEndTime" type="text" class="form-control input-sm input-date"/>
+					            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+					        </label>
+				        </td>
+				        <td>
+				          &nbsp;<a href="javascript:void(0)" ><span onclick="el('txtStartTime').value=el('txtEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=gLastWeekDate.toDateString();el('txtEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=el('txtEndTime').value='';">清空</a>
+			            </td>
+			            <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			               <button type="button" class="btn btn-primary btn-sm" onClick="searchWebService();">
+						       <span class="glyphicon glyphicon-search"></span>查询
+						   </button>
+			            </td>
+			        </tr>
+	           </table>
+	        </div>
+	    </div>
+	    <div class="panel panel-default panel-sm" style="border-bottom-width:0;">
+	    	 <div class="panel-heading" style="padding: 10px 15px">
+		            <div class="pull-left">
+		                <span>Web服务列表 </span>
+		            </div>
+			        <div class='pull-right'>
+			        	<span style="cursor:pointer;margin-right: 10px;" title="新建" onclick="gWebServiceCrud.add();">
+          					<i class="fa fa-plus"></i>
+          						<span>&nbsp;新建</span>
+        				</span>
+        				<span style="cursor:pointer;margin-right: 10px;" title="编辑" onclick="gWebServiceCrud.edit();">
+		            	  <i class="fa fa-pencil-square-o"></i>
+				          <span>&nbsp;编辑</span>
+				       </span>
+					   <span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gWebServiceCrud.remove();">
+							<i class="fa fa-times"></i>
+							<span>&nbsp;删除</span>
+					   </span>
+					   <span style="cursor:pointer;margin-right: 10px;" title="刷新" onclick="document.location.reload();">
+				          <i class="fa fa-refresh"></i>
+				          <span>&nbsp;刷新</span>
+				       </span>
+			          <!--  <span style="cursor:pointer;" onclick="gWebServiceCrud.add();"><img src="images/new.png" style="height:18px;">新建&nbsp;&nbsp;</img></span> -->
+			        </div>
+		      </div>
+	    </div>
+	    <div id="divWebServiceList" class="table-unbordered"></div>
+	    <div class="panel-sm">
+	        <div id="divWebServicePage" class="panel-footer"></div>
+	    </div>
+	    
+    </div>
+  	<!--新增-修改  web服务弹出框 -->
+    <div id="divWebServiceDialog" style="display: none">
+    <form class="form-horizontal mg-lg">
+      <div class="form-group">
+        <label for="txtWebName" class="col-sm-2 control-label">服务名称:</label>
+        	<div class="col-sm-10">
+        	  <div class="input-group input-group-sm">
+		          <input type="text" class="form-control input-sm" id="txtWebName"  validatetype="NotEmpty"/>
+		          <span class="input-group-addon" style="color: Red">*</span>
+	        </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtWebCode" class="col-sm-2 control-label">服务代号:</label>
+        <div class="col-sm-10">
+          <div class="input-group input-group-sm">
+	          <input type="text" class="form-control input-sm" id="txtWebCode" validatetype="NotEmpty"/>
+	          <span class="input-group-addon" style="color: Red">*</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+	      <label for="txt_sys" class="col-sm-2 control-label">系统名称:</label>
+	      <div class="col-sm-10 ">
+	      	<select id="sysName" class="form-control" validatetype="NotEmpty" ></select>
+	      </div>
+   	  </div>
+      <div class="form-group">
+	      <label for="txt_webDesc" class="col-sm-2 control-label">描述:</label>
+	      <div class="col-sm-10 ">
+	      	<textarea name="webDesc" id="txt_webDesc" style="width: 100%;height: 50px" class="form-control"></textarea>
+	      </div>
+   	  </div>
+   	  <div class="form-group">
+	      <label for="txt_descUrl" class="col-sm-2 control-label">描述地址:</label>
+	      <div class="col-sm-10 ">
+	      	<textarea name="sysDesc" id="txt_descUrl" style="width: 100%;height: 50px" class="form-control"></textarea>
+	      </div>
+   	  </div>
+   	  <div class="form-group">
+	      <label for="txt_requestUrl" class="col-sm-2 control-label">请求地址:</label>
+	      <div class="col-sm-10 ">
+	      	<textarea name="sysDesc" id="txt_requestUrl" style="width: 100%;height: 50px" class="form-control"></textarea>
+	      </div>
+   	  </div>
+   	  <div class="form-group">
+	  	<label for="webState" class="col-sm-2 control-label">状态:</label>
+	   		<div class="col-sm-10 ">
+	   			<div class="input-group input-group-sm">
+					<select id="webState" class="form-control" validatetype="NotEmpty" >
+			               <option value="0">正常</option>
+			               <option value="1">停用</option>
+		               </select>
+		            <span class="input-group-addon" style="color: Red">*</span>
+				</div>
+	    	</div>
+	   </div>
+    </form>
+  </div>
+</body>
+</html>

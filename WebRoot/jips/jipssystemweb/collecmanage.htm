@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JMTC PORTAL</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+    
+    <script type="text/javascript" src="javascript/base.js"></script>
+    <script type="text/javascript" src="javascript/collecmanage.js"></script>
+    <script type="text/javascript" src="javascript/class.js"></script>
+    <script type="text/javascript">
+    	Layoutit("#divPageFrame", {hLayout:[
+    	                                    320,
+    	                                    {value:'auto',vLayout:[
+    	                                                           {value:'50%',vLayout:[35, 'auto', 35]},
+    	                                                           {value:'50%',vLayout:[35, 'auto', 35]}
+    	                                                           ]}
+    	                                   ]});
+    </script>
+    <link href="css/base.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="pageInit();">
+	<div id="divPageFrame">
+	   	<div id="divLeftTree" class="panel panel-sm panel-default">
+	   		<div class="panel-heading" style="padding: 1px 10px;">
+	   			<div class="pull-left" style="padding:5px">
+					<span>分类树</span>
+				</div>
+				<div class="btn-group btn-group-sm pull-center">
+					<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+			  			<input id="classTreeOptions" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control input-sm" selectedvalue="-1" />
+			  			<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+					</label>
+				</div>
+			</div>
+	   		<div id="divClassTree" style="overflow: auto;padding-right: 80px;"></div>
+	   	</div>
+	   	<div id="divRight" >
+	    	<div id="divRightTop" class="panel panel-sm panel-default">
+				<div class="panel-heading" style="padding: 10px 15px;">
+					<div class="pull-left">
+			        	<span>采集系统列表</span>
+			        </div>
+			        <div class='pull-right'>
+			        	<!-- <span id="spanSys" style="cursor:pointer;" onclick="gSysCrud.add()"><img src="images/new.png" style="height:18px;">&nbsp;新增系统</img></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+			        	<span style="cursor:pointer;margin-right: 10px;" title="新增" onclick="gSysCrud.add();">
+							<i class="fa fa-plus"></i>
+							<span>&nbsp;新增</span>
+					   </span>
+					   <span style="cursor:pointer;margin-right: 10px;" title="编辑" onclick="gSysCrud.edit();">
+		            	  <i class="fa fa-pencil-square-o"></i>
+				          <span>&nbsp;编辑</span>
+				       </span>
+					   <span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gSysCrud.remove();">
+							<i class="fa fa-times"></i>
+							<span>&nbsp;删除</span>
+					   </span>
+					   <span style="cursor:pointer;margin-right: 10px;" title="刷新" onclick="document.location.reload();">
+				          <i class="fa fa-refresh"></i>
+				          <span>&nbsp;刷新</span>
+				       </span>
+	        		</div> 
+		      	</div>
+		      	<div id="divCollecList" class="table-unbordered"></div>
+		      	<div class="panel-sm">
+		        	<div id="divCollecPage" class="panel-footer"></div>
+		      	</div>
+			</div>
+		    <div id="divRightDown" class="panel panel-sm panel-default">
+		      	<div class="panel-heading" style="padding: 10px 15px;">
+		        	<div class="pull-left">
+		        		<span>服务列表</span>
+		        	</div>
+		        	<div class='pull-right'>
+			        	<!-- <span id="spanSys" style="cursor:pointer;" onclick="addDevice();"><img src="images/new.png" style="height:18px;">&nbsp;新增服务</img></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+			        	<span style="cursor:pointer;margin-right: 10px;" title="新增" onclick="addDevice();">
+							<i class="fa fa-plus"></i>
+							<span>&nbsp;新增</span>
+					   </span>
+					   <span style="cursor:pointer;margin-right: 10px;" title="编辑" onclick="gDeviceCrud.edit();">
+		            	  <i class="fa fa-pencil-square-o"></i>
+				          <span>&nbsp;编辑</span>
+				       </span>
+					   <span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gDeviceCrud.remove();">
+							<i class="fa fa-times"></i>
+							<span>&nbsp;删除</span>
+					   </span>
+	        		</div>
+		      	</div>
+	      		<div id="divDeviceList" class="table-unbordered"></div>
+		      	<div class="panel-sm">
+		        	<div id="divDevicePage" class="panel-footer"></div>
+		      	</div>
+		    </div>
+	   	</div>
+	</div>
+	<!--新增-修改采集系统弹出框  -->
+	<div id="divSysDialog" style="display: none;">
+		<form class="form-horizontal mg-lg">
+			<div class="form-group">
+		        <label for="txt_SysName" class="col-sm-2 control-label">系统编号:</label>
+		        <div class="col-sm-10 ">
+		        	<div class="input-group input-group-sm">
+		        		<input type="text" class="form-control input-sm" id="txt_SysCode" maxlength="200" validatetype="NotEmpty"/>
+		        		<span class="input-group-addon" style="color: Red">*</span>
+		        	</div>
+		        </div>
+	      	</div>
+	    	<div class="form-group">
+		        <label for="txt_SysName" class="col-sm-2 control-label">系统名称:</label>
+		        <div class="col-sm-10 ">
+		        	<div class="input-group input-group-sm">
+		        		<input type="text" class="form-control input-sm" id="txt_SysName" maxlength="200" validatetype="NotEmpty,filenameext"/>
+		        		<span class="input-group-addon" style="color: Red">*</span>
+		        	</div>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+		        <label for="busTypeOptions" class="col-sm-2 control-label">类型:</label>
+		        <div class="col-sm-5 ">
+			        <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+			        	<input type="hidden" id="hidBusTypeOptionsType" /> 
+						<input id="busTypeOptionsType" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px" class="form-control selecttree" selectedvalue="-1"/>
+						<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 35%;right: 0%;"></i>
+					</label>
+		    	</div>
+		    	 <div class="col-sm-5 " style="padding-left: 0px;">
+					<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+				        <input type="text" id="busTypeOptions" style="width:205px;" class="form-control selecttree" readonly onclick="popHiddenTree(el('divSubTree1'), this);" /> 
+			            <input type="hidden" id="hidBusTypeOptionId" /> 
+		            </label>
+		    	</div>
+	        </div>
+	        <div class="form-group">
+		        <label for="unitOptions" class="col-sm-2 control-label">单位:</label>
+		        <div class="col-sm-5 ">
+			        <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+			        	<input type="hidden" id="hidUnitOptionsType" /> 
+						<input id="unitOptionsType" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control selecttree" selectedvalue="-1"/>
+						<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 35%;right: 0%;"></i>
+					</label>
+		    	</div>
+		    	<div class="col-sm-5 " style="padding-left: 0px;">
+					<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+				        <input type="text" id="unitOptions" style="width:205px;" class="form-control selecttree" readonly onclick="popHiddenTree(el('divSubTree2'), this);"/> 
+			            <input type="hidden" id="hidUnitOptionId" /> 
+		            </label>
+		    	</div>
+	        </div>
+	        <div class="form-group">
+		        <label for="locationOptions" class="col-sm-2 control-label">地点:</label>
+		        <div class="col-sm-5 ">
+			        <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+			        	<input type="hidden" id="hidLocationOptionsType" /> 
+						<input id="locationOptionsType" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control selecttree" selectedvalue="-1"/>
+						<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 35%;right: 0%;"></i>
+					</label>
+		    	</div>
+		    	 <div class="col-sm-5 " style="padding-left: 0px;">
+					<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+				        <input type="text" id="locationOptions" style="width:205px;" class="form-control selecttree" readonly onclick="popHiddenTree(el('divSubTree3'), this);" /> 
+			            <input type="hidden" id="hidLocationOptionId" /> 
+		            </label>
+		    	</div>
+	        </div>
+	      	<div class="form-group">
+		        <label for="txt_sysDesc" class="col-sm-2 control-label">描述:</label>
+		        <div class="col-sm-10 ">
+		         <textarea id="txt_sysDesc" name="DataSourceDescXml" style="width: 100%;height: 50px" class="form-control"></textarea>
+		        </div>
+	      	</div>
+	    </form>
+  	</div> 
+  	<!-- 弹出框输入框的树 -->
+  	<div id="divSubTree1" style="display: none; border: solid 1px #ccc; background: #fff; height: 150px; overflow: auto" class="ztree" minWidth="210px"></div>
+  	<div id="divSubTree2" style="display: none; border: solid 1px #ccc; background: #fff; height: 150px; overflow: auto" class="ztree" minWidth="210px"></div>
+  	<div id="divSubTree3" style="display: none; border: solid 1px #ccc; background: #fff; height: 150px; overflow: auto" class="ztree" minWidth="200px"></div>  
+  	<!--新建-修改 设备弹出框 -->
+  	<div id="divDeviceDialog" style="display: none;">
+		<form class="form-horizontal mg-lg">
+			<div class="form-group" >
+		        <label for="txt_DeviceToSys" class="col-sm-2 control-label">所属系统:</label>
+		        <div class="col-sm-10 ">
+		        	<div class="input-group input-group-sm">
+		        	<input type="text" class="form-control input-sm" id="txt_DeviceToSys" validatetype="NotEmpty" maxlength="200" readonly="readonly"/>
+		        	<span class="input-group-addon" style="color: Red">*</span>
+		        	</div>
+		        </div>
+	      	</div>
+			<div class="form-group">
+		        <label for="txt_DeviceName" class="col-sm-2 control-label">服务名称:</label>
+		        <div class="col-sm-10 ">
+		        	<input type="text" class="form-control input-sm" id="txt_DeviceName" maxlength="200" validatetype="NotEmpty,filenameext"/>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+		        <label for="txt_DeviceCode" class="col-sm-2 control-label">服务代号:</label>
+		        <div class="col-sm-10 ">
+		        	<input type="text" class="form-control input-sm" id="txt_DeviceCode" maxlength="200" />
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+		        <label for="txt_DeviceCode" class="col-sm-2 control-label">服务类型:</label>
+		        <div class="col-sm-10 ">
+		        	<div class="input-group input-group-sm">
+			      		<select id="txt_SERVICE_TYPE" class="form-control" validatetype="NotEmpty" >
+		               		<option value="">---------------------------请选择服务类型---------------------</option>
+		                	<option value="801">邮件下载</option>
+		                	<option value="802">口令字下载</option>
+		                	<option value="803">身份认证下载</option>
+		                	<option value="80801">IP数据下载1</option>
+		                	<option value="80802">IP数据下载2</option>
+		                	<option value="809">摆渡机摆渡</option>
+			            </select>
+			            <span class="input-group-addon" style="color: Red">*</span>
+		            </div>
+	            </div>
+	        </div>
+	      	<div class="form-group">
+		        <label for="txt_ServiceUrl" class="col-sm-2 control-label">通信地址:</label>
+		        <div class="col-sm-10 ">
+		        	<div class="input-group input-group-sm">
+		        	<input type="text" class="form-control input-sm" id="txt_ServiceUrl" maxlength="200" validatetype="NotEmpty,url" />
+		        	<span class="input-group-addon" style="color: Red">*</span>
+		        	</div>
+		        </div>
+	      	</div>
+			<div class="form-group">
+		        <label for="txt_DeviceDesc" class="col-sm-2 control-label">描述:</label>
+		        <div class="col-sm-10 ">
+		         <textarea id="txt_DeviceDesc" name="DeviceDesc" style="width: 100%;height: 50px" class="form-control"></textarea>
+		        </div>
+		    </div>
+		</form>
+	</div>
+</body>
+</html>

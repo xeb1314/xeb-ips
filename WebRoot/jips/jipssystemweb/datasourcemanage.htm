@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>数据源管理</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/crud.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/gridlist.js"></script>
+  <script type="text/javascript" src="javascript/base.js"></script>
+  <script type="text/javascript" src="javascript/datasourcemanage.js"></script>
+  <script type="text/javascript" src="javascript/datasource.js"></script>
+  <script type="text/javascript" src="javascript/classtods.js"></script>
+  <script type="text/javascript">
+    	Layoutit("#divPageFrame", {hLayout:[
+    	                                    300,
+    	                                    {value:'auto',vLayout:[200,35, 'auto', 35]}
+    	                                   ]});
+    	Layoutit("#divSelectLable", {hLayout: [{value:420,vLayout:[50, "auto", 35]},
+    	                                     'auto'
+    										]});
+    	Layoutit('#divLabelManager', {vLayout:[50,300,35]});
+    </script>
+  <link href="css/base.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="pageInit();">
+	<div id="divPageFrame" >
+	    <div class="panel panel-default panel-sm" style="border-bottom-width:0;">
+        	<div class="panel-heading" style="padding: 1px 10px;">
+        		<div class="pull-left" style="padding:5px">
+        			<span>分类树</span>
+				</div>
+				<div class="btn-group btn-group-sm pull-center">	
+        			<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+			  			<input id="dataManageOptions" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control input-sm" selectedvalue="-1" />
+			  			<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+					</label>
+        		</div>
+      		</div>
+      		<div id="divDataSourceTree" style="overflow: auto;"></div>
+		</div>
+	    <div>
+		    <div class="panel panel-sm  panel-default" style="border-bottom-width:0">
+		        <div class="panel-heading" style="padding: 10px 15px;height: 45px">
+		            <b>查询条件</b>
+		        </div>
+		        <div class="panel-collapse div-collapse">
+		           <table  align="center" cellpadding="0" cellspacing="0" >
+		                <tr class="tableRowHeight60" >
+		                	<td class="rightAlign">
+					        	<span>名称:&nbsp;</span>
+					        </td>
+					        <td width="170px;">
+						    	<input id="txtNameQuery" type="text" class="form-control input-sm input-date"/>
+				            </td>
+				           <td class="rightAlign">
+					           <span>时间:&nbsp;</span>
+					        </td>
+					        <td width="170px;">
+						        <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+						            <input id="txtStartTime" type="text" class="form-control input-sm input-date">
+						            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+						        </label>
+				            </td>
+				            <td class="rightAlign">
+				            	<span>至</span>&nbsp;
+				            </td>
+				            <td width="170px;">
+				                <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+						            <input id="txtEndTime" type="text" class="form-control input-sm input-date">
+						            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+						        </label>
+				            </td>
+				            <td class="rightAlign">
+				             &nbsp;<a href="javascript:void(0)" ><span onclick="el('txtStartTime').value=el('txtEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+			                          <a href="javascript:void(0)" onclick="el('txtStartTime').value=gLastWeekDate.toDateString();el('txtEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+			                          <a href="javascript:void(0)" onclick="el('txtStartTime').value=el('txtEndTime').value='';">清空</a>
+				            </td>
+				            <td rowspan="2" class="rightAlign">
+				               <button type="button" class="btn btn-primary btn-sm" onClick="searchDataSource();">
+							        <span class="glyphicon glyphicon-search"></span> 查询
+							   </button>
+				            </td>
+				        </tr>
+				        <tr class="tableRowHeight60">
+				        	<td class="rightAlign">
+					        	<span>参数:&nbsp;</span>
+					        </td>
+					        <td width="170px;">
+						    	<input id="txtPathQuery" type="text" class="form-control input-sm input-date"/>
+				            </td>
+ 				            <td class="leftAlign">
+ 				            	<span>状态:&nbsp;</span>
+				            </td>
+ 				            <td colspan="4">
+ 						        <input type="checkbox" name="chkState" value="-1" class="checkboxMid" checked/>&nbsp;<span class="checkboxMid">全部</span>&nbsp;&nbsp;
+ 	                            <input type="checkbox" name="chkState" value="0" class="checkboxMid" checked/>&nbsp;<span class="checkboxMid">公共</span>&nbsp;&nbsp;
+ 	                            <input type="checkbox" name="chkState" value="1" class="checkboxMid" checked/>&nbsp;<span class="checkboxMid">指派单位</span>&nbsp;&nbsp;
+ 	                            <input type="checkbox" name="chkState" value="2" class="checkboxMid" checked/>&nbsp;<span class="checkboxMid">未分配</span>&nbsp;&nbsp;
+ 			           		</td>
+				        </tr>
+		           </table>
+		        </div>
+	    	</div>
+	    	<div class="panel panel-sm  panel-default">
+	    		<div class="panel-heading-1" style="padding-top:10px">
+			      	<div class="pull-left">
+			     		<b>分类列表 </b>
+			      	</div>
+		     		<div class='pull-right'>
+			        	<span style="cursor:pointer;margin-right: 10px;" title="新增" onclick="gDataSourceCrud.add();">
+							<i class="fa fa-plus"></i>
+							<span>&nbsp;新增</span>
+					   </span>
+					   <span style="cursor:pointer;margin-right: 10px;" title="编辑" onclick="gDataSourceCrud.edit();">
+		            	  <i class="fa fa-pencil-square-o"></i>
+				          <span>&nbsp;编辑</span>
+				       </span>
+					   <span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gDataSourceCrud.remove();">
+							<i class="fa fa-times"></i>
+							<span>&nbsp;删除</span>
+					   </span>
+					   <span style="cursor:pointer;margin-right: 10px;" title="刷新" onclick="document.location.reload();">
+				          <i class="fa fa-refresh"></i>
+				          <span>&nbsp;刷新</span>
+				       </span>
+				       <span style="cursor:pointer;margin-right: 10px;" title="数据权限" onclick="dataAccess();">
+				          <i class="fa fa-tags"></i>
+				          <span>&nbsp;数据权限</span>
+				       </span>
+	        		</div> 
+		    	</div>
+	    	</div>
+	    	<div class="table-unbordered" id="divDataSourceList"></div>
+		    <div class="panel-sm">
+         	    <div id="divDataSourcePage" class="panel-footer"></div>
+	   		</div> 
+    	</div>
+	</div>
+	<!--新增-修改  数据源弹出框  -->
+	<div id="divDataSourceDialog" style="display: none;">
+		<form class="form-horizontal mg-lg">
+	    	<div class="form-group">
+		        <label for="txt_DataSourceName" class="col-sm-2 control-label">名称:</label>
+		        <div class="col-sm-10 ">
+		        	<div class="input-group input-group-sm">
+		        		<input type="text" class="form-control input-sm" id="txt_DataSourceName" maxlength="200" validatetype="NotEmpty,filenameext" onblur="validateName();"/>
+		        		<span class="input-group-addon" style="color: Red">*</span>
+		        	</div>
+		        </div>
+	      	</div>
+	      	<!-- 源路径 12.09-->
+	      	<div class="form-group">
+		        <label for="txt_SourcePath" class="col-sm-2 control-label">参数:</label>
+		        <div class="col-sm-10">
+		          <div class="input-group input-group-sm">
+		            <input type="text" class="form-control" id="txt_SourcePath" validatetype="NotEmpty" /> 
+		            <span class="input-group-addon" style="color: Red">*</span>
+		          </div>
+		        </div>
+	      	</div>
+	      	<!-- 访问方式 -->
+	      	<div class="form-group" >
+		        <label for="txt_DSType" class="col-sm-2 control-label">访问方式:</label>
+		        <div class="col-sm-10 ">
+		        	<input type="hidden" id="dbTypeValue" /> 
+		        	<input id="lableSelectDSType" onclick="jetsennet.ui.DropDownList.show(this)" style="width:100%;height:30px;" class="form-control input-sm" selectedvalue="10" 
+		        	 readonly="readonly"	handing="文件~10|数据库表~20"/>
+					<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 5%;"></i>
+		        </div>
+	      	</div>
+			<!-- 数据库类型 -->
+	      	<div class="form-group" style="display:none" id="dbType">
+		        <label for="dbType" class="col-sm-2 control-label">数据库类型:</label>
+		        <div class="col-sm-10 ">
+		        	<div class="input-group input-group-sm">
+		               <select id="txt_DbType" class="form-control input-sm">
+			               <option value="Oracle">Oracle库</option>
+			               <option value="GBase">南通库</option>
+			               <option value="JFDB">飓风库</option>
+		               </select>
+		               <span class="input-group-addon" style="color: Red">*</span>
+	               </div>
+		        </div>
+	      	</div>
+	      	<div class="form-group" id="emlType">
+		        <label for="txt_DataSourceType" class="col-sm-2 control-label">类型:</label>
+		        <div class="col-sm-10 ">
+		           <div class="input-group input-group-sm">
+		               <select id="txt_DataSourceType" class="form-control input-sm">
+			               <option value="801">邮件</option>
+			               <option value="802">口令</option>
+			               <option value="803">认证</option>
+			               <option value="808">话音</option>
+			               <option value="810">文件</option>
+			               <option value="811">传真</option>
+			               <option value="812">文本</option>
+			               <option value="815">IP</option>
+			               <option value="816">短信</option>
+		               </select>
+		               <span class="input-group-addon" style="color: Red">*</span>
+	               </div>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+		        <label for="txt_State" class="col-sm-2 control-label">状态:</label>
+		        <div class="col-sm-10 ">
+		        	<input type="hidden" id="hidStateId" /> 
+		        	<input id="lableSelectState" onclick="jetsennet.ui.DropDownList.show(this)" style="width:100%" class="form-control input-sm" 
+		        	 readonly="readonly"	handing="公共~0|指派单位~1|未分配~2"	validatetype="NotEmpty"/>
+					 <i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 5%;"></i>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+		        <label for="txt_DataSourceDesc" class="col-sm-2 control-label">描述:</label>
+		        <div class="col-sm-10 ">
+		         <textarea id="txt_DataSourceDesc" name="DataSourceDescXml" style="width: 100%;height: 50px" class="form-control"></textarea>
+		        </div>
+	      	</div>
+	      	<div class="form-group" style="display: none" id="gratFunToUsers">
+		        <label for="gratFunToUsers" class="col-sm-2 control-label">授权单位:</label>
+		        <div class="col-sm-10 ">
+		        	 <div class="input-group" id="validateGrantUser">
+	                	 <select id="selMember" class="form-control" name="select" multiple></select> 
+	                     <span class="input-group-addon"> 
+	                     <input type="button" value=" 添加 " class="btn btn-primary btn-sm margin-bottom-xs" id="btnAdd" onclick="gUserCrud.showSelectDlg('divSelectUser', 'selMember', {size : {width : 520, height : 410}});" style="display: block;" /> 
+	                     <input type="button" value=" 删除 " class="btn btn-danger btn-sm" id="btnDel" onclick="jetsennet.Crud.selectOptionsDel('selMember');" />
+	                     </span>
+              		 </div>
+		        </div>
+	      	</div>
+	    </form>
+  	</div>
+  	
+  <!-- 数据权限 -->
+  <div id="divDataAccess" style="display: none;">
+	<div id="divLableClass" style="padding: 15px;border-bottom: 1px solid #dddddd">
+		<input type="hidden" id="ddlDataLableVal"/>
+			<input type="radio" name="dataLable" class="checkboxMid" onclick="radioFunc(this.value);" default="179" value="179"/>&nbsp;<span class="checkboxMid">线路</span>
+			<input type="radio" name="dataLable" class="checkboxMid" onclick="radioFunc(this.value);" default="177" value="177"/>&nbsp;<span class="checkboxMid">方向</span>
+			<input type="radio" name="dataLable" class="checkboxMid" onclick="radioFunc(this.value);" default="180" value="180"/>&nbsp;<span class="checkboxMid">语种</span>
+	</div>
+	<input type="hidden" id="ddlParentGroup"/>
+  	<div id="divSelectLable">
+  		<div style="padding-left: 5px;border-right: 1px solid #dddddd">
+		  	<div style="padding-left: 5px;">
+			  	<div class="center-wrapper">
+					<div class="center-area">
+						<div class="input-group input-group-xs input3">
+					    <input type="text" class="form-control" id="txtSearchName" placeholder="标签名称">
+				         <span class="input-group-btn">
+				           <button type="submit" class="btn btn-default" onclick="searchSelectLableData();">
+				             <span class="glyphicon glyphicon-search"></span>
+				           </button>
+				         </span>
+				       </input>
+				       </div>
+				    </div>
+			    </div>
+		    </div>
+		    <div id="divSelectLableList">数据正在加载...</div>
+		    <div id="divSelectLablePage" style="padding-top: 5px;padding-left: 5px;"></div>
+	    </div>
+	    <!-- 用户组树 -->
+		<div id="divUserGroupContent" style="height:300px;overflow: auto;" class="ztree"></div>
+	</div>
+  </div>
+  <!-- 标签管理 -->
+  <div id="divLabelManager" style="display: none;">
+	<form class="form-horizontal mg-lg">	<!-- <div style="padding: 6px;border-bottom: 1px solid #dddddd"> -->
+  	 <div class="form-group" id="controlLabel" style="padding-right: 30px;">
+		<label for="lableName1" class="col-sm-2 control-label">标签:</label>
+	    <div class="col-sm-5 ">
+	        <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+				<input id="lableNamesType1" name="lableNamesType" onclick="jetsennet.ui.DropDownList.show(this)" readonly="readonly" style="width:180px;" class="form-control input-sm" selectedvalue="-1"/>
+				<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+			</label>
+		</div>
+		<div class="col-sm-5 " style="padding-left: 0px;">
+		 	<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+		        <input type="text" id="lableName_lableNamesType1" style="width:180px;" class="form-control input-sm" /> 
+		    </label>&nbsp;
+		    <span style="cursor:pointer;" onclick="selectTag();" title="查询"><img src="images/search.png" style=" padding-bottom:7px;"/></span>
+	        <span style="cursor:pointer;" onclick="addTag();" title="添加"><img src="images/add.gif" style=" padding-bottom:7px;"/></span>
+		</div>
+	</div>
+	</form>
+  	<div class="table-unbordered" id="divLabelContent" style="border-top: 1px solid #dddddd">内容加载中......</div>
+  	<div id="divLabelPage" style="padding-top: 5px;padding-left: 5px;"></div>
+  </div>
+	<!-- 模板详情 -->
+	<div id="divLabelDetail" style="display: none">
+		<form class="form-horizontal mg-lg">
+	    	<div class="form-group">
+	    		<label for="txtSourcePathDetail" class="col-sm-3 control-label">参数:</label>
+		        <div class="col-sm-6 ">
+		        	<div class="input-group input-group-sm">
+		        		<input id="txtSourcePathDetail" type="text" class="form-control input-sm" style="width: 300px;" readonly/>
+		        	</div>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+	    		<label for="lableClassDetails" class="col-sm-3 control-label">所属标签:</label>
+		        <div class="col-sm-6 ">
+		        	<div class="input-group input-group-sm">
+		        		<select id="lableClassDetails" style="width: 300px; height: 150px" class="form-control" name="selectClass" multiple></select>
+		        	</div>
+		        </div>
+	      	</div>
+	      	<div class="form-group" id="userDisplay" >
+	    		<label for="lableUserDetails" class="col-sm-3 control-label">所属用户:</label>
+		        <div class="col-sm-6 ">
+		        	<div class="input-group input-group-sm">
+		        		<select id="lableUserDetails"  style="width: 300px; height: 150px" class="form-control" name="selectUser" multiple></select>
+		        	</div>
+		        </div>
+	      	</div>
+   		</form>
+	</div>
+	<!-- 选择用户结束 -->
+	 <div id="divSelectUser" style="display: none">
+    	<div id="divSelectUserList">数据正在加载...</div>
+    	<div id="divSelectUserPage" style="padding-top: 5px;"></div>
+  	</div>
+</body>
+</html>

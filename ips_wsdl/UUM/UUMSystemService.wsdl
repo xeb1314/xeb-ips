@@ -1,0 +1,381 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://TVNetwork/UUM/UUMSystemService/2.0" xmlns:nspub="http://TVNetwork/Schema/Common/2.0" xmlns:nsuum="http://TVNetwork/Schema/UUM/2.0" targetNamespace="http://TVNetwork/UUM/UUMSystemService/2.0">
+	<types>
+		<xs:schema targetNamespace="http://TVNetwork/UUM/UUMSystemService/2.0" elementFormDefault="qualified">
+			<xs:import namespace="http://TVNetwork/Schema/Common/2.0" schemaLocation="../Common/CommonTypes.xsd"/>
+			<xs:import namespace="http://TVNetwork/Schema/UUM/2.0" schemaLocation="UserInfo.xsd"/>
+			<xs:element name="userLoginRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="loginName" type="xs:string"/>
+						<xs:element name="password" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="userLoginResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WSResult" type="nspub:WSResultType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="userLogoutRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="userToken" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="userLogoutResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WSResult" type="nspub:WSResultType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="userModifyPwdRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="loginName" type="xs:string"/>
+						<xs:element name="oldPwd" type="xs:string"/>
+						<xs:element name="newPwd" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="userModifyPwdResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WSResult" type="nspub:WSResultType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getAllUserRequest">
+				<xs:complexType/>
+			</xs:element>
+			<xs:element name="getAllUserResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WSResult" type="nspub:WSResultType"/>
+						<xs:element name="allUser" type="nsuum:UserAllInfoType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getUserItemRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="loginName" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getUserItemResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WSResult" type="nspub:WSResultType"/>
+						<xs:element name="userItem" type="nsuum:UserItemType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getAllOnlineUserRequest">
+				<xs:complexType/>
+			</xs:element>
+			<xs:element name="getAllOnlineUserResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WSResult" type="nspub:WSResultType"/>
+						<xs:element name="allOnlineUser">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="loginName" type="xs:string" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="importSysFunctionRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="sysFunctions" type="nsuum:ArrayOfSysFunctionType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="importSysFunctionResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WSResult" type="nspub:WSResultType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getAllUserRoleRequest">
+				<xs:complexType/>
+			</xs:element>
+			<xs:element name="getAllUserRoleResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WSResult" type="nspub:WSResultType"/>
+						<xs:element name="allUserRole" type="nsuum:UserAllRoleInfoType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getRoleAuthorityRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="roleIDs">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="roleID" type="xs:int" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="sysName" type="xs:string" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getRoleAuthorityResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WSResult" type="nspub:WSResultType"/>
+						<xs:element name="roleAuthoritys" type="nsuum:ArrayOfRoleAuthorityType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getOnlineUserByNameRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="loginName" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getOnlineUserByNameResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WSResult" type="nspub:WSResultType"/>
+						<xs:element name="onlineUserInfo" type="nsuum:UserOnlineInfoType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</types>
+	<message name="RequestHeadMsg">
+		<part name="RequestHead" element="nspub:requestHead"/>
+	</message>
+	<message name="UserLoginRequest">
+		<part name="requestHead" element="nspub:requestHead"/>
+		<part name="userLoginRequest" element="tns:userLoginRequest"/>
+	</message>
+	<message name="UserLoginResponse">
+		<part name="userLoginResponse" element="tns:userLoginResponse"/>
+	</message>
+	<message name="UserLogoutRequest">
+		<part name="requestHead" element="nspub:requestHead"/>
+		<part name="userLogoutRequest" element="tns:userLogoutRequest"/>
+	</message>
+	<message name="UserLogoutResponse">
+		<part name="userLogoutResponse" element="tns:userLogoutResponse"/>
+	</message>
+	<message name="UserModifyPwdRequest">
+		<part name="requestHead" element="nspub:requestHead"/>
+		<part name="userModifyPwdRequest" element="tns:userModifyPwdRequest"/>
+	</message>
+	<message name="UserModifyPwdResponse">
+		<part name="userModifyPwdResponse" element="tns:userModifyPwdResponse"/>
+	</message>
+	<message name="GetAllUserRequest">
+		<part name="requestHead" element="nspub:requestHead"/>
+		<part name="getAllUserRequest" element="tns:getAllUserRequest"/>
+	</message>
+	<message name="GetAllUserResponse">
+		<part name="getAllUserResponse" element="tns:getAllUserResponse"/>
+	</message>
+	<message name="GetUserItemRequest">
+		<part name="requestHead" element="nspub:requestHead"/>
+		<part name="getUserItemRequest" element="tns:getUserItemRequest"/>
+	</message>
+	<message name="GetUserItemResponse">
+		<part name="getUserItemResponse" element="tns:getUserItemResponse"/>
+	</message>
+	<message name="GetAllOnlineUserRequest">
+		<part name="requestHead" element="nspub:requestHead"/>
+		<part name="getAllOnlineUserRequest" element="tns:getAllOnlineUserRequest"/>
+	</message>
+	<message name="GetAllOnlineUserResponse">
+		<part name="getAllOnlineUserResponse" element="tns:getAllOnlineUserResponse"/>
+	</message>
+	<message name="ImportSysFunctionRequest">
+		<part name="requestHead" element="nspub:requestHead"/>
+		<part name="importSysFunctionRequest" element="tns:importSysFunctionRequest"/>
+	</message>
+	<message name="ImportSysFunctionResponse">
+		<part name="importSysFunctionResponse" element="tns:importSysFunctionResponse"/>
+	</message>
+	<message name="GetAllUserRoleRequest">
+		<part name="requestHead" element="nspub:requestHead"/>
+		<part name="getAllUserRoleRequest" element="tns:getAllUserRoleRequest"/>
+	</message>
+	<message name="GetAllUserRoleResponse">
+		<part name="getAllUserRoleResponse" element="tns:getAllUserRoleResponse"/>
+	</message>
+	<message name="GetRoleAuthorityRequest">
+		<part name="requestHead" element="nspub:requestHead"/>
+		<part name="getRoleAuthorityRequest" element="tns:getRoleAuthorityRequest"/>
+	</message>
+	<message name="GetRoleAuthorityResponse">
+		<part name="getRoleAuthorityResponse" element="tns:getRoleAuthorityResponse"/>
+	</message>
+	<message name="GetOnlineUserByNameRequest">
+		<part name="requestHead" element="nspub:requestHead"/>
+		<part name="getOnlineUserByNameRequest" element="tns:getOnlineUserByNameRequest"/>
+	</message>
+	<message name="GetOnlineUserByNameResponse">
+		<part name="getOnlineUserByNameResponse" element="tns:getOnlineUserByNameResponse"/>
+	</message>
+	<portType name="UUMSystemServicePort">
+		<operation name="userLogin">
+			<input message="tns:UserLoginRequest"/>
+			<output message="tns:UserLoginResponse"/>
+		</operation>
+		<operation name="userLogout">
+			<input message="tns:UserLogoutRequest"/>
+			<output message="tns:UserLogoutResponse"/>
+		</operation>
+		<operation name="userModifyPwd">
+			<input message="tns:UserModifyPwdRequest"/>
+			<output message="tns:UserModifyPwdResponse"/>
+		</operation>
+		<operation name="getAllUser">
+			<input message="tns:GetAllUserRequest"/>
+			<output message="tns:GetAllUserResponse"/>
+		</operation>
+		<operation name="getUserItem">
+			<input message="tns:GetUserItemRequest"/>
+			<output message="tns:GetUserItemResponse"/>
+		</operation>
+		<operation name="getAllOnlineUser">
+			<input message="tns:GetAllOnlineUserRequest"/>
+			<output message="tns:GetAllOnlineUserResponse"/>
+		</operation>
+		<operation name="importSysFunction">
+			<input message="tns:ImportSysFunctionRequest"/>
+			<output message="tns:ImportSysFunctionResponse"/>
+		</operation>
+		<operation name="getAllUserRole">
+			<input message="tns:GetAllUserRoleRequest"/>
+			<output message="tns:GetAllUserRoleResponse"/>
+		</operation>
+		<operation name="getRoleAuthority">
+			<input message="tns:GetRoleAuthorityRequest"/>
+			<output message="tns:GetRoleAuthorityResponse"/>
+		</operation>
+		<operation name="getOnlineUserByName">
+			<input message="tns:GetOnlineUserByNameRequest"/>
+			<output message="tns:GetOnlineUserByNameResponse"/>
+		</operation>
+	</portType>
+	<binding name="UUMSystemServiceBinding" type="tns:UUMSystemServicePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="getAllUser">
+			<soap:operation soapAction="http://TVNetwork/UUM/UUMSystemService/2.0/getAllUser"/>
+			<input>
+				<soap:body parts="getAllUserRequest" use="literal"/>
+				<soap:header message="tns:GetAllUserRequest" part="requestHead" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="userLogin">
+			<soap:operation soapAction="http://TVNetwork/UUM/UUMSystemService/2.0/userLogin"/>
+			<input>
+				<soap:body parts="userLoginRequest" use="literal"/>
+				<soap:header message="tns:UserLoginRequest" part="requestHead" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="userLogout">
+			<soap:operation soapAction="http://TVNetwork/UUM/UUMSystemService/2.0/userLogout"/>
+			<input>
+				<soap:body parts="userLogoutRequest" use="literal"/>
+				<soap:header message="tns:UserLogoutRequest" part="requestHead" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="userModifyPwd">
+			<soap:operation soapAction="http://TVNetwork/UUM/UUMSystemService/2.0/userModifyPwd"/>
+			<input>
+				<soap:body parts="userModifyPwdRequest" use="literal"/>
+				<soap:header message="tns:UserModifyPwdRequest" part="requestHead" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getUserItem">
+			<soap:operation soapAction="http://TVNetwork/UUM/UUMSystemService/2.0/getUserItem"/>
+			<input>
+				<soap:body parts="getUserItemRequest" use="literal"/>
+				<soap:header message="tns:GetUserItemRequest" part="requestHead" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getAllOnlineUser">
+			<soap:operation soapAction="http://TVNetwork/UUM/UUMSystemService/2.0/getAllOnlineUser"/>
+			<input>
+				<soap:body parts="getAllOnlineUserRequest" use="literal"/>
+				<soap:header message="tns:GetAllOnlineUserRequest" part="requestHead" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="importSysFunction">
+			<soap:operation soapAction="http://TVNetwork/UUM/UUMSystemService/2.0/importSysFunction"/>
+			<input>
+				<soap:body parts="importSysFunctionRequest" use="literal"/>
+				<soap:header message="tns:ImportSysFunctionRequest" part="requestHead" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getAllUserRole">
+			<soap:operation soapAction="http://TVNetwork/UUM/UUMSystemService/2.0/getAllUserRole"/>
+			<input>
+				<soap:body parts="getAllUserRoleRequest" use="literal"/>
+				<soap:header message="tns:GetAllUserRoleRequest" part="requestHead" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getRoleAuthority">
+			<soap:operation soapAction="http://TVNetwork/UUM/UUMSystemService/2.0/getRoleAuthority"/>
+			<input>
+				<soap:body parts="getRoleAuthorityRequest" use="literal"/>
+				<soap:header message="tns:GetRoleAuthorityRequest" part="requestHead" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="getOnlineUserByName">
+			<soap:operation soapAction="http://TVNetwork/UUM/UUMSystemService/2.0/getOnlineUserByName"/>
+			<input>
+				<soap:body parts="getOnlineUserByNameRequest" use="literal"/>
+				<soap:header message="tns:GetOnlineUserByNameRequest" part="requestHead" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="UUMSystemService">
+		<port name="UUMSystemServiceSoap" binding="tns:UUMSystemServiceBinding">
+			<soap:address location="http://localhost:8080/TVNetwork/UUM/UUMSystemService"/>
+		</port>
+	</service>
+</definitions>

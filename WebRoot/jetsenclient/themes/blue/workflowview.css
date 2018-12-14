@@ -1,0 +1,95 @@
+.wf-view{}
+.wf-tasknode,.wf-selected-tasknode{font-weight:bold;background:#5e86df url(images/wficon/scan.png) center  no-repeat;color: #fff;background-size:cover;}
+.wf-tasknode,.wf-emptynode{border: #5e86df 1px solid;}
+.wf-selected-tasknode{border: #5e86df 1px solid;}
+
+.wf-containernode ,.wf-selected-containernode{position:absolute;border:0px;}
+.wf-move-separator{position: absolute;width: 1px;border: gray 2px dashed;overflow: hidden;padding: 3px 0px;}
+.wf-move-node{position: absolute;font-weight: bold;}
+.wf-line{background-color:#5e86df;margin:0px;border:0px;padding:0px;height:1px;}
+.wf-selected-containernode div.wf-line{background-color:#5e86df;}
+.wf-move-node .wf-line{background-color:#5e86df;}
+.wf-progress{background-color:#5e86df;margin:0px;border:0px;padding:0px;height:10px;}
+.wf-progress-value{background-color:#00FF00;margin:0px;border:0px;padding:0px;height:10px;position:absolute;top:0px;}
+
+.wf-act-8001{background:#5e86df url(images/wficon/transfer.png) center  no-repeat; background-size:cover;}
+.wf-act-8020{background:#5e86df url(images/wficon/md5.png) center  no-repeat; background-size:cover;}
+.wf-act-541{background:#5e86df url(images/wficon/emlparse.png) center  no-repeat; background-size:cover;}
+.wf-act-801{background:#5e86df url(images/wficon/emlparse.png) center  no-repeat; background-size:cover;}
+.wf-act-802{background:#5e86df url(images/wficon/passdown.png) center  no-repeat; background-size:cover;}
+.wf-act-803{background:#5e86df url(images/wficon/identity.png) center  no-repeat; background-size:cover;}
+.wf-act-810{background:#5e86df url(images/wficon/fileparse.png) center  no-repeat; background-size:cover;}
+.wf-act-531{background:#5e86df url(images/wficon/scan.png) center  no-repeat; background-size:cover;}
+.wf-act-5001{background:#5e86df url(images/wficon/transfer.png) center  no-repeat; background-size:cover;}
+.wf-act-5200{background:#5e86df url(images/wficon/transcode.png) center  no-repeat; background-size:cover;}
+.wf-act-5220{background:#5e86df url(images/wficon/mediacompare.png) center  no-repeat; background-size:cover;}
+.wf-act-5020{background:#5e86df url(images/wficon/md5.png) center  no-repeat; background-size:cover;}
+.wf-act-5201{background:#5e86df url(images/wficon/package.png) center  no-repeat; background-size:cover;}
+.wf-act-5211{background:#5e86df url(images/wficon/mediacut.png) center  no-repeat; background-size:cover;}
+.wf-act-5212{background:#5e86df url(images/wficon/mediainfo.png) center  no-repeat; background-size:cover;}
+.wf-act-5213{background:#5e86df url(images/wficon/mediaindex.png) center  no-repeat; background-size:cover;}
+.wf-act-5400{background:#5e86df url(images/wficon/autocheck.png) center  no-repeat; background-size:cover;}
+.wf-act-5401{background:#5e86df url(images/wficon/keyframe.png) center  no-repeat; background-size:cover;}
+.wf-act-5501{background:#5e86df url(images/wficon/vediosearch.png) center  no-repeat; background-size:cover;}
+
+.wf-act-800{background:#5e86df url(images/wficon/emlparse.png) center  no-repeat; background-size:cover;}
+.wf-act-804{background:#5e86df url(images/wficon/plotext.png) center  no-repeat; background-size:cover;}
+.wf-act-805{background:#5e86df url(images/wficon/class.png) center  no-repeat; background-size:cover;}
+.wf-act-806{background:#5e86df url(images/wficon/cluster.png) center  no-repeat; background-size:cover;}
+.wf-act-807{background:#5e86df url(images/wficon/abs.png) center  no-repeat; background-size:cover;}
+.wf-act-808{background:#5e86df url(images/wficon/voice.png) center  no-repeat; background-size:cover;}
+.wf-act-811{background:#5e86df url(images/wficon/fix.png) center  no-repeat; background-size:cover;}
+.wf-act-812{background:#5e86df url(images/wficon/fileparse.png) center  no-repeat; background-size:cover;}
+.wf-act-813{background:#5e86df url(images/wficon/txt.png) center  no-repeat; background-size:cover;}
+.wf-act-814{background:#5e86df url(images/wficon/simpl.png) center  no-repeat; background-size:cover;}
+.wf-act-890{background:#5e86df url(images/wficon/emldb.png) center  no-repeat; background-size:cover;}
+.wf-act-891{background:#5e86df url(images/wficon/import2.png) center  no-repeat; background-size:cover;}
+.wf-act-560{background:#5e86df url(images/wficon/ip.png) center  no-repeat; background-size:cover;}
+
+.wf-act-1 {background:#5e86df url(images/wficon/import.png) center  no-repeat; background-size:cover;}
+.wf-act-11 {background:#5e86df url(images/wficon/check.png) center  no-repeat; background-size:cover;}
+.wf-act-21,.wf-act-22,.wf-act-23 {background:#5e86df url(images/wficon/catalog.png) center  no-repeat; background-size:cover;}
+.wf-act-31,.wf-act-32,.wf-act-33{background:#5e86df url(images/wficon/check.png) center  no-repeat; background-size:cover;}
+
+/* .wf-act-501 {background:#5e86df url(images/wficon/transfer.png) center  no-repeat; background-size:cover;}
+.wf-act-521 {background:#5e86df url(images/wficon/transcode.png) center  no-repeat; background-size:cover;}
+.wf-act-531 {background:#5e86df url(images/wficon/scan.png) center  no-repeat; background-size:cover;}
+.wf-act-561 {background:#5e86df url(images/wficon/keyframe.png) center  no-repeat; background-size:cover;}
+.wf-act-562 {background:#5e86df url(images/wficon/tcheck.png) center  no-repeat; background-size:cover;} */
+
+.wf-act-9001 {background:#5e86df url(images/wficon/webservice.png) center  no-repeat; background-size:cover;}
+.wf-act-9002 {background:#5e86df url(images/wficon/http.png) center  no-repeat; background-size:cover;}
+.wf-act-9003 {background:#5e86df url(images/wficon/httpexecute.png) center  no-repeat; background-size:cover;}
+.wf-act-9101 {background:#5e86df url(images/wficon/childproc.png) center  no-repeat; background-size:cover;}
+.wf-act-9201 {background:#5e86df url(images/wficon/delay.png) center  no-repeat; background-size:cover;}
+
+.wf-act-10101 {background:#5e86df url(images/wficon/ifelse01.png) center  no-repeat; background-size:cover;}
+.wf-act-10201 {background:#5e86df url(images/wficon/parallel01.png) center  no-repeat; background-size:cover;}
+.wf-act-10301 {background:#5e86df url(images/wficon/listen01.png) center  no-repeat; background-size:cover;}
+.wf-act-10401 {background:#5e86df url(images/wficon/while01.png) center  no-repeat; background-size:cover;}
+
+.wf-scale-up {background:#5e86df url(images/wficon/plus.png) center center no-repeat;cursor:pointer;z-index:10}
+.wf-scale-down {background:#5e86df url(images/wficon/min.png) center center no-repeat;cursor:pointer;z-index:10}
+
+.wf-status-0 {border: #fc6 2px dashed;}
+.wf-status-1 {border: #fc6 2px solid;}
+.wf-status-2 {border: #0f0 2px solid;}
+.wf-status-3 {border: #00f 2px solid;}
+.wf-status-4 {border: #f06 2px solid;}
+.wf-status-5 {border: #a06 2px solid}
+.wf-status-6 {border: #f66 2px solid;}
+.wf-status-7 {border: #ff0 2px solid;}
+.wf-status-10 {border: #f00 2px solid;}
+
+/* Add by JiJie.LianG 2015-05-13 选中节点提示框 */
+/* .wf-status-800 {border: #66afe9 2px dashed;} */
+.wf-status-800{
+	border: #66afe9 2px solid;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+    outline: 0 none;
+}
+
+.img-rounded div{color: white;}
+
+.word-space{ word-wrap: normal;}
+.nodeWord-space{overflow: hidden; text-overflow:ellipsis;white-space:nowrap;}

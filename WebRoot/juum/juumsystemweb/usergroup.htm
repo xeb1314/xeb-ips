@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>分组管理</title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+<script type="text/javascript">
+Layoutit("#divPageFrame", {vLayout: [46, "auto"]});
+Layoutit("#divSelectUser", {vLayout: [50, "auto", 35]});
+</script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+<![endif]-->
+</head>
+<body onload="pageInit()" class="panels">
+
+<div id="divPageFrame" class="v-panel" style="overflow: hidden;">
+	<div class="panel-heading">
+	<h3 class="panel-title pull-left" style="display:inline-block;">用户分组管理</h3>
+	    <div id="divButtons" class="pull-right" style=" display: inline-block; margin-top: -2px; ">
+	    	<span style="cursor:pointer;margin-right: 10px;" title="新建" onclick="gCrud.add();">
+	    <i class="fa fa-plus"></i>
+	    <span>&nbsp;新建</span>
+	  </span>
+	    	<span style="cursor:pointer;margin-right: 10px;" title="刷新" onclick="gCrud.load();">
+	    <i class="fa fa-refresh"></i>
+	    <span>&nbsp;刷新</span>
+	  </span>
+	    </div>
+	</div>
+	<div class="table-unbordered" id="divContent">内容加载中......</div>
+</div>
+
+  <!-- 新增、编辑前端开始 -->
+  <div id="divUserGroup" style="display: none;">
+    <form class="form-horizontal mg-lg">
+      <div class="form-group">
+        <label for="txtGroupName" class="col-sm-2 control-label">分组名称:</label>
+        <div class="col-sm-10">
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" id="txtGroupName" validatetype="NotEmpty,filenameext,removespaces" maxlength="20"/> 
+            <span class="input-group-addon" style="color: Red">*</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtGroupCode" class="col-sm-2 control-label">分组代号:</label>
+        <div class="col-sm-10 ">
+			<div class="input-group input-group-sm">
+          		<input type="text" class="form-control input-sm" id="txtGroupCode" validatetype="NotEmpty,filenameext,removespaces" maxlength="12"/>
+          		<span class="input-group-addon" style="color: Red">*</span>
+          	</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ddlParentGroup" class="col-sm-2 control-label">所属分组:</label>
+        <div class="col-sm-10">
+          <div class="input-group input-group-sm">
+            <input type="text" id="txt_ddlParentGroup" class="form-control selecttree" readonly onclick="popHiddenTree(el('divGroupTree'), this);" validatetype="NotEmpty" /> 
+            <input type="hidden" id="ddlParentGroup"/> 
+            <span class="input-group-addon" style="color: Red">*</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txt_groupType" class="col-sm-2 control-label">分组类型:</label>
+        <div class="col-sm-10">
+          <div class="input-group input-group-sm">
+          	<select id="txt_groupType" class="form-control" validatetype="NotEmpty"></select>
+		 	<span class="input-group-addon" style="color: Red">*</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtDescription" class="col-sm-2 control-label">分组描述:</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" id="txtDescription" rows="3" maxlength="50" ></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="selMember" class="col-sm-2 control-label">成员:</label>
+        <div class="col-sm-10">
+          <div class="input-group">
+            <select id="selMember" class="form-control" name="select" multiple></select> 
+            <span class="input-group-addon"> 
+              <input type="button" value=" 添加 " class="btn btn-primary btn-sm margin-bottom-xs" id="btnAdd" onclick="gUserCrud.showSelectDlg('divSelectUser', 'selMember', {size : {width : 500, height : 400}});" style="display: block;" /> 
+              <input type="button" value=" 删除 " class="btn btn-danger btn-sm" id="btnDel" onclick="jetsennet.Crud.selectOptionsDel('selMember');" />
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- 新增、编辑前端结束 -->
+  <!-- 用户列表显示开始 -->
+  <div id="divSelectUser" style="display: none">
+  	<div>
+	  	<div class="center-wrapper">
+			<div class="center-area">
+			    <form class="form-inline mg-sm">
+			      <span>用户姓名:</span>
+			      <div class="form-group">
+			        <input id="txtUserName" type="text" class="form-control input-xs" style="width: 120px;"/>
+			      </div>
+			      <span class="margin-left-md">登录名称:</span>
+			      <div class="form-group">
+			        <input id="txtLoginName" type="text" class="form-control input-xs" style="width: 120px;" />
+			      </div>
+			      <button type="button" class="btn btn-primary btn-xs" style="margin-left: 10px;"  onclick="searchSelectUserData();">
+			        <span class="glyphicon glyphicon-search"></span> 查询
+			      </button>
+			    </form>
+			</div>
+		</div>			 
+	</div>
+    <div id="divSelectUserList">数据正在加载...</div>
+    <div id="divSelectUserPage" style="padding-top: 5px;"></div>
+  </div>
+  
+  <div id="divGroupTree" style="display: none; border: solid 1px #ccc; background: #fff; height: 150px; overflow: auto" class="ztree" minWidth="200px"></div>
+  <!-- 用户列表显示结束 -->
+<script type="text/javascript" src="javascript/usergroup.js"></script>
+</body>
+</html>

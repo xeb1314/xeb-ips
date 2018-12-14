@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://TVNetwork/MAM/MAMSystemService/1.0" xmlns:nspubc="http://TVNetwork/Schema/CommonComplexTypes/1.0" xmlns:md="http://TVNetwork/Schema/MAM/1.0" targetNamespace="http://TVNetwork/MAM/MAMSystemService/1.0">
+	<types>
+		<xs:schema targetNamespace="http://TVNetwork/MAM/MAMSystemService/1.0" elementFormDefault="qualified">
+			<xs:import namespace="http://TVNetwork/Schema/CommonComplexTypes/1.0" schemaLocation="../CommonTypes/CommonComplexTypes.xsd"/>
+			<xs:import namespace="http://TVNetwork/Schema/MAM/1.0" schemaLocation="MediaObject.xsd"/>
+		</xs:schema>
+	</types>
+	<message name="mediaImportRequest">		
+		<part name="requestHead" element="nspubc:requestHead"/>		
+		<part name="mediaImportRequest" element="md:mediaImportRequest"/>		
+	</message>
+	<message name="mediaImportResponse">
+		<part name="mediaImportResponse" element="md:mediaImportResponse"/>
+	</message>
+	<message name="mediaImportCallbackRequest">		
+		<part name="requestHead" element="nspubc:requestHead"/>			
+		<part name="mediaImportCallbackRequest" element="md:mediaImportCallbackRequest"/>		
+	</message>
+	<message name="mediaImportCallbackResponse">
+		<part name="mediaImportCallbackResponse" element="md:mediaImportCallbackResponse"/>
+	</message>
+	<portType name="MAMSystemServicPort">
+		<operation name="mediaImport">
+			<input message="tns:mediaImportRequest"/>
+			<output message="tns:mediaImportResponse"/>
+		</operation>
+		<operation name="mediaImportCallback">
+			<input message="tns:mediaImportCallbackRequest"/>
+			<output message="tns:mediaImportCallbackResponse"/>
+		</operation>
+	</portType>
+	<binding name="MAMSystemServiceHttpBinding" type="tns:MAMSystemServicPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="mediaImport">
+			<soap:operation soapAction="http://TVNetwork/MAM/MAMSystemService/1.0/mediaImport"/>
+			<input>
+				<soap:header message="tns:mediaImportRequest" part="requestHead" use="literal"/>			
+				<soap:body parts="mediaImportRequest" use="literal"/>				
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="mediaImportCallback">
+			<soap:operation soapAction="http://TVNetwork/MAM/MAMSystemService/1.0/mediaImportCallback"/>
+			<input>
+				<soap:header message="tns:mediaImportCallbackRequest" part="requestHead" use="literal"/>			
+				<soap:body parts="mediaImportCallbackRequest" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="MAMSystemService">
+		<port name="MAMSystemServiceHttpPort" binding="tns:MAMSystemServiceHttpBinding">
+			<soap:address location="http://localhost:8080/TVNetwork/MAM/MAMSystemService"/>
+		</port>
+	</service>
+</definitions>

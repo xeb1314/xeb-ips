@@ -1,0 +1,7 @@
+﻿<?xml version="1.0"?>
+<!-- 媒体文件比较-->
+<actConfig>
+  <item name="sourcePath1" desc="源路径1" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0" allowVariable="true"/>
+  <item name="sourcePath2" desc="源路径2" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0" allowVariable="true"/>
+  <item name="threshold" desc="阀值" deafult="40"  allowEmpty="false" dataType="int" source="0" minValue="30" maxValue="50"/>
+</actConfig>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0"?>
+<!--话音入库-->
+<actConfig>
+  <item name="cmIndex" desc="存储对象源" visible="true" deafult="CM801" title="扫描出的文件存放的数据源" allowEmpty="false" dataType="string" maxLength="0" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/>
+  <item name="dsID" desc="数据源ID" deafult="" allowEmpty="true" dataType="string" maxLength="100" source="0" visible="true"/>
+  <item name="dbCode" desc="数据库" deafult="893" allowEmpty="false" dataType="int" maxLength="5" source="1" sourceString="Oracle~893|南通库~892"/>
+  <item name="HMWTable" desc="数据存储表" deafult="" allowEmpty="false" dataType="string" maxLength="20" source="0"/>
+  <item name="dsName" desc="输出数据源" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0"/>
+ <!--  <item name="procUser" desc="处理用户" visible="true" deafult="" allowEmpty="false" dataType="string" maxLength="20" source="0"/>
+  <item name="procCode" desc="任务代码" visible="true" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0"/> -->
+</actConfig>
+
+<!--allowInput 是否显示文本框   true：显示， false：不显示， 默认为false -->

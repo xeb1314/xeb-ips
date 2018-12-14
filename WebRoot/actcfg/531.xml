@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<!-- 扫描 -->
+<actConfig>
+  <item name="scanPath" desc="扫描目录" deafult="" allowVariable="true"  allowEmpty="false" dataType="string" maxLength="100" source="0" visible="false"/>
+  <item name="nameFilter" desc="文件后缀" deafult="*.mov;*.mxf;*.gxf;*.mpg;*.avi;*.ts;*.mkv;*.vob;*.flv;*.wmv;" title="以英文分号隔开，不区分大小写，如：*.mxf;*.mov;*.ts" allowEmpty="false" dataType="string" maxLength="50" source="1" sourceString="所有文件~*.*|视频文件~*.mov;*.mxf;*.gxf;*.mpg;*.avi;*.ts;*.mkv;*.vob;*.flv;*.wmv;|音频文件~*.wav;*.wma;*.mp3;*.aac;*.flac;|图片文件~*.png;*.bmp;*.jpg;*.tif;*.tga;|自定义项~"/>
+  <item name="scanTime" desc="扫描时间" filed="Start,End" deafult="00:00:00,23:59:59" allowEmpty="false" dataType="date" source="5"/>  
+  <item name="scanInterval" desc="扫描间隔" deafult="20" allowEmpty="false" unit="秒" dataType="int" source="0" minValue="1" maxValue="3600"/>
+  <item name="groupType" desc="存储文件组" deafult="1" title="扫描出的文件存放的组" allowEmpty="false" dataType="int" maxLength="5" allowVariable="false" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="2203"/>
+  <!-- <item name="cmIndex" desc="存储对象源" deafult="CM1" title="扫描出的文件存放的数据源" allowEmpty="false" dataType="string" maxLength="0" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/>
+   -->
+   <item name="scanSub" desc="扫描子目录"  source="4" deafult="true"/>
+   <item name="scanHidFile" desc="扫描隐藏文件"  source="4" deafult="false"/>
+   <!-- <item name="scanMidiaGroup" desc="扫描媒体文件组"  source="4" deafult="true"/> 
+   <item name="scanPhotoGroup" desc="扫描图片序列"  source="4" deafult="false"/> -->
+</actConfig>
+
+<!-- visible是否显示  false:显示，  true：不显示，  默认为显示，   需有默认值default -->
+<!--soure 0:自输入，1：下拉自定义，2：受控词，3：变量   4：多选框   5:时间-->
+<!--allowVariable 是否显示变量弹出框   true：显示， false：不显示， 默认为false -->
+<!--allowDate 是否显示日期   true：显示， false：不显示， 默认为false -->
+<!--filed 用于保存时间段  保存为scanStartTime scanEndTime 不写默认保存一个scanTime  ","分割有多少个则显示多少个日期控件 依次显示保存-->

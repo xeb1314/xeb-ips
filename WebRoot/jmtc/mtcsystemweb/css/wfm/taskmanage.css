@@ -1,0 +1,22 @@
+.imgbutton {position:absolute;right: 20px;}
+.imgbutton input{ border:none; width:80px; line-height:33px; color:#fff;}
+.imgbutton-1{ background:url(../../images/oop_17.png) no-repeat left; height:33px; cursor: pointer;}
+.imgbutton-2{ background:url(../../images/trerr_03.png) no-repeat left;  height:33px; color:#fff;cursor: pointer;}
+.imgbutton-3{ background:url(../../images/trerr_08.png) no-repeat left;  height:33px;text-indent:25px; color:#fff;cursor: pointer;}
+
+
+.pushback{background:url(../../images/pushback.png) no-repeat center; margin: 0  auto; width:18px ; height:18px;cursor:pointer;}
+.pushback span{ display:none;}
+.pushback a{ display:none;}
+
+.reexec{background:url(../../images/reexec.png) no-repeat center; margin: 0  auto; width:18px ; height:18px;cursor:pointer;}
+.reexec span{ display:none;}
+.startflow a{ display:none;}
+
+.committask{background:url(../../images/commit.png) no-repeat center; margin: 0  auto;width:18px ; height:18px;cursor:pointer;}
+.committask span{ display:none;}
+.committask a{ display:none;}
+
+#taskmanage-processTab-div-body{
+	border-bottom: 0px;
+}

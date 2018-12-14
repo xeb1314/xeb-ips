@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<head>
+<title>受控词管理</title>
+<script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+<script type="text/javascript">
+Layoutit("#divPageFrame", {hLayout:[{value: 200, vLayout:[46, "auto"]}, {vLayout: [46, "auto", 40]}]});
+</script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+<![endif]-->
+</head>
+<body onload="pageInit();">
+
+<div id="divPageFrame" class="panels" style="overflow: hidden;">
+    <div class="h-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="display:inline-block;">模块列表</h3>
+        </div>
+        <div id="divTree" class="table-unbordered ztree" style="overflow: auto;"></div>
+    </div>
+    <div class="h-panel">
+        <div class="panel-heading">
+		   <div class="input-group input-group-xs pull-left input3">
+	         <input type="text" class="form-control" id="txt_CW_NAME" onkeydown="jetsennet.keyEvent(searchWord)" placeholder="名称">
+	           <span class="input-group-btn">
+	             <button type="submit" class="btn btn-default" onclick="javascript:searchWord();">
+	               <span class="glyphicon glyphicon-search"></span>
+	             </button>
+	           </span>
+	         </input>
+	       </div>
+	      
+	      <div id="divButtons" class="pull-right" style=" display: inline-block; margin-top: -2px; ">
+	        <span style="cursor:pointer;margin-right: 10px;" title="新建" onclick="gCrud.add();">
+	          <i class="fa fa-plus"></i>
+	        <span>&nbsp;新建</span>
+	        </span>
+	          	<span style="cursor:pointer;margin-right: 10px;" title="编辑" onclick="gCrud.edit();">
+	          	  <i class="fa fa-pencil-square-o"></i>
+	        <span>&nbsp;编辑</span>
+	        </span>
+	        <span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gCrud.remove();">
+	          <i class="fa fa-times"></i>
+	        <span>&nbsp;删除</span>
+	        </span>
+	        <span style="cursor:pointer;margin-right: 10px;" title="刷新" onclick="pageInit();">
+	          <i class="fa fa-refresh"></i>
+	          <span>&nbsp;刷新</span>
+	        </span>
+	      </div>
+	    </div>
+	
+	    <div class="table-unbordered" id="divContent">数据加载中...</div>
+	    
+	    <div class="panel-footer" id="divPage"></div>
+    </div>
+</div>
+
+  <div id="divCtrlword" style="display: none">
+    <form class="form-horizontal margin-left-lg margin-right-lg margin-top-lg">
+      <div class="form-group">
+        <label for="selSystem" class="col-sm-3 control-label">模块:</label>
+        <div class="col-sm-9">
+          <select id="selSystem" class="form-control input-sm"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtControlType" class="col-sm-3 control-label">类型编号:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control input-sm" id="txtControlType" validatetype="NotEmpty,filenameext,removespaces" placeholder="必填项" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtControlName" class="col-sm-3 control-label">名称:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control input-sm" id="txtControlName" validatetype="NotEmpty,filenameext,removespaces" maxlength="20" placeholder="必填项" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtControlCode" class="col-sm-3 control-label">代码:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control input-sm" id="txtControlCode" validatetype="NotEmpty,filenameext,removespaces" maxlength="20" placeholder="必填项" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtControlDesc" class="col-sm-3 control-label">描述:</label>
+        <div class="col-sm-9">
+          <textarea id="txtControlDesc" class="form-control input-sm" rows="4" validatetype="NotEmpty,filenameext,removespaces" maxlength="100"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+<script type="text/javascript" src="javascript/ctrlword.js"></script>  
+</body>
+</html>

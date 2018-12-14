@@ -1,0 +1,13 @@
+﻿<?xml version="1.0"?>
+<!--技审-->
+<actConfig>
+  <item name="groupType" desc="技审码流组" deafult="1" allowEmpty="false" dataType="int" maxLength="5" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="2203"/>  
+  <item name="templateName" desc="技审模板" deafult="" allowEmpty="false" dataType="string" source="10"/>   <!-- source="10" 从数据库中获取模板名称 -->
+  <item name="destPath" desc="目标路径" deafult="" title="技审后的文件存储目录" allowEmpty="false" dataType="string" allowVariable="true" maxLength="100" source="0"/>
+  <!-- <item name="cmIndex" desc="数据对象" deafult="CM1" allowEmpty="false" dataType="string" maxLength="0" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/>
+ --></actConfig>
+
+
+
+
+

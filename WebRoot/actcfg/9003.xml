@@ -1,0 +1,6 @@
+﻿<?xml version="1.0"?>
+<!--HTTP执行-->
+<actConfig>
+  <item name="UrlPath" desc="HTTP地址" deafult="" allowEmpty="false" dataType="string" maxLength="200" source="0"/> 
+  <item name="Period" desc="任务轮询间隔（分钟）" deafult="" allowEmpty="false" dataType="int" maxLength="20" source="0"/> 
+</actConfig>

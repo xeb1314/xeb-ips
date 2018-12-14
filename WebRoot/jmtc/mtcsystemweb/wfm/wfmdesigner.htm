@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JMTC PORTAL</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../../jetsenclient/javascript/jbase.js" apppath="../"></script>
+	<script type="text/javascript">
+	// 	Layoutit("#divPageFrame", {hLayout:[{value:350,vLayout:[46,{hLayout:[76,'auto']}]}, {vLayout:[46,{value: 175, vLayout:[36, {hLayout: [30, "auto", 30]}]},'auto']}]});
+	 	Layoutit("#divPageFrame", {hLayout:[{value:350,vLayout:[46,'auto']}, {vLayout:[46,{value: 175, vLayout:[36, {hLayout: [30, "auto", 30]}]},'auto']}]});
+	</script>
+    <link href="../css/base.css" rel="stylesheet" type="text/css" />
+    <link href="../css/wfm/wfmdesigner.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload="pageInit();" oncontextmenu="return false;">
+    <div id="divPageFrame" class="panels">
+    <!-- 左侧分类树 -->
+    <div class="h-panel" id="paneldiv">
+         <div class="panel-heading" id="panelHead">
+           <span>数据信息</span>
+		    <div class="btn-group btn-group-sm pull-right">
+		       <span style="cursor:pointer;" onclick="newBindObject();"><img src="../images/new.png" style="height:18px;"/><span>&nbsp;新建类型</span></span>&nbsp;
+		       <span style="cursor:pointer;" onclick="newWorkflow();"><img src="../images/new.png" style="height:18px;"/><span>&nbsp;新建流程</span></span>&nbsp;
+		       <span style="cursor:pointer;" onclick="editWorkflow();"><img src="../images/edit.png" style="height:18px;"/><span>&nbsp;编辑</span></span>&nbsp;
+		       <span style="cursor:pointer;" onclick="deleteWorkflow();"><img src="../images/del.png" style="height:18px;"/><span>&nbsp;删除</span></span>
+		     </div>
+		 </div>
+		 <div id="treecontent" style="overflow-y:auto;overflow-x:hidden;">
+		    <div style="float: left;color: #35A2FF;position: relative;left: 24px;top:10px;width: 50px;">所有流程</div>
+		    <div id="divProcessList" style="float: left;position: relative;left: 18px;top:4px;width: 280px;">
+		    	<div v-component="linetree" v-with="model: treeData" v-ref="linetree" on-click="onClick" style="overflow-y:auto;overflow-x:hidden;float: left;padding-left: 1px;margin-top: 4px;width: 100%;">
+		        </div>
+		    </div>
+		 </div>  
+    </div>
+    <div class="h-panel" id="designPanelDiv" >
+       <div class="panel-heading">
+           <div style="float: left;"><span>流程设计工具</span></div>
+		    <div class="btn-group btn-group-sm pull-right" style="float: left;">
+		       <span style="cursor:pointer;" id="savespan" onclick="saveProcess();"><img src="../images/save.png" style="height:18px;"/><span>&nbsp;保存</span></span>&nbsp;
+		       <span style="cursor:pointer;" id="importspan" onclick="importWorkflow();"><img src="../images/import.png" style="height:18px;"/><span>&nbsp;导入</span></span>&nbsp;
+		       <span style="cursor:pointer;" id="exportspan" onclick="exportWorkflow();"><img src="../images/export.png" style="height:18px;"/><span>&nbsp;导出</span></span>&nbsp;
+		       <span style="cursor:pointer;" id="copyspan" onclick="copyProcess();"><img src="../images/copy.png" style="height:18px;"/><span>&nbsp;复制</span></span>&nbsp;
+		       <span style="cursor:pointer;" id="activespan" onclick="activeProcess(11);"><img src="../images/activate.png" style="height:18px;"/><span>&nbsp;激活</span></span>&nbsp;
+		       <span style="cursor:pointer;" id="noactivespan" onclick="activeProcess(100);"><img src="../images/unactivate.png" style="height:18px;"/><span>&nbsp;取消激活</span></span>&nbsp;
+		       <span style="cursor:pointer;" id="edit" onclick="activeProcess(0);"><img src="../images/edit.png" style="height:18px;"/><span>&nbsp;编辑</span></span>&nbsp;
+		       <span style="cursor:pointer;" id="defaultspan" onclick="activeProcess(10);"><img src="../images/default.png" style="height:18px;"/><span>&nbsp;缺省</span></span>&nbsp;
+		       <span style="cursor:pointer;" id="nodefaultspan" onclick="activeProcess(12);"><img src="../images/nodefault.png" style="height:18px;"/><span>&nbsp;取消缺省</span></span>&nbsp;
+		       <span style="cursor:pointer;" id="testspan" onclick="testProcess();"><img src="../images/skip.png" style="height:18px;"/><span>&nbsp;试用</span></span>
+		     </div>
+		 </div>
+         <div id="divActList" class="panel-border-bottom" style="overflow: hidden;" onselectstart="return false;">
+            <ul id="tabPane">
+            </ul>
+            <div>
+	            <div class="spanleft"><span class="glyphicon glyphicon-chevron-left" id="chevronLeft"></span></div>
+	            <div class="tabpage" id="tabPage" style="overflow: hidden;"></div>
+	            <div class="spanright"><span class="glyphicon glyphicon-chevron-right" id="chevronRight"></span></div>
+            </div>
+         </div>
+         <div class="drawing" id="divDesign" style="overflow: auto;"></div>
+    </div>
+  </div>
+    
+	    	    <div id="divProcess" style="display: none; width: 450px">
+			        <form class="form-horizontal mg-lg">
+			          <div class="form-group">
+			            <label for="txtRoleName" class="col-sm-3 control-label">流程名称：</label>
+			            <div class="col-sm-7">
+			              <div class="input-group input-group-sm">
+			                <input type="text" class="form-control" id="txtProcessName" validatetype="NotEmpty,filename" maxlength="18"/> 
+			                <span class="input-group-addon" style="color: Red">*</span>
+			              </div>
+			            </div>
+			          </div>
+			          <div class="form-group">
+			            <label for="txtObjType" class="col-sm-3 control-label">流程类型：</label>
+			            <div class="col-sm-7">
+			                <div class="input-group input-group-sm">
+				                <label style="position: relative; font-weight: normal; margin-bottom: 0;width: 100%" >
+								  <input id="txtObjType" onclick="jetsennet.ui.DropDownList.show(this)" class="form-control input-sm" validatetype="NotEmpty" readonly/>
+								  <i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;z-index: 10;"></i>
+								</label>
+								<span class="input-group-addon" style="color: Red">*</span>
+			                </div>
+			            </div>
+			          </div>
+			          <div class="form-group">
+			            <label for="txtCmpObjType" class="col-sm-3 control-label">存储对象：</label>
+			            <div class="col-sm-7">
+			                <label style="position: relative; font-weight: normal; margin-bottom: 0;width: 100%" >
+							  <input id="txtCmpObjType" onclick="jetsennet.ui.DropDownList.show(this)" class="form-control input-sm" validatetype="NotEmpty" readonly/>
+							  <i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+							</label>
+			            </div>
+			          </div>
+			          <div class="form-group">
+			            <label for="txtProcessDesc" class="col-sm-3 control-label">流程描述：</label>
+			            <div class="col-sm-7">
+			               <textarea class="form-control textarea" id="txtProcessDesc"  rows="3" maxlength="50"></textarea>
+			            </div>
+			          </div>
+			        </form>
+	            </div>
+	            
+	            <div id="divBindObject" style="display: none">
+	                <form class="form-horizontal mg-lg">
+			          <div class="form-group">
+			            <label for="txt_OBJ_TYPE" class="col-sm-3 control-label">类型编号：</label>
+			            <div class="col-sm-7">
+			              <div class="input-group input-group-sm">
+			                <input type="text" class="form-control" id="txt_OBJ_TYPE" validatetype="NotEmpty,Integer,minValue" maxlength="6" minValue="1"/> 
+			                <span class="input-group-addon" style="color: Red">*</span>
+			              </div>
+			            </div>
+			          </div>
+			          <div class="form-group">
+			            <label for="txt_OBJ_NAME" class="col-sm-3 control-label">类型名称：</label>
+			            <div class="col-sm-7">
+			              <div class="input-group input-group-sm">
+			                <input type="text" class="form-control" id="txt_OBJ_NAME" validatetype="NotEmpty" maxlength="16"/> 
+			                <span class="input-group-addon" style="color: Red">*</span>
+			              </div>
+			            </div>
+			          </div>
+			        </form>
+			    </div>
+	            
+            <div id="divImport" style="display: none;">
+            	<table border="0" cellpadding="0" cellspacing="0" class="mg-lg" width="100%">
+            	   <colgroup>
+                        <col style="width:120px;" />
+                        <col width="auto" />
+                    </colgroup>
+                    <tr style="height: 60px;">
+                        <td><label class="control-label">导入文件：</label></td>
+                        <td>
+                           <form action="../../../exportImportFlowDefine" method="post" id="frmImport" target="hiddenframe" enctype="multipart/form-data">
+			                <input type="file" name="fileImport" id="fileImport" onkeydown="return false" onpaste="return false" class="form-control" style="height:31px;"/>
+			               </form>
+			            </td>
+			       </tr>
+            	</table>
+            </div>
+            <form action="../../../exportImportFlowDefine" method="post" id="frmExport" target="hiddenframe">
+             <input type="hidden" name="operateType" value="1" />
+             <input type="hidden" name="procId" id="procId" value="" />
+             <input type="hidden" name="isIE" id="isIE" value="" />
+            </form>
+            <div id="divCopyProcess" style="display: none; padding: 20px">
+                <form class="form-horizontal mg-lg">
+			          <div class="form-group">
+			            <label for="txtCopyFlowName" class="col-sm-4 control-label">新流程名称：</label>
+			            <div class="col-sm-7">
+			              <div class="input-group input-group-sm">
+			                <input type="text" class="form-control" id="txtCopyFlowName" validatetype="NotEmpty" maxlength="25"/> 
+			                <span class="input-group-addon" style="color: Red">*</span>
+			              </div>
+			            </div>
+			          </div>
+			        </form>
+            </div>
+    
+             <div id="divtestObject" style="display: none;">
+            	<form class="form-horizontal mg-lg">
+			          <div class="form-group">
+			            <label for="saveFileGroup" class="col-sm-4 control-label">存储文件组：</label>
+			            <div class="col-sm-7"  style="padding-right:3px">
+			              <div class="input-group input-group-sm" style="width:100%">
+			              <label style="position: relative; font-weight: normal; margin-bottom: 0;width:100%;">
+			              <input id="saveFileGroup" validatetype="NotEmpty" onclick="jetsennet.ui.DropDownList.show(this)" class="form-control input-sm class2" 
+			              style="width:100%;"  readonly="readonly" handing="编辑版~1|预览版~30"/>
+			              <i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;z-index:10;"></i></label>
+			              <span class="input-group-addon" style="color: Red">*</span></div>
+			            </div>
+			            <div class="col-sm-1" style="padding-left:3px">
+			            </div>
+			          </div>
+			          <div class="form-group" id="filepathinit">
+			            <label class="col-sm-4 control-label">文件路径：</label>
+			            <div class="col-sm-7" style="padding-right:3px">
+				            <div class="input-group input-group-sm">
+				            <input name="saveFilePath" type="text" validatetype="NotEmpty,maxlength" maxlength="300" class="form-control" />
+				            <span class="input-group-addon" style="color: Red" disabled="disabled">*</span>
+				            </div>
+			            </div>
+			            <div class="col-sm-1" style="padding-left:3px">
+			            </div>
+			          </div>
+			    </form>
+            </div>
+    
+     <iframe id="hiddenframe" name="hiddenframe" style="display: none"></iframe>
+
+    <div id="divFunctionTree" style="display: none; width: 202px; height: 250px; overflow: auto;"
+        class="jetsen-tree-divc">
+    </div>
+    <div id="divPlayer" style="display: none;">
+    </div>
+    <div id="divActConfig" style="display: none;">
+    </div>
+    
+    <div id="divAssignRule" style="display: none;">
+        <div style="width: 100%;height: 30px;padding: 10px;" id="controlAssignDiv"></div>
+        <div style="width: 100%;height: 110px;padding: 30px;" id="assignSetDiv"></div>
+    </div>
+    
+    <div id="divConditionVariableWin" style="display: none; height: 100%;">
+	    <div id="divVariableConditionList" style="width: 100%;height: 99%;"></div> 
+    </div>
+    <div id="divVariableWin" style="display: none;">
+       <div id="divVariableList" style="width: 100%; height:320px;"></div>
+	</div>
+	
+	<div id="divVariableDetail" style="display: none; height: 100%; border: 0px">
+	   <form class="form-horizontal mg-lg">
+	       <label class="col-sm-4 control-label" id="span_VariableName"></label>
+	       <div class="col-sm-4">
+	          <input id="txt_VariableOperate" class="form-control input-sm" handing="≠~≠|≤~≤|≥~≥|&lt;~&lt;|&gt;~&gt;|=~=" onclick="jetsennet.ui.DropDownList.show(this)" readonly/>
+	       </div>
+	       <div class="col-sm-4">
+	          <input class="form-control input-sm" type="text"  id="txt_VeriableValue_Str" maxlength="100"/>
+	          <input class="form-control input-sm" type="text"  id="txt_VeriableValue_Int" maxvalue="10000000"/>
+	           <label style="position: relative;font-weight: normal;margin-bottom: 0;" id="txt_VeriableValue_Date_span">
+					<input id="txt_VeriableValue_Date" type="text" class="form-control input-sm" onclick="jetsennet.pickDate(this)" readonly/>
+					<i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;/* color: ivory; */"></i>
+				</label>
+	       </div>
+	   </form>
+    </div>
+    
+    <script type="text/javascript" src="../javascript/base.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/flowoperator.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/nodeassign.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/wfmdesigner.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/template.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/mediainfo.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/transcode.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/mxffileexport.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/mxffilecreate.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/qualitycheck.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/qualitycheckdata.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/wfmvariable.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/actconfig.js"></script>
+<!--左侧树  -->
+<script type="text/x-template" id="linetree-template">
+    <ul class="line-tree">
+      <li v-repeat="model" v-component="folder"></li>
+    </ul>
+</script>
+<script type="text/x-template" id="folder-template">
+    <div class="item folder">
+      <i class="fa" v-class="fa-plus-circle:!open,fa-minus-circle:open" v-on="click:open=!open"></i>
+	  <img v-if="icon" v-attr="src:icon"></img>
+      <span v-class="selected:id==selectId" v-on="dblclick:dblclick,click:click" title="{{name}}" unselectable="on" style="-moz-user-select:none;" onselectstart="return false;">{{name}}</span>
+    </div>
+    <ul v-show="open">
+      <li v-repeat="children" v-component="{{type}}"></li>
+    </ul>
+</script>
+<script type="text/x-template" id="file-template">
+    <div class="item file" style="overflow: hidden; text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;">
+	  <img v-if="icon" v-attr="src:icon"></img>
+	  <span v-class="selected:id==selectId" v-on="click:click" title="{{name}}">{{name}}</span>
+	</div>
+</script>
+<script type="text/javascript" src="../javascript/wfm/vuetree.js"></script>
+</body>
+</html>

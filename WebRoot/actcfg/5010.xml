@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<!-- 迁移合并 -->
+<actConfig>
+  <!-- <item name="cmIndex" desc="存储对象" deafult="CM1" allowEmpty="false" dataType="string" maxLength="0" source="2" sourceTable="WFM_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/>
+   --><item name="groupType" desc="文件码流组" deafult="1" allowEmpty="false" dataType="int" maxLength="5" source="1" sourceString="编辑版~1|预览版~30"/>
+  <item name="sourcePath" desc="迁移源路径" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0" allowVariable="true"/>
+  <item name="destPath" desc="目标路径" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0" allowVariable="true"/>
+  <item name="executeType" desc="执行方式" deafult="1" allowEmpty="false" dataType="int" maxLength="5" source="0" allowVariable="true"  visible="true"/>
+  <item name="readLimit" desc="磁盘读限速" deafultValue="30000" allowEmpty="false" unit="KB" allowInput="true" deafult="false" dataType="int"  minValue="1000" maxValue="500000"  source="4"/>
+  <item name="writeLimit" desc="磁盘写限速" deafultValue="30000" allowEmpty="false" unit="KB" allowInput="true" deafult="false" dataType="int"  minValue="1000" maxValue="500000" source="4"/>
+  <item name="md5Count" desc="MD5计算"  source="4" deafult="false"/>
+</actConfig>

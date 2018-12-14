@@ -1,0 +1,20 @@
+﻿<?xml version="1.0"?>
+<!-- 媒体剪辑-->
+<actConfig>
+  <!-- <item name="cmIndex" desc="存储对象" deafult="CM1" allowEmpty="false" dataType="string" maxLength="0" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/>
+   -->
+  <item name="groupType" desc="源文件组" deafult="1" type="1" allowEmpty="false" dataType="int" maxLength="5" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="2203"/>
+  <item name="destGroupType" desc="目标文件组" deafult="30" type="1" allowEmpty="false" dataType="int" maxLength="5" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="2203"/>
+  <item name="destPath" desc="目标路径" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0" allowVariable="true"/>
+  <item name="cutType" desc="剪辑方式" deafult="250" allowEmpty="false" dataType="int" maxLength="5" source="1"  sourceString="JVE合成~200|CutList合成~250"/>
+  <item name="remuxType" desc="复用类型" deafult="MOV" allowEmpty="false" dataType="string"  source="1" sourceString="AVI~AVI|MOV~MOV|MXF~MXF|TS~TS|MP4~MP4" controlFlag="1"/> 
+  <item name="readLimit" desc="磁盘读限速" unit="KB" deafultValue="30000" allowInput="true" allowEmpty="false" dataType="int" maxLength="5" source="4"/>
+  <item name="writeLimit" desc="磁盘写限速" unit="KB" deafultValue="30000" allowInput="true" allowEmpty="false" dataType="int" maxLength="5" source="4" />
+  <item name="muxRate" desc="复用码率" deafult="0" unit="kbps" allowEmpty="false" dataType="int" maxLength="5" source="0" controlValue="remuxType~TS"/>
+  <item name="streamID" desc="TS流ID" deafult="256" allowEmpty="false" dataType="int" maxLength="5" source="0" controlValue="remuxType~TS"/>
+  <item name="programID" desc="节目ID" deafult="48" allowEmpty="false" dataType="int" maxLength="5" source="0" controlValue="remuxType~TS"/>
+  <item name="vidPID" desc="视频流ID" deafult="160" allowEmpty="false" dataType="int" maxLength="5" source="0" controlValue="remuxType~TS"/>
+  <item name="audPID" desc="音频流ID" deafult="100" allowEmpty="false" dataType="int" maxLength="5" source="0" controlValue="remuxType~TS"/>
+  <item name="opType" desc="文件码流组" deafult="1" allowEmpty="false" dataType="int" maxLength="5" source="1" sourceString="op-1a~0|op-Atom~1" controlValue="remuxType~MXF"/>
+  <item name="pfdSupport" desc="蓝光支持" deafult="1" allowEmpty="false" dataType="int" maxLength="5" source="1" sourceString="不支持~0|支持~1" controlValue="remuxType~MXF"/>
+</actConfig>

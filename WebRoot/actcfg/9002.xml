@@ -1,0 +1,5 @@
+﻿<?xml version="1.0"?>
+<!--HTTP请求-->
+<actConfig>
+  <item name="UrlPath" desc="HTTP地址" deafult="" allowEmpty="false" dataType="string" maxLength="200" source="0"/> 
+</actConfig>

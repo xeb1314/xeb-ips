@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JetsenNet网络系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../../jetsenclient/javascript/jbase.js" apppath="../" apptype="1"></script>
+	<!-- 用到的插件，包含自己写的相关插件 -->
+	<script type="text/javascript" src="plugins/navigation.js"></script>
+	<script type="text/javascript" src="plugins/toolbar.js"></script>
+	<script type="text/javascript" src="plugins/bootstrap-hover-dropdown.min.js"></script>
+	<script type="text/javascript" src="plugins/jquery.slimscroll.js"></script>
+	<!-- 模板通用js -->   
+	<script type="text/javascript" src="../public/javascript/inout.js"></script>   
+	<script type="text/javascript" src="../public/javascript/datasource.js"></script>   
+	<!-- 模板自身js -->
+	<script type="text/javascript" src="javascript/myApp.js"></script>
+	<script type="text/javascript" src="javascript/index.js"></script>
+	<!-- 页面样式 -->
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/style-responsive.css" />
+	<link rel="stylesheet" type="text/css" href="css/default.css" />
+	<link rel="stylesheet" type="text/css" href="css/toolbar.css" /> 
+</head>
+
+<body class="page-footer-fixed"  screen_capture_injected="true">
+<div class="header navbar">
+	<div class="header-inner">
+		<div class="page-logo">
+            <a href="javascript:;">
+                <img src="images/mainframe/ips-logo-2.png" alt="logo" style="margin-top: 5px;" />
+            </a>
+        </div>
+		<div id="mytoolbar"></div>
+	</div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="page-container">
+	<div id="mynavigation" class="page-sidebar-wrapper">
+	</div>
+	<div class="page-content-wrapper">
+		<div class="page-content" style="overflow: hidden;">
+			<iframe frameborder="0" id="JetsenMain" name="JetsenMain" src="main.htm" scrolling="no" style="border:none; width: 100%;" ></iframe>
+		</div>
+	</div>
+</div>
+
+<div class="container" id="mypagefooter">
+	<div class="footer">
+		<div class="footer-inner">版权所有 捷成世纪JETSEN BEIJING TECHNOLOGY</div>
+		<div class="footer-tools">
+			<span class="go-hide"><i class="fa fa-angle-double-down"></i></span>
+		</div>
+	</div>
+</div>
+
+<!-- 样式控制 -->
+<div class="theme-panel hidden-xs hidden-sm" style="position: absolute; right: 2px; top: 5px; z-index: 9999999;">
+	<div class="toggler">
+		<i class="fa fa-gear"></i>
+	</div>
+	<div class="theme-options" style="display: none;">
+		<div class="theme-option" style="padding-top:28px;">
+			<span> 布局  </span> 
+			<select class="layout-option form-control input-small">
+				<option value="fluid">全屏</option>
+				<option value="boxed">居中</option>
+			</select>
+		</div>
+		<div class="theme-option">
+			<span> 导航栏  </span> 
+				<select class="sidebar-option form-control input-small">
+				<option value="default">模式1</option>
+				<option value="fixed">模式2</option>
+			</select>
+		</div>
+		<div class="theme-option">
+			<span> 导航栏位置  </span> 
+			<select class="sidebar-pos-option form-control input-small">
+				<option value="left">左边</option>
+				<option value="right">右边</option>
+			</select>
+		</div>
+		<div class="theme-option">
+			<span> 状态栏  </span> 
+			<select class="footer-option form-control input-small">
+				<option value="show">显示</option>
+				<option value="hide">隐藏</option>
+			</select>
+		</div>
+		<div class="div-quit" onclick="doLogout();">
+			<i class="fa fa-sign-out"></i>退出
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

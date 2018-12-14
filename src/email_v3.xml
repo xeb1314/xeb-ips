@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema name="emailv3" version="1.5" desc="邮件表ver3">
+<fields>
+<field name="DsID" type="string" indexed="true" stored="true" mode="ro" length="50" multiValued="false" desc="数据源ID"/>
+<field name="DsPID" type="string" indexed="true" stored="true" mode="ro" length="50" multiValued="false" desc="数据源父ID"/>
+<field name="IPVersion" type="string" indexed="true" stored="true" mode="ro" length="1" multiValued="false" desc="IP版本"/>
+<field name="SrcIP" type="hipaddr" indexed="true" stored="true" mode="ro" length="48" multiValued="false" desc="源IP地址"/>
+<field name="DestIP" type="hipaddr" indexed="true" stored="true" mode="ro" length="48" multiValued="false" desc="目的IP地址"/>
+<field name="SFromIp" type="hipaddr" indexed="true" stored="true" mode="ro" multiValued="false" desc="源IP地区属性"/>
+<field name="SToIp" type="hipaddr" indexed="true" stored="true" mode="ro" multiValued="false" desc="目的IP地区属性"/>
+<field name="SrcPort" type="int" indexed="true" stored="true" mode="ro" multiValued="false" desc="源端口号"/>
+<field name="DestPort" type="int" indexed="true" stored="true" mode="ro" multiValued="false" desc="目的端口号"/>
+<field name="EmailTypeCode" type="string" indexed="true" stored="true" mode="ro" length="1" multiValued="false" desc="邮件类型代码"/>
+<field name="EmailType" type="string" indexed="true" stored="true" mode="ro" length="10" multiValued="false" desc="邮件类型"/>
+<field name="LineNo1" type="int" indexed="true" stored="true" mode="ro" multiValued="false" desc="光层"/>
+<field name="LineNo2" type="int" indexed="true" stored="true" mode="ro" multiValued="false" desc="电层"/>
+<field name="LineNo1Char" type="string" indexed="true" stored="true" mode="ro" length="20" multiValued="false" desc="光层值"/>
+<field name="LineNo2Char" type="string" indexed="true" stored="true" mode="ro" length="20" multiValued="false" desc="电层值"/>
+<field name="LineNo3" type="int" indexed="true" stored="true" mode="ro" multiValued="false" desc="时隙"/>
+<field name="LineNo4" type="int" indexed="true" stored="true" mode="ro" multiValued="false" desc="虚属性"/>
+<field name="SLineGrade" type="int" indexed="true" stored="true" mode="ro" multiValued="false" desc="等级"/>
+<field name="FromUser" type="string" indexed="true" stored="true" mode="ro" length="20" multiValued="false" desc="发方用户名"/>
+<field name="ToUser" type="string" indexed="true" stored="true" mode="ro" length="20" multiValued="false" desc="收方用户名"/>
+<field name="FromAddr" type="string" indexed="true" stored="true" mode="ro" multiValued="false" desc="发件地址"/>
+<field name="ToAddr" type="string" indexed="true" stored="true" mode="ro" multiValued="true" desc="收件地址"/>
+<field name="CC" type="string" indexed="true" stored="true" mode="ro" multiValued="true" desc="抄送"/>
+<field name="BCC" type="string" indexed="true" stored="true" mode="ro" multiValued="true" desc="暗送"/>
+<field name="Subject" type="text" indexed="true" stored="true" mode="ro" multiValued="false" desc="标题"/>
+<field name="SendTime" type="date" indexed="true" stored="true" mode="ro" multiValued="false" desc="发送时间"/>
+<field name="AffixNum" type="int" indexed="true" stored="true" mode="ro" multiValued="false" desc="附件个数"/>
+<field name="AffixType" type="string" indexed="true" stored="true" mode="ro" multiValued="true" desc="附件类型"/>
+<field name="AffixName" type="string" indexed="true" stored="true" mode="ro" multiValued="true" desc="附件文件名"/>
+<field name="LangCode" type="string" indexed="true" stored="true" mode="rw" multiValued="false" desc="语（文）种编码"/>
+<field name="Lang" type="string" indexed="true" stored="true" mode="rw" multiValued="false" desc="文种"/>
+<field name="Charset" type="string" indexed="true" stored="true" mode="ro" multiValued="false" desc="编码集"/>
+<field name="IsEncrypt" type="int" indexed="true" stored="true" mode="ro" multiValued="false" desc="性质"/>
+<field name="Keywords" type="string" indexed="true" stored="true" mode="ro" multiValued="true" desc="关键词"/>
+<field name="Abstract" type="text" stored="true" language="cn" multiValued="true" desc="文摘"/>
+<field name="IsMiss" type="int" indexed="true" stored="true" mode="ro" multiValued="false" desc="是否完整"/>
+<field name="HasAffix" type="int" indexed="true" stored="true" mode="ro" multiValued="false" desc="是否有附件"/>
+<field name="UnknownAffix" type="int" indexed="true" stored="true" mode="ro" multiValued="false" desc="是否包含未知附件"/>
+<field name="TaskId" type="int" indexed="true" stored="true" multiValued="false" desc="任务ID"/>
+<field name="SText" type="text" indexed="true" stored="true" language="cn" multiValued="false" desc="正文"/>
+<field name="AffixDat" type="hblob" multiValued="true" desc="原始附件"/>
+<field name="AffixText" type="text" stored="true" language="cn" combine="true" multiValued="true" desc="附件文本"/>
+<field name="MessageID" type="string" indexed="true" stored="true" multiValued="false" unique="true" desc="报文标识号"/>
+<field name="MessagePID" type="string" indexed="true" stored="true" mode="ro" length="50" multiValued="false" desc="报文父标识号"/>
+<field name="MessageType" type="string" indexed="true" stored="true" multiValued="false" desc="素材类型"/>
+<field name="InUnit" type="string" indexed="true" stored="true" length="50" multiValued="false" mode="rw" desc="单位编码"/>
+<field name="Unit" type="string" indexed="true" length="200" multiValued="false" mode="rw" desc="单位"/>
+<field name="InPerson" type="string" indexed="true" length="50" mode="rw" desc="人员编码"/>
+<field name="Person" type="string" indexed="true" length="200" mode="ro" desc="人员"/>
+<field name="InPosition" type="string" indexed="true" length="50" mode="ro" desc="位置编码"/>
+<field name="Position" type="string" indexed="true" length="200" mode="ro" desc="位置"/>
+<field name="InsystemType" type="string" indexed="true" length="50" mode="ro" desc="系统编码"/>
+<field name="System" type="string" indexed="true" length="200" mode="ro" desc="系统"/>
+<field name="Inequipment" type="string" indexed="true" mode="ro" desc="设备标识"/>
+<field name="equipment" type="string" indexed="true" mode="ro" desc="设备"/>
+<field name="InTime" type="date" indexed="true" mode="ro" desc="时间"/>
+<field name="StoreAddress" type="string" indexed="true" mode="ro" desc="存储目录"/>
+<field name="FileName" type="string" indexed="true" mode="ro" desc="文件名"/>
+<field name="FileNo" type="string" indexed="true" mode="ro" desc="文件号"/>
+<field name="FileLength" type="int" indexed="true" mode="ro" desc="报文长度"/>
+<field name="CountryCode" type="string" indexed="true" mode="ro" desc="国家代码"/>
+<field name="Country" type="string" indexed="true" mode="ro" desc="国家"/>
+<field name="OrgCode" type="string" indexed="true" mode="ro" desc="机构简称"/>
+<field name="Org" type="string" indexed="true" mode="ro" desc="机构"/>
+<field name="Reader" type="string" indexed="true" mode="ro" desc="人"/>
+<field name="ReadTime" type="date" indexed="true" mode="ro" desc="时间"/>
+<field name="SerialNum" type="string" indexed="true" mode="ro" desc="序号"/>
+<field name="CollectSys" type="string" indexed="true" mode="ro" desc="采集系统"/>
+<field name="CollectUser" type="string" indexed="true" mode="ro" desc="采集用户"/>
+<field name="CollectCode" type="string" indexed="true" mode="ro" desc="采集任务号"/>
+<field name="CollectTime" type="date" indexed="true" mode="ro" desc="采集时间"/>
+<field name="ProcUser" type="string" indexed="true" mode="rw" desc="数据处理用户"/>
+<field name="ProcCode" type="string" indexed="true" mode="rw" desc="数据处理任务号"/>
+<field name="ProcTime" type="date" indexed="true" mode="rw" desc="数据处理时间"/>
+<field name="RepeatMailID" type="string" indexed="true" mode="rw" desc="重复邮件ID"/>
+<field name="IsRepeat" type="int" indexed="true" mode="rw" desc="是否重报"/>
+<field name="AffixSize" type="int" indexed="true" mode="ro" multiValued="true" desc="附件大小"/>
+</fields>
+</schema>

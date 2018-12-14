@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+
+	<!-- ========================== 自定义输出格式说明================================ -->
+	<!-- %p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL -->
+	<!-- #%r 输出自应用启动到输出该log信息耗费的毫秒数 -->
+	<!-- #%c 输出所属的类目，通常就是所在类的全名 -->
+	<!-- #%t 输出产生该日志事件的线程名 -->
+	<!-- #%n 输出一个回车换行符，Windows平台为“\r\n”，Unix平台为“\n” -->
+	<!-- #%d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyy MMM dd HH:mm:ss,SSS}，输出类似：2002年10月18日 
+		22：10：28，921 -->
+	<!-- #%l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java:10) -->
+	<!-- ========================================================================== -->
+
+	<!-- ========================== 输出方式说明================================ -->
+	<!-- Log4j提供的appender有以下几种: -->
+	<!-- org.apache.log4j.ConsoleAppender(控制台), -->
+	<!-- org.apache.log4j.FileAppender(文件), -->
+	<!-- org.apache.log4j.DailyRollingFileAppender(每天产生一个日志文件), -->
+	<!-- org.apache.log4j.RollingFileAppender(文件大小到达指定尺寸的时候产生一个新的文件), -->
+	<!-- org.apache.log4j.WriterAppender(将日志信息以流格式发送到任意指定的地方) -->  
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%t.%F:%L] %n%m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMax" value="ERROR" />
+			<param name="LevelMin" value="TRACE" />
+		</filter>
+	</appender>
+
+	<!-- 
+	<appender name="FILE" class="org.apache.log4j.FileAppender">
+		<param name="File" value="C:/logs/jetsen" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%t.%F:%L] %m%n" />
+		</layout>
+	</appender>
+	 -->
+	  
+	<!-- 输出到固定大小日志文件 -->
+	<appender name="filelog_appender"  
+        class="org.apache.log4j.RollingFileAppender">  
+        <param name="File" value="C:/logs/log" />  
+        <param name="Append" value="true" />  
+        <param name="MaxFileSize" value="1MB" />  
+        <param name="MaxBackupIndex" value="10000" />  
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%d %-5p [%t.%F:%L] %n%m%n%n" />     
+        </layout>  
+    </appender>  
+    
+    
+	<!-- 输出到日志文件 每天一个日志  -->  
+	<!--
+    <appender name="filelog_daily" class="org.apache.log4j.DailyRollingFileAppender">     
+        <param name="File" value="C:/logs/log" />     
+        <layout class="org.apache.log4j.PatternLayout">     
+            <param name="ConversionPattern" value="%d %-5p [%t.%F:%L] %n%m%n%n" />     
+        </layout>     
+    </appender>   
+    <appender name="filelog_daily_orm" class="org.apache.log4j.DailyRollingFileAppender">     
+        <param name="File" value="C:/logs/dblog" />     
+        <layout class="org.apache.log4j.PatternLayout">     
+            <param name="ConversionPattern" value="%d %-5p [%t.%F:%L] %n%m%n%n" />     
+        </layout>     
+    </appender>   
+	-->
+	
+	
+	<!-- 保存到数据库，方便性能统计等
+	<appender name="DATABASE" class="org.apache.log4j.jdbc.JDBCAppender">
+		<param name="URL" value="jdbc:oracle:thin:@192.168.0.59:1521:oanet" />
+		<param name="driver" value="oracle.jdbc.driver.OracleDriver" />
+		<param name="user" value="hdczoa" />
+		<param name="password" value="system" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="INSERT INTO hdczoa.LOG4J(stamp,thread, info_level,class,message) VALUES ('%d', '%t', '%p', '%c', %m)" />
+		</layout>
+	</appender>
+	 -->
+
+	<!-- 发邮件 
+	<appender name="MAIL" class="org.apache.log4j.net.SMTPAppender">
+		<param name="threshold" value="fatal" />
+		<param name="BufferSize" value="512" />
+		<param name="From" value="test@163.com" />
+		<param name="SMTPHost" value="smtp.163.com" />
+		<param name="Subject" value="juyee-log4jMessage" />
+		<param name="To" value="test@163.com" />
+		<param name="SMTPUsername" value="test" />
+		<param name="SMTPPassword" value="test" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH:mm:ss.SSS} [%p]-[%c] %m%n" />
+		</layout>
+	</appender>
+	-->
+
+	<!-- 
+	<appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+		<param name="BufferSize" value="256" />
+		<appender-ref ref="DATABASE" />
+	</appender>
+	 -->
+
+	<!--通过<category></category>的定义可以将各个包中的类日志输出到不同的日志文件中 -->
+	<category name="jetsennet.frame">
+		<priority value="DEBUG" />
+	</category>
+	<category name="org.springframework">
+		<priority value="info" />
+	</category>
+	<category name="org.apache">
+		<priority value="info" />
+	</category>
+
+	<logger name="org.springframework" additivity="false">       
+        <level value="INFO" />       
+    </logger>
+
+	<root>
+		<priority value="DEBUG" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="filelog_appender" />
+	</root>
+</log4j:configuration>  

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://TVNetwork/Schema/IPS/1.0" targetNamespace="http://TVNetwork/Schema/IPS/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="dataSource" type="tns:DataSourceType">
+		<xs:annotation>
+			<xs:documentation>数据源条目</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="OrderMsgType">
+		<xs:annotation>
+			<xs:documentation>邮件订阅消息类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LoginName" type="xs:string"/>
+			<xs:element name="OrderType" type="xs:string"/>
+			<xs:element name="DataSourceID" type="xs:string"/>
+			<xs:element name="ExtendAttributes" type="tns:ArrayOfAttributeItemType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfDataSourceType">
+		<xs:annotation>
+			<xs:documentation>数据源集合类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="dataSource" type="tns:DataSourceType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AttributeItemType">
+		<xs:annotation>
+			<xs:documentation>扩展属性条目类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="itemCode" type="xs:string"/>
+			<xs:element name="itemValue" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfAttributeItemType">
+		<xs:sequence>
+			<xs:element name="attributeItem" type="tns:AttributeItemType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ExtendAttributes" type="tns:ArrayOfAttributeItemType">
+		<xs:annotation>
+			<xs:documentation>扩展属性</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="DataSourceType">
+		<xs:annotation>
+			<xs:documentation>数据源条目类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="dsID" type="xs:string"/>
+			<xs:element name="dsUID" type="xs:string"/>
+			<xs:element name="parentID" type="xs:string"/>
+			<xs:element name="dsName" type="xs:string"/>
+			<xs:element name="dsType" type="xs:int"/>
+			<xs:element name="dsClassName" type="xs:string"/>
+			<xs:element name="dsClass" type="xs:int"/>
+			<xs:element name="state" type="xs:int"/>
+			<xs:element name="dsParam" type="xs:string"/>
+			<xs:element name="dsDesc" type="xs:string"/>
+			<xs:element name="createUser" type="xs:string"/>
+			<xs:element name="createUserID" type="xs:int"/>
+			<xs:element name="createTime" type="xs:string"/>
+			<xs:element name="updateUser" type="xs:string"/>
+			<xs:element name="updateUserID" type="xs:int"/>
+			<xs:element name="updateTime" type="xs:string"/>
+			<xs:element name="str1" type="xs:string"/>
+			<xs:element name="str2" type="xs:string"/>
+			<xs:element name="str3" type="xs:string"/>
+			<xs:element name="ExtendAttributes" type="tns:ArrayOfAttributeItemType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JMTC PORTAL</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../../jetsenclient/javascript/jbase.js" apppath="../"></script>
+    <script type="text/javascript">
+    	Layoutit("#divPageFrame", {vLayout:[200, {vLayout:[45, 'auto', 35]}]});
+    	Layoutit("#divSubTask", {vLayout:["auto", 35]});
+    </script>
+    <link href="../css/base.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="pageInit();">
+   <div id="divPageFrame" class="panels">
+	    <div class="v-panel">
+	        <div class="panel-heading">
+	            <span>查询条件</span>
+	        </div>
+	        <div class="panel-collapse div-collapse">
+	           <table border="0" align="center" cellpadding="0" cellspacing="0">
+			        <tr class="tableRowHeight60">
+			            <td class="rightAlign" width="80px;">
+			             	<span>任务名称:&nbsp;</span>
+			            </td>
+			            <td width="240px;">
+						    <input id="txt_taskName" name="name" class="form-control input-sm" onkeydown="jetsennet.keyEvent(getTaskList)"/>
+			            </td>
+			             <td class="rightAlign" width="100px;">
+				            <span>任务接收时间:&nbsp;</span>
+				         </td>
+				         <td width="520px;">
+				            <label style="position: relative;font-weight: normal;margin-bottom: 0;">
+							  <input id="txtStartTime" type="text" class="form-control input-sm input-date" readonly/>
+							  <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;/* color: ivory; */"></i>
+							</label>
+	                            &nbsp;<span>至</span>&nbsp;
+	                        <label style="position: relative;font-weight: normal;margin-bottom: 0;">
+							  <input id="txtEndTime" type="text" class="form-control input-sm input-date" readonly/>
+							  <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;/* color: ivory; */"></i>
+							</label>
+	                            &nbsp;<a href="javascript:void(0)" ><span onclick="el('txtStartTime').value=el('txtEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=gLastWeekDate.toDateString();el('txtEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=el('txtEndTime').value='';">清空</a>
+			            </td>
+			            
+			            <td rowspan="2" style="vertical-align: middle;">
+			               <button type="button" class="btn btn-primary btn-sm" onClick="getTaskList();">
+						        <span class="glyphicon glyphicon-search"></span> 查询
+						   </button>
+			            </td>
+			        </tr>
+			        <tr class="tableRowHeight60">
+			             <td class="rightAlign">
+					           <span>任务类型:&nbsp;</span>
+					     </td>
+				         <td>
+				            <label style="position: relative; font-weight: normal; margin-bottom: 0;width: 100%">
+							  <input id="txt_taskType" onclick="jetsennet.ui.DropDownList.show(this)"  class="form-control input-sm" selectedvalue="-1" readonly/>
+							  <i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+							</label>
+			             </td>
+			           <td class="rightAlign">
+				           <span>任务状态:&nbsp;</span>
+				        </td>
+				        <td>
+					            <input type="checkbox" name="chkState" value="-1" class="checkboxMid"/>&nbsp;<span class="checkboxMid">全部</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                            <input type="checkbox" name="chkState" value="1" class="checkboxMid" checked />&nbsp;<span class="checkboxMid">新任务</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                            <input type="checkbox" name="chkState" value="100" class="checkboxMid" checked />&nbsp;<span class="checkboxMid">执行中</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                            <input type="checkbox" name="chkState" value="200" class="checkboxMid"/>&nbsp;<span class="checkboxMid">成功</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                            <input type="checkbox" name="chkState" value="210" class="checkboxMid"/>&nbsp;<span class="checkboxMid">失败</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			           </td>
+			           
+			        </tr>
+	           </table>
+	        </div>
+	    </div>
+	    
+	    <div class="v-panel panel-border-top table-unbordered">
+		      <div class="panel-heading">
+		        <span>任务列表</span>
+		        <div class="btn-group btn-group-sm pull-right">
+		          <button type="button" title="手动下发任务" onclick="addTaskExec();">
+		            <span>手动下发任务</span>
+		          </button>
+		        </div>
+		      </div>
+		       <div id="divList" >数据加载中...</div>
+	        <div id="taskPage" class="panel-footer"></div>
+	    </div>
+	    
+    </div>
+
+    <div id="divLevel" style="text-align: center; vertical-align: middle;
+       display: none;">
+            <form class="form-horizontal mg-lg">
+			    <div class="form-group">
+			        <label for="txt_taskLevel" class="col-sm-4 control-label">设定任务优先级：</label>
+			        <div class="col-sm-7">
+				         <div class="input-group input-group-sm" style="width:100%">
+				             <label style="position: relative; font-weight: normal; margin-bottom: 0;width:100%;">
+					             <input type="text" class="form-control input-sm" id="txt_taskLevel" onclick="jetsennet.ui.DropDownList.show(this)" validatetype="NotEmpty" handing="1~1|2~2|3~3|4~4|5~5|6~6|7~7|8~8|9~9|10~10|100~100" readonly/>
+					             <i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;z-index:10;"></i> 
+				             </label>
+					         <span class="input-group-addon" style="color: Red">*</span>
+				         </div>
+			        </div>
+			    </div>
+		   </form>
+    </div>
+    
+    <!-- 任务详情 -->
+    <div id="divTaskDetail" style="display: none;padding-top: 3px;height: 100%;" >
+        <div>
+		    <ul id="tabPane">
+		      <li>任务信息</li>
+			  <li>信息报文</li>
+			  <li id="resultTabPane">运行结果</li>
+		    </ul>
+		  </div>
+		  <div id="tabPage" style="height: 100%;">
+		    <!-- 任务信息 -->
+			      <div id="LogDetail" style="padding:10px;height: 90%;">
+			      </div>
+			     <!-- 信息报文 -->
+			      <div id="taskxmlContent" style="height: 100%;">
+			          <div style="width: 100%;height:92%;overflow-y: auto;" id="taskxmlContentInDiv">
+			          </div>
+			      </div>
+			      <div id="resultxmlContent" style="height: 100%;">
+			          <div style="width: 100%;height:92%;overflow-y: auto;" id="taskResultxmlContentInDiv">
+			          </div>
+			      </div>
+		  </div>
+    </div>
+    
+    <div id="divSubTask" style="display: none">
+        <div id="divSubList" style="width: 100%;">数据加载中...</div>
+		<div id="subTaskPage" class="panel-footer" ></div>
+    </div>
+    
+    <!-- 添加任务 -->
+    <div id="divAddTask" style="display: none">        
+        <div style="padding:5px">
+            任务报文:
+            <textarea id="txtAddTaskXml" style="height: 250px; width: 480px" validatetype="notEmpty"></textarea>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="../javascript/mtc/taskmanage.js"></script>
+    <script type="text/javascript" src="../javascript/mtc/taskcommon.js"></script>
+</body>
+</html>

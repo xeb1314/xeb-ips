@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://cxf.apache.org/jaxrs
+	http://cxf.apache.org/schemas/jaxrs.xsd 
+	http://cxf.apache.org/jaxws 
+	http://cxf.apache.org/schemas/jaxws.xsd">
+	<!-- 实体类加载 -->
+	<bean id="baseClassLoader" class="jetsennet.frame.dataaccess.BaseClassLoader">
+		<property name="packageNames">
+			<list>
+				<value>jetsennet.jsystem.schema</value>
+				<value>jetsennet.juum.schema</value>
+				<value>jetsennet.mtc.schema</value>
+				<value>jetsennet.wfm.schema</value>
+				<value>jetsennet.ips.schema</value>
+				<value>jetsennet.jdma.schema</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 資源文件配置 -->
+	<bean id="propertyConfig" class="jetsennet.util.SpringContextUtil">
+		<property name="locations">
+			<list>
+				<value>classpath:/config.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 通用数据库连接配置 -->
+	<bean id="mtcDBBuilderProp" class="jetsennet.orm.configuration.ConfigurationBuilderProp">
+		<constructor-arg value="/dbconfig_mtc.properties" />
+	</bean>
+	
+	<!-- 通用数据库连接配置 -->
+	<bean id="wfmDBBuilderProp" class="jetsennet.orm.configuration.ConfigurationBuilderProp">
+		<constructor-arg value="/dbconfig_wfm.properties" />
+	</bean>
+
+	<!-- 通用数据库连接配置 -->
+	<bean id="defaultDBBuilderProp" class="jetsennet.orm.configuration.ConfigurationBuilderProp">
+		<constructor-arg value="/dbconfig.properties" />
+	</bean>
+	<!-- web框架 -->
+	<import resource="classpath:/frame-service.xml" />
+	<!-- jsystem -->
+	<import resource="classpath:/system-service.xml" />
+	<!-- uum -->
+	<import resource="classpath:/uum-service.xml" />
+	<!-- mtc -->
+	<import resource="classpath:/mtc-service.xml" />
+	<!-- wfm -->
+	<import resource="classpath:/wfm-service.xml" />
+	<!-- ips -->
+	<import resource="classpath:/ips-service.xml" />
+	<!-- jdma -->
+	<import resource="classpath:/dma-service.xml" />
+	
+	<!-- 上传相关配置 -->
+	<bean id="multipartResolver" name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+	</bean>
+	
+</beans>

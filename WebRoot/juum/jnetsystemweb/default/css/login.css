@@ -1,0 +1,19 @@
+html body
+{
+	background: url(../images/mainframe/background.PNG);
+}	
+
+#div_logo 
+{
+	position: absolute;
+	width:520px;
+	height:356px;
+	left:50%;
+	top:50%; 
+	margin-left:-260px;
+	margin-top:-178px;
+	background: url(../images/mainframe/jetsen-ips-logo.png) no-repeat center top;
+	vertical-align: middle;
+	text-align: center;
+	padding-top: 160px;
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:nspubc="http://TVNetwork/Schema/CommonComplexTypes/1.0" xmlns:tns="http://JetsenNet/JMTC/" targetNamespace="http://JetsenNet/JMTC/">
+	<types>
+		<xs:schema targetNamespace="http://JetsenNet/JMTC/" elementFormDefault="qualified">
+			<xs:import namespace="http://TVNetwork/Schema/CommonComplexTypes/1.0" schemaLocation="../CommonTypes/CommonComplexTypes.xsd"/>
+			<xs:element name="mtsProcess">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="1" minOccurs="1" name="messageText" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="mtsProcessResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="1" minOccurs="1" name="out" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</types>
+	<message name="mtsProcessResponse">
+		<part name="mtsProcessResponse" element="tns:mtsProcessResponse"/>
+	</message>
+	<message name="mtsProcessRequest">
+		<part name="requestHead" element="nspubc:requestHead"/>
+		<part name="mtsProcessRequest" element="tns:mtsProcess"/>
+	</message>
+	<portType name="MtsWebService">
+		<operation name="mtsProcess">
+			<input name="mtsProcessRequest" message="tns:mtsProcessRequest"/>
+			<output name="mtsProcessResponse" message="tns:mtsProcessResponse"/>
+		</operation>
+	</portType>
+	<binding name="MtsWebServiceHttpBinding" type="tns:MtsWebService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="mtsProcess">
+			<soap:operation soapAction="http://JetsenNet/JMTC/mtsProcess"/>
+			<input name="mtsProcessRequest">
+				<soap:header message="tns:mtsProcessRequest" part="requestHead" use="literal"/>			
+				<soap:body parts="mtsProcessRequest" use="literal"/>
+			</input>
+			<output name="mtsProcessResponse">
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="MtsWebService">
+		<port name="MtsWebServiceHttpPort" binding="tns:MtsWebServiceHttpBinding">
+			<soap:address location="http://localhost:8080/jetsennet-jmtc-2.0-manager/services/MtsWebService"/>
+		</port>
+	</service>
+</definitions>

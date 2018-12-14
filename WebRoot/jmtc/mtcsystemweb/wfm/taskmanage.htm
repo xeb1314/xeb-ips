@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JMTC PORTAL</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../../jetsenclient/javascript/jbase.js" apppath="../"></script>
+    <script type="text/javascript">
+ 		Layoutit("#divPageFrame", {vLayout:[200, {vLayout:[45, 'auto', 35]}]});
+ 		Layoutit("#divDialog", {vLayout:[33, "auto"]});
+    </script>
+    <link href="../css/base.css" rel="stylesheet" type="text/css" />
+    <link href="../css/wfm/taskmanage.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="pageInit();">
+    <div id="divPageFrame" class="panels">
+	    <div class="v-panel">
+	        <div class="panel-heading">
+	            <span>查询条件</span>
+	        </div>
+	        <div class="panel-collapse div-collapse">
+	           <table  border="0" align="center" cellpadding="0" cellspacing="0">
+			        <tr class="tableRowHeight60">
+			            <td class="rightAlign" width="80px;">
+			             	<span>任务名称:&nbsp;</span>
+			            </td>
+			            <td width="240px;">
+						    <input id="txtObjName" class="form-control input-sm" onkeydown="jetsennet.keyEvent(searchTask)" />
+			            </td>
+			            <td class="rightAlign" width="80px;">
+				            <span>开始时间:&nbsp;</span>
+				         </td>
+				         <td colspan="3">
+				         <label style="position: relative;font-weight: normal;margin-bottom: 0;">
+							  <input id="txtStartTime" type="text" class="form-control input-sm input-date" readonly/>
+							  <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;/* color: ivory; */"></i>
+							</label>
+	                            &nbsp;<span>至</span>&nbsp;
+				         <label style="position: relative;font-weight: normal;margin-bottom: 0;">
+							  <input id="txtEndTime" type="text" class="form-control input-sm input-date" readonly/>
+							  <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;/* color: ivory; */"></i>
+							</label>
+	                            &nbsp;<a href="javascript:void(0)" ><span onclick="el('txtStartTime').value=el('txtEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=gLastWeekDate.toDateString();el('txtEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=el('txtEndTime').value='';">清空</a>
+			           
+		                  <button type="button" class="btn btn-primary btn-sm pull-right" onClick="searchTask();" style="margin-right: 10px">
+					        <span class="glyphicon glyphicon-search"></span> 查询
+					      </button>
+			            </td>
+			        </tr>
+			        <tr class="tableRowHeight60">
+			             <td class="rightAlign" width="80px;">
+			               <span>工作流程:&nbsp;</span>
+			            </td>
+			            <td width="163px;">
+			               <label style="position: relative; font-weight: normal; margin-bottom: 0;width: 100%;">
+							  <input id="txtProcess" onclick="jetsennet.ui.DropDownList.show(this)"  class="form-control input-sm" readonly/>
+							  <i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+							</label>
+			            </td>
+				         <td class="rightAlign">
+						           <span>节点类型:&nbsp;</span>
+						 </td>
+				         <td width="190px">
+				            <label style="position: relative; font-weight: normal; margin-bottom: 0;width: 163px;">
+							  <input id="labCurrentTask" onclick="jetsennet.ui.DropDownList.show(this)"  class="form-control input-sm" readonly/>
+							  <i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+							</label>
+			             </td>
+			        
+			           <td class="rightAlign">
+				           <span>任务状态:&nbsp;</span>
+				        </td>
+				        <td>
+					        <input type="checkbox" name="chkState" value="-1" class="checkboxMid"/>&nbsp;<span class="checkboxMid">全部</span>&nbsp;&nbsp;
+                            <input type="checkbox" name="chkState" value="0" class="checkboxMid" />&nbsp;<span class="checkboxMid">未就绪</span>&nbsp;&nbsp;
+                            <input type="checkbox" name="chkState" value="1" class="checkboxMid" checked/>&nbsp;<span class="checkboxMid">等待</span>&nbsp;&nbsp;
+                            <input type="checkbox" name="chkState" value="2" class="checkboxMid" checked/>&nbsp;<span class="checkboxMid">执行中</span>&nbsp;&nbsp;
+                            <input type="checkbox" name="chkState" value="5" class="checkboxMid" checked />&nbsp;<span class="checkboxMid">被打回</span>&nbsp;&nbsp;
+                            <input type="checkbox" name="chkState" value="4" class="checkboxMid" />&nbsp;<span class="checkboxMid">打回</span>&nbsp;&nbsp;
+                            <input type="checkbox" name="chkState" value="7" class="checkboxMid" />&nbsp;<span class="checkboxMid">暂停</span>&nbsp;&nbsp;
+                            <input type="checkbox" name="chkState" value="3" class="checkboxMid" />&nbsp;<span class="checkboxMid">结束</span>&nbsp;&nbsp;
+                            <input type="checkbox" name="chkState" value="10" class="checkboxMid" checked/>&nbsp;<span class="checkboxMid">错误</span>&nbsp;&nbsp;
+			           </td>
+			           
+			        </tr>
+	           </table>
+	        </div>
+	    </div>
+	    
+	    <div class="v-panel panel-border-top table-unbordered">
+		      <div class="panel-heading">
+		        <span>任务列表</span>
+		        <div class="btn-group btn-group-sm pull-right">
+		            <span style="cursor:pointer;" onclick="commitTasks();"><img src="../images/skip.png" style="height:18px;"/><span>&nbsp;跳过</span></span>&nbsp;&nbsp;
+		            <span style="cursor:pointer;" onclick="backTasks();"><img src="../images/rollback.png" style="height:18px;"/><span>&nbsp;打回</span></span>&nbsp;&nbsp;
+		            <span style="cursor:pointer;" onclick="reexecTasks();"><img src="../images/repetition.png" style="height:18px;"/><span>&nbsp;重新执行</span></span>
+		        </div>
+		      </div>
+		      <div id="divList" >数据加载中...</div>
+		      <div id="divPage" class="panel-footer"></div>
+	    </div>
+	    
+    </div>
+    
+        <div id="divDialog" style="display: none;">
+           <div>
+		    <ul id="tabPane">
+		      <li>流程监控</li>
+			  <li>流程记录</li>
+		    </ul>
+		  </div>
+		  <div id="tabPage">
+		    <!-- 流程监控 -->
+			      <div id="divDesign" style="height:100%; width:750px">
+			      </div>
+			      <!-- 流程记录 -->
+			      <div id="processList" style="height:100%; width:750px">
+			      </div>
+		  </div>
+	    </div>
+	    
+	    <div id="divTaskBack" style="display: none;">
+	        <form class="form-horizontal mg-lg">
+        	<div class="form-group">
+			     <label for="txtBackDesc" class="col-sm-3 control-label">打回原因：</label>
+			        <div class="col-sm-7">
+			           <div class="input-group input-group-sm">
+			                <input type="text" class="form-control" id="txtBackDesc" validatetype="NotEmpty" maxlength="50"/> 
+			                <span class="input-group-addon" style="color: Red">*</span>
+			              </div>
+			        </div>
+			</div>
+           </form>
+      </div>
+      
+    <script type="text/javascript" src="../javascript/base.js"></script>    
+    <script type="text/javascript" src="../javascript/wfm/taskmanage.js"></script>
+    <script type="text/javascript" src="../javascript/wfm/wfmtaskset.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0"?>
+<!--媒体信息-->
+<actConfig>
+  <item name="groupType" desc="源文件组" deafult="1" type="1" allowEmpty="false" allowCheckbox="false" dataType="int" maxLength="5" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="2203"/>
+  <!-- <item name="cmIndex" desc="存储对象" deafult="CM1" type="1" allowEmpty="false" allowCheckbox="false" dataType="string" maxLength="0" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/>
+   --><item name="toStoreDB" desc="结果存数据库"  source="4" deafult="true" type="1"/>
+  <item type="1"/>
+  <item name="fileFormat" desc="文件格式" deafult="" type="1" allowEmpty="true"/>
+  <item name="fileSize" desc="文件大小" deafult="" type="1" allowEmpty="true"/>
+  <item name="videoStreamCount" desc="视频流数" deafult="" type="1" allowEmpty="true"/>
+  <item name="audioStreamCount" desc="音频流数" deafult="" type="1" allowEmpty="true"/>
+  <item name="mux_muxType" desc="复用方式" deafult="" type="1" allowEmpty="true"/>
+  <item name="mux_bitRate" desc="复用码率" deafult="" type="1" allowEmpty="true"/>
+  <item name="mux_duration" desc="时长" deafult="" type="1" allowEmpty="true"/>
+  
+  <item name="video_pid" desc="PID" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_fourcc" desc="编码格式" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_bitRate" desc="码率" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_frames" desc="长度" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_bitRateMode" desc="码率控制模式" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_width" desc="宽度" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_chromafmt" desc="色差格式" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_heigth" desc="高度" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_scanType" desc="扫描方式" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_gopSize" desc="GOP" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_aspect" desc="宽高比" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_depth" desc="图像显示位深" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_AFD" desc="AFD" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_rate" desc="帧速率" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_profile" desc="Profile" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_scale" desc="比例" deafult="" type="2" allowEmpty="true"/>
+  <item name="video_level" desc="Level" deafult="" type="2" allowEmpty="true"/>
+  
+  <item name="audio_pid" desc="PID" deafult="" type="3" allowEmpty="true"/>
+  <item name="audio_fourcc" desc="编码格式" deafult="" type="3" allowEmpty="true"/>
+  <item name="audio_bitPerSample" desc="采样精度" deafult="" type="3" allowEmpty="true"/>
+  <item name="audio_channels" desc="声道数" deafult="" type="3" allowEmpty="true"/>
+  <item name="audio_bitRate" desc="码率" deafult="" type="3" allowEmpty="true"/>
+  <item name="audio_freq" desc="采样率" deafult="" type="3" allowEmpty="true"/>
+  <item name="audio_bitRateMode" desc="码流控制模式" deafult="" type="3" allowEmpty="true"/>
+  <item name="audio_samples" desc="采样总数" deafult="" type="3" allowEmpty="true"/>
+
+<!--type 1:媒体基本信息  2：视频流信息  3：音频流信息-->
+
+</actConfig>

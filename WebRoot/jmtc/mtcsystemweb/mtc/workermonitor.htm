@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JMTC PORTAL</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../../jetsenclient/javascript/jbase.js" apppath="../"></script>
+    <script type="text/javascript" src="../javascript/base.js"></script>
+    <script type="text/javascript" src="../javascript/mtc/workermonitor.js"></script>
+    <script type="text/javascript" src="../javascript/mtccommon.js"></script>
+    <link href="../css/base.css" rel="stylesheet" type="text/css" />
+    <link href="../css/index.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+	    jetsennet.require([ "gridlist", "pagebar", "window", "bootstrap/moment", "bootstrap/daterangepicker", "crud","autocomplete"]);
+	    jetsennet.importCss("bootstrap/daterangepicker-bs3");
+        function pageInit() {
+            jetsennet.ui.DropDownList.initOptions("txt_actor", true);
+            jetsennet.ui.DropDownList["txt_actor"].onchanged = function (item) {
+                showActorView(item.ip, item.port, item.name, item.state);
+            };
+            getActorList();
+            var id = jetsennet.queryString("serverId");
+            if (id) {
+                jetsennet.ui.DropDownList["txt_actor"].setValue(id);
+            }
+        }
+    </script>
+</head>
+<body onload="pageInit();">
+    <div id="all">
+        <div id="content">
+            <div class="cantent01 clf">
+                <div class="clf-left">
+                    <div class="title">
+                        <div class="dess">
+                            <p>
+                                媒体进程监控</p>
+                        </div>
+                    </div>
+                    <div class="search-panel">
+                        <div class="search-left">
+                            <span>执行器名称：</span>
+                            <input id="txt_actor" class="select2" onclick="jetsennet.ui.DropDownList.show(this)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cantent01 clf" id="divContent">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

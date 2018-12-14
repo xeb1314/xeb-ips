@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://TVNetwork/PPM/PPMSystemService/1.0" xmlns:nspubc="http://TVNetwork/Schema/CommonComplexTypes/1.0" xmlns:nsprog="http://TVNetwork/Schema/PPM/1.0" targetNamespace="http://TVNetwork/PPM/PPMSystemService/1.0">
+	<types>
+		<xs:schema targetNamespace="http://TVNetwork/PPM/PPMSystemService/1.0" elementFormDefault="qualified">
+			<xs:import namespace="http://TVNetwork/Schema/CommonComplexTypes/1.0" schemaLocation="../CommonTypes/CommonComplexTypes.xsd"/>
+			<xs:import namespace="http://TVNetwork/Schema/PPM/1.0" schemaLocation="Program.xsd"/>
+		</xs:schema>
+	</types>
+	<message name="programCodeSearchRequest">
+		<part name="requestHead" element="nspubc:requestHead"/>
+		<part name="programCodeSearchRequest" element="nsprog:programCodeSearchRequest"/>
+	</message>
+	<message name="programCodeSearchResponse">
+		<part name="programCodeSearchResponse" element="nsprog:programCodeSearchResponse"/>
+	</message>
+	<message name="lockProgramCodeRequest">
+		<part name="requestHead" element="nspubc:requestHead"/>
+		<part name="lockProgramCodeRequest" element="nsprog:lockProgramCodeRequest"/>
+	</message>
+	<message name="lockProgramCodeResponse">
+		<part name="lockProgramCodeResponse" element="nsprog:lockProgramCodeResponse"/>
+	</message>
+	<portType name="PPMSystemServicePort">
+		<operation name="programCodeSearch">
+			<input message="tns:programCodeSearchRequest"/>
+			<output message="tns:programCodeSearchResponse"/>
+		</operation>
+		<operation name="lockProgramCode">
+			<input message="tns:lockProgramCodeRequest"/>
+			<output message="tns:lockProgramCodeResponse"/>
+		</operation>
+	</portType>
+	<binding name="PPMSystemServiceHttpBinding" type="tns:PPMSystemServicePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="programCodeSearch">
+			<soap:operation soapAction="http://TVNetwork/PPM/PPMSystemService/1.0/programCodeSearch"/>
+			<input name="programCodeSearchRequest">
+				<soap:header message="tns:programCodeSearchRequest" part="requestHead" use="literal"/>
+				<soap:body parts="programCodeSearchRequest" use="literal"/>				
+			</input>
+			<output name="programCodeSearchResponse">
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="lockProgramCode">
+			<soap:operation soapAction="http://TVNetwork/PPM/PPMSystemService/1.0/lockProgramCode"/>
+			<input name="lockProgramCodeRequest">
+				<soap:header message="tns:lockProgramCodeRequest" part="requestHead" use="literal"/>			
+				<soap:body parts="lockProgramCodeRequest" use="literal"/>
+			</input>
+			<output name="lockProgramCodeResponse">
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="PPMSystemService">
+		<port name="PPMSystemServiceHttpPort" binding="tns:PPMSystemServiceHttpBinding">
+			<soap:address location="http://localhost:8080/TVNetwork/PPM/PPMSystemService"/>
+		</port>
+	</service>
+</definitions>

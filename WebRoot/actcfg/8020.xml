@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+<!--MD5-->
+<actConfig>
+  <!-- <item name="cmIndex" desc="存储对象" deafult="CM1" allowEmpty="false" dataType="string" maxLength="0" source="2" sourceTable="WFM_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/>
+   --><item name="groupType" desc="文件码流组" deafult="1" allowEmpty="false" dataType="int" maxLength="5" source="1" sourceString="编辑版~1|预览版~30"/>
+  <item name="readLimit" desc="磁盘读限速" deafultValue="30000" source="4" allowInput="true" dataType="int" allowEmpty="false" deafult="false" unit="KB"/>
+</actConfig>
+
+<!--allowInput 是否显示文本框   true：显示， false：不显示， 默认为false -->

@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>功能管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+<script type="text/javascript">
+	Layoutit("#divPageFrame", {vLayout: [46, "auto", 40]});
+</script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+<![endif]-->
+</head>
+<body onload="pageInit();" class="panels">
+
+<div id="divPageFrame" class="panel middle-panel panel-sm">
+  
+    <div class="panel-heading">
+   	  <div class="pull-left input4" id="divNavigation"></div>
+      
+      <div class='btn-group btn-group-sm pull-right'>
+        <span style="cursor:pointer;margin-right: 10px;" title="新建" onclick="gCrud.add();">
+          <i class="fa fa-plus"></i>
+          <span>&nbsp;新建</span>
+        </span>
+        <span style="cursor:pointer;margin-right: 10px;" title="编辑" onclick="gCrud.edit();">
+          	  <i class="fa fa-pencil-square-o"></i>
+          <span>&nbsp;编辑</span>
+        </span>
+        <span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gCrud.remove();">
+          <i class="fa fa-times"></i>
+          <span>&nbsp;删除</span>
+        </span>
+        <span style="cursor:pointer;margin-right: 10px;" title="刷新" onclick="document.location.reload();">
+          <i class="fa fa-refresh"></i>
+          <span>&nbsp;刷新</span>
+        </span>
+        <span style="cursor:pointer;margin-right: 10px;" title="返回" onclick="backward();">
+          <i class="fa fa-undo"></i>
+          <span>&nbsp;返回</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="table-unbordered" id= "divContent">数据加载中...</div>
+    
+    <div class="panel-footer" id="divPage"></div>
+</div>
+
+  <!-- 新增、编辑功能开始 -->
+  <div id="divFunction" style="display: none;">
+    <form class="form-horizontal mg-lg">
+      <div class="form-group">
+        <label for="txt_ID" class="col-sm-2 control-label">功能编号:</label>
+        <div class="col-sm-10">
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" id="txt_ID" validatetype="NotEmpty,Integer" /> 
+            <span class="input-group-addon" style="color: Red">*</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txt_Name" class="col-sm-2 control-label">功能名称:</label>
+        <div class="col-sm-10">
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" id="txt_Name" validatetype="NotEmpty,filenameext,removespaces" maxlength="12" /> 
+            <span class="input-group-addon" style="color: Red">*</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txt_Function" class="col-sm-2 control-label">所属功能:</label>
+        <div class="col-sm-10">
+          <div class="input-group input-group-sm">
+            <input type="text" id="txt_Function" class="form-control selecttree" readonly onclick="popHiddenTree(el('divFunctionTree'), this);" validatetype="NotEmpty" /> 
+            <input type="hidden" id="hidParentId" /> 
+            <span class="input-group-addon" style="color: Red">*</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txt_ViewPos" class="col-sm-2 control-label">排序编号:</label>
+        <div class="col-sm-10">
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" id="txt_ViewPos" validatetype="NotEmpty,Integer" maxlength="10" /> 
+            <span class="input-group-addon" style="color: Red">*</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtType" class="col-sm-2 control-label">功能类型:</label>
+        <div class="col-sm-10">
+          <select id="txtType" class="form-control" default="0">
+            <option value="0" title="功能">功能</option>
+            <option value="1" title="权限">权限</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtState" class="col-sm-2 control-label">启用状态:</label>
+        <div class="col-sm-10">
+          <select id="txtState" class="form-control" default="0">
+            <option value="0" title="启用">启用</option>
+            <option value="1" title="禁用">禁用</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txt_Param" class="col-sm-2 control-label">相关参数:</label>
+        <div class="col-sm-10 ">
+          <input type="text" class="form-control input-sm" id="txt_Param" maxlength="200" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txt_Desc" class="col-sm-2 control-label">功能描述:</label>
+        <div class="col-sm-10 ">
+          <input type="text" class="form-control input-sm" id="txt_Desc" maxlength="50" />
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- 新增、编辑功能结束 -->
+  <div id="divFunctionTree" style="display: none; border: solid 1px #ccc; background: #fff; height: 150px; overflow: auto" class="ztree" minWidth="200px"></div>
+  <div id="divDelete" style="display: none">
+    <form class="margin-left-lg margin-top-lg">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="chkDeleteAll"> 删除所有子功能
+        </label>
+      </div>
+    </form>
+  </div>
+<script type="text/javascript" src="javascript/function.js"></script>  
+</body>
+</html>

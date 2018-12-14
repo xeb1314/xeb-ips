@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>登录日志</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+  <script type="text/javascript">
+  	jetsennet.importCss("bootstrap/daterangepicker-bs3");
+  	Layoutit("#myframe", {vLayout:[150, {vLayout: [46, "auto", 40]}]});
+  </script>
+  <!--[if lt IE 9]> 
+	<script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+	<script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+  <![endif]-->
+</head>
+<body onload="pageInit();">
+	<div id="myframe" class="panels">
+		<div>
+			<div class="center-wrapper">
+				<div class="center-area">
+					<form class="form-inline margin-bottom-sm center-content">
+				      <span>用户名/登录名:</span>
+				      <div class="form-group">
+				        <input id="user_name" type="text" class="form-control input-sm" />
+				      </div>
+				      <span class="margin-left-md">登录时间:</span>
+				      <div class="form-group">
+				        <input id="login_time" type="text" class="form-control input-sm input-date" />
+				      </div>
+				      <span class="margin-left-md">登出时间:</span>
+				      <div class="form-group">
+				        <input id="logout_time" type="text" class="form-control input-sm input-date" />
+				      </div>
+				      <button type="button" class="btn btn-primary btn-sm" onclick="searchloginlog();">
+				        <span class="glyphicon glyphicon-search"></span> 查询
+				      </button>
+				      <button type="button" class="btn btn-info btn-sm" onclick="exportExcel();">
+				        <span class="glyphicon glyphicon-export"></span> 导出
+				      </button>
+				    </form>
+		   		</div>
+			</div>
+		</div>
+		<div class="v-panel">
+			<div class="panel-heading">
+		      <h3 class="panel-title pull-left" style="display:inline-block;">登录日志列表</h3>
+		      <div id="divButtons" class="pull-right" style=" display: inline-block; margin-top: -2px; ">
+            	<span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gCrud.remove();">
+		          <i class="fa fa-times"></i>
+		          <span>&nbsp;删除</span>
+		        </span>
+              </div>
+		    </div>
+		    
+		    <div class="table-unbordered" id="userlogList"></div>
+		   
+		   	<div class="panel-footer" id="loginPageBar"></div>
+		</div>    	
+	</div>
+	
+	<script type="text/javascript" src="javascript/loginlog.js"></script>
+</body>
+</html>

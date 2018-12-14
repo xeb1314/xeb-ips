@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>UUM接收SSO令牌、保存自身cookie</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../../jetsenclient/javascript/jbase.js" apppath="../" apptype="1"></script>
+	<script type="text/javascript" src="javascript/inout.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var ssoToken = jetsennet.queryString("ssoToken");
+			var appAccount = jetsennet.queryString("appAccount");
+			var map = new HashMap();
+			map.put("ssoToken", ssoToken);
+			map.put("appAccount", appAccount);
+			var dal = new jetsennet.DefaultDal(jetsennet["PORTAL_SERVICE"]);
+			var result = dal.execute("uumRegisterLogin", map);
+			if (result && result.resultVal && result.errorCode == 0) {
+				jetsennet.registerUser(result.resultVal);
+			}
+		});		
+	</script>
+</head>
+<body>
+</body>
+</html>

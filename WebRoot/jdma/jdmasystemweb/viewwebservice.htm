@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>查看服务</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+  <script type="text/javascript" src="javascript/viewwebservice.js"></script>
+  <script type="text/javascript" src="javascript/model/serviceinfo.js"></script>
+  <script type="text/javascript">
+		Layoutit("#divPageFrame", {vLayout:[
+		                              230,
+		                              {value: 'auto',hLayout:[
+		                                     {value: '30%' /* ,vLayout:[35, 'auto' ,5,0] */},
+		                                     {value:'70%'}
+		                                     ]}
+		                             ]});
+  </script>
+  <link href="css/base.css" rel="stylesheet" type="text/css" />
+  <!--[if lt IE 9]> 
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+  <![endif]-->
+  <style type="text/css">
+        .result1
+        {
+            width: 100%;
+        }
+        .result2
+        {
+            width: 100%;
+            background: whitesmoke;
+        }
+    </style>
+</head>
+<body onload="pageInit();">
+      <!-- <div class="panel-group" role="panel-group" desc="面板组" > -->
+      <div id="divPageFrame" >
+      	<div class="panel panel-sm  panel-default" style="border-bottom-width:0">
+	        <div class="panel-heading" style="padding: 10px 15px;height: 35px">
+	        	<div class="pull-left">
+		            <span>服务详细资料</span>
+		         </div>
+			     <div class='pull-right' >
+		        	<span style="cursor:pointer;margin-right: 10px;" title="刷新" onclick="el('divRight').innerHTML='';loadServiceSoap('',null,1);">
+         					<i class="fa fa-refresh"></i>
+         					<span>&nbsp;刷新</span>
+       				</span>
+       				<span style="cursor:pointer;margin-right: 10px;" title="返回" onclick="backward();">
+         					<i class="fa fa-undo"></i>
+         					<span>&nbsp;返回</span>
+       				</span>
+			    </div>
+	        </div>
+	        <div class="panel-collapse div-collapse" style="padding-top: 5px">
+	           <table  align="left" cellpadding="10" cellspacing="0" >
+	                <tr class="tableRowHeight20" >
+	                	<td class="rightAlign" width="100px">
+				            <span>服务ID：&nbsp;</span>
+				         </td>
+				         <td id="lt_SERVICE_ID">
+                		 </td>
+			        </tr>
+			        <tr class="tableRowHeight20" >
+	                	<td class="rightAlign" width="100px">
+				            <span>服务名称：&nbsp;</span>
+				         </td>
+				         <td id="lt_SERVICE_NAME">
+                		 </td>
+			        </tr>
+			        <tr class="tableRowHeight20" >
+	                	<td class="rightAlign" width="100px">
+				            <span>服务描述：&nbsp;</span>
+				         </td>
+				         <td id="lt_SERVICE_DESC">
+                		 </td>
+			        </tr>
+			        <tr class="tableRowHeight20" >
+	                	<td class="rightAlign" width="100px">
+				            <span>服务描述地址：&nbsp;</span>
+				         </td>
+				         <td id="lt_WSDL_PATH">
+                		 </td>
+			        </tr>
+			        <tr class="tableRowHeight20" >
+	                	<td class="rightAlign" width="100px">
+				            <span>服务请求地址：&nbsp;</span>
+				         </td>
+				         <td id="lt_SERVICE_URL">
+                		 </td>
+			        </tr>
+			        <tr class="tableRowHeight20" >
+	                	<td class="rightAlign" width="100px">
+				            <span> 状态：&nbsp;</span>
+				         </td>
+				         <td id="lt_STATE">
+                		 </td>
+			        </tr>
+			        <tr class="tableRowHeight20" >
+	                	<td class="rightAlign" width="100px">
+				            <span> 创建用户：&nbsp;</span>
+				         </td>
+				         <td id="lt_CREATE_USER">
+                		 </td>
+			        </tr>
+			        <tr class="tableRowHeight20" >
+	                	<td class="rightAlign" width="300px">
+				            <span> 创建时间：&nbsp;</span>
+				         </td>
+				         <td id="lt_CREATE_TIME">
+                		 </td>
+			        </tr>
+	           </table>
+	        </div>
+	    </div>
+	    <div id="pageItem">
+	    	<div class="panel panel-default panel-sm" style="border-bottom-width:0;">
+		    	<div class="panel-heading" style="padding: 10px 15px">
+		            <div class="pull-left">
+		                <span>服务方法 </span>
+		            </div>
+			        <div class='pull-right' >
+			           <button type="button" class="btn btn-primary btn-sm"  onClick="testChecked();" style="padding: 0px 8px 0px">
+			           		测试
+					   </button>&nbsp;&nbsp;&nbsp;全选<input type="checkbox" onclick="selectAll(this.checked)" />
+			        </div>
+			    </div>
+	    		<div id="divMethodList" style="overflow: auto;"></div>
+	    		<div id="divServiceSoap"></div>
+        		<div id="divAllResult" style="display: none"></div>
+	    	</div>
+	    	<div class="panel panel-default panel-sm">
+        		<div id="divRight" style=" height:95%"></div>
+	    	</div>
+    	</div>
+    </div>
+   <!--  <div id="divTestDialog" style="display: none">
+    	<form class="form-horizontal mg-lg">
+    	<div class="form-group">
+	    	<div>
+			    <ul id="tabPane1">
+			      <li>服务参数</li>
+				  <li>消息头</li>
+			    </ul>
+			</div>
+			<div id="tabPage1">
+		   		流程监控
+		      	<div id="divProcDesign" style="height: 180px;">
+		      	</div>
+		      	流程记录
+		      	<div id="processList" style="height: 180px;">
+		      	</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="txt_DeviceName" >服务测试结果:</label>
+	        <div >
+	        	<textarea name="sysDesc" id="txt_requestUrl" style="width: 100%;height: 150px" class="xml"></textarea>
+	        </div>
+		</div>
+		</form>
+	</div> -->
+</body>
+</html>

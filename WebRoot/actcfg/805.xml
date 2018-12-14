@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<!-- 文本分类 -->
+<actConfig>
+  <item name="userId" desc="用户名" deafult="admin" allowVariable="false"  allowEmpty="false" dataType="string" maxLength="100" source="0" visible="true"/>
+  <item name="password" desc="密码" deafult="trsadmin" allowVariable="false"  allowEmpty="false" dataType="string" maxLength="100" source="0" visible="true"/>
+  <item name="CKMURL" desc="CKM服务器地址" deafult="http://127.0.0.1:8000" allowVariable="false"  allowEmpty="false" dataType="string" maxLength="100" source="0" visible="true"/>
+  <item name="templateName" desc="分类模版名称" deafult="demo" title="模板名称不能超过32个字符,不能包含“/”和“\”。" allowEmpty="false" dataType="string" maxLength="20" source="0"/>
+  <item name="nameFilter" desc="文件后缀" deafult="*.txt;" title="以英文分号隔开，不区分大小写。" allowEmpty="false" dataType="string" maxLength="20" source="0"/> 
+ <!--  <item name="sourcePath" desc="源目录" deafult="" allowVariable="false"  allowEmpty="true" dataType="string" maxLength="100" source="0" visible="false"/> -->
+  <!-- <item name="resultPath" desc="目标目录" deafult="" allowVariable="false"  allowEmpty="true" dataType="string" maxLength="100" source="0" visible="false"/> -->
+  <item name="scanSub" desc="扫描子目录"  source="4" deafult="false"/>
+</actConfig>
+
+<!-- visible是否显示  false:显示，  true：不显示，  默认为显示，   需有默认值default -->
+<!--soure 0:自输入，1：下拉自定义，2：受控词，3：变量   4：多选框   5:时间-->
+<!--allowVariable 是否显示变量弹出框   true：显示， false：不显示， 默认为false -->
+<!--allowDate 是否显示日期   true：显示， false：不显示， 默认为false -->
+<!--filed 用于保存时间段  保存为scanStartTime scanEndTime 不写默认保存一个scanTime  ","分割有多少个则显示多少个日期控件 依次显示保存-->

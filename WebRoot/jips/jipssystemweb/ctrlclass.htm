@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>分类管理</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/crud.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/gridlist.js"></script>
+  
+  <script type="text/javascript" src="javascript/ctrlclass.js"></script>
+  <script type="text/javascript">
+            Layoutit("#divPageFrame", {vLayout:[
+			            40,
+			            {value:'auto',hLayout:[
+			                     '25%',
+			                     {value:'75%',vLayout:[35, 'auto', 35]}
+			                     ]}
+			           ]});
+  </script>
+  <link href="css/base.css" rel="stylesheet" type="text/css" />
+  <link href="css/ctrlclass.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="pageInit();">
+	<div id="divPageFrame" >
+	    <div class="panel panel-default panel-sm" style="border-bottom-width:0;">
+	         <div class="panel-heading" style="padding: 1px 10px;"> 
+	         	<div class="pull-left">
+	         		<table border="0" align="center" cellpadding="0" cellspacing="0">
+	            	<tr class="tableRowHeight20">
+		            	<td class="rightAlign">
+		            		<b>系统分类:</b>
+		            	</td>
+		            	<td>
+				            <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+						  		<input id="sysClassOptions" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control input-sm" selectedvalue="-1"/>
+						  		<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+							</label>
+						</td>
+						<td>
+							<div id="divClassSelect" style="display: none;">
+								<b>分类类别:</b>
+								<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+									<input id="ctrlClassOptions"  onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control input-sm" selectedvalue="-1"/>
+									<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+								</label>
+							</div>
+						</td>
+					</tr>
+					</table>
+				</div>
+	         </div> 
+	    </div>
+	    <div id="divPageFrames" style="padding-top: 0px">
+		    <div class="panel panel-sm  panel-default">
+	        	<div class="panel-heading" style="padding: 10px 15px">
+	        		<div>
+	        			<span>分类树 </span>
+	        		</div>
+	      		</div>
+	      		<div id="divTree" style="overflow: auto;"></div>
+	   	    </div>
+		    <div  class="panel panel-sm  panel-default">
+		    	<div class="panel-heading">
+			      	<div class="pull-left">
+			     		<span>分类列表 </span>
+			      	</div>
+		     		<div class='pull-right'>
+			        	<span style="cursor:pointer;margin-right: 10px;" title="新建类别" onclick="addClassType();">
+          					<i class="fa fa-plus"></i>
+          					<span>&nbsp;新建类别</span>
+        				</span>
+        				<!-- <span style="cursor:pointer;margin-right: 10px;" title="删除类别" onclick="deleteClassType();">
+          					<i class="fa fa-times"></i>
+          					<span>&nbsp;删除类别</span>
+         				</span> -->
+        				<span style="cursor:pointer;margin-right: 10px;" title="新建分类" onclick="addClass();">
+          					<i class="fa fa-plus"></i>
+          						<span>&nbsp;新建分类</span>
+        				</span>
+        				<span style="cursor:pointer;margin-right: 10px;" title="删除分类" onclick="deleteClass();">
+          					<i class="fa fa-times"></i>
+          					<span>&nbsp;删除分类</span>
+         				</span>
+		        		<!-- <span id="spanClassType" style="cursor:pointer;" onclick="addClassType();"><img src="images/new.png" style="height:18px;">&nbsp;新增类别</img></span>&nbsp;&nbsp;
+		        		<span id="spanClass" style="cursor:pointer;" dis onclick="addClass()"><img src="images/new.png" style="height:18px;">&nbsp;新增分类</img></span> -->
+		        	<!-- <span style="cursor:pointer;" onclick="gCrud.edit()"><img src="images/edit.png" style="height:18px;">&nbsp;修改</img></span>
+		        	<span style="cursor:pointer;" onclick="gCrud.remove()"><img src="images/del.png" style="height:18px;">&nbsp;删除</img></span> -->
+		        	</div> 
+			    </div>
+			    <div id="divDataList" class="panel panel-sm  panel-default">
+				      	<div id="divSysClassList" style=" display:none; overflow: auto;height:100%;">数据加载中...</div>
+				      	<div id="divClassTypeList" style=" display:none; overflow: auto;height:100%;">数据加载中...</div>
+				      	<div id="divClassList" style=" display:none; overflow: auto;height:100%;">数据加载中...</div>
+		    	</div>
+			    <div class="panel-sm">
+	         	    <div id="divSysClassPage" class="panel-footer" style=" display:none;"></div>
+	         	    <div id="divClassTypePage" class="panel-footer" style=" display:none;"></div>
+	         	    <div id="divClassPage" class="panel-footer" style=" display:none;"></div>
+		   		</div> 
+		    </div>
+	    </div>
+	</div>
+	
+	<div id="divSysCtrlClass" style="display: none;">
+	    <form class="form-horizontal mg-lg">
+	      <div class="form-group">
+	        <label for="txt_Sys_ID" class="col-sm-2 control-label">系统编号:</label>
+	        <div class="col-sm-10">
+	          <div class="input-group input-group-sm">
+	            <input type="text" class="form-control" id="txt_Sys_ID" validatetype="NotEmpty,UInteger" /> 
+	            <input type="hidden" id="hidClassId" /> 
+	            <span class="input-group-addon" style="color: Red">*</span>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="form-group">
+	        <label for="txt_Sys_Name" class="col-sm-2 control-label">名称:</label>
+	        <div class="col-sm-10 ">
+	          <div class="input-group input-group-sm">
+		          <input type="text" class="form-control input-sm" id="txt_Sys_Name" validatetype="NotEmpty,filenameext" maxlength="200" />
+		          <span class="input-group-addon" style="color: Red">*</span>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="form-group">
+	        <label for="txt_Sys_Desc" class="col-sm-2 control-label">描述:</label>
+	        <div class="col-sm-10 ">
+	          <input type="text" class="form-control input-sm" id="txt_Sys_Desc" maxlength="50" />
+	        </div>
+	      </div>
+	    </form>
+  	</div>
+  	<div id="divCtrlClassType" style="display: none;">
+	    <form class="form-horizontal mg-lg">
+	      <div class="form-group">
+	        <label for="txt_ClassType_ID" class="col-sm-2 control-label">类型编号:</label>
+	        <div class="col-sm-10">
+	          <div class="input-group input-group-sm">
+	            <input type="text" class="form-control" id="txt_ClassType_ID" validatetype="NotEmpty,UInteger" /> 
+	            <input type="hidden" id="hidClassTypeId" /> 
+	            <span class="input-group-addon" style="color: Red">*</span>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="form-group">
+	        <label for="txt_ClassType_Name" class="col-sm-2 control-label">名称:</label>
+	        <div class="col-sm-10 ">
+	          <input type="text" class="form-control input-sm" id="txt_ClassType_Name" validatetype="NotEmpty,filenameext" maxlength="200" />
+	        </div>
+	      </div>
+	      <div class="form-group">
+	        <label for="txt_ClassType_State" class="col-sm-2 control-label">状态:</label>
+	        <div class="col-sm-10 ">
+	           <div class="input-group input-group-sm">
+	               <select id="txt_ClassType_State" class="form-control" validatetype="NotEmpty" default="">
+		               <option value="0">启用</option>
+		               <option value="1">停用</option>
+	               </select> 
+	               <span class="input-group-addon" style="color: Red">*</span>
+               </div>
+	        </div>
+	      </div>
+	    </form>
+  	</div>
+  	<div id="divCtrlClass" style="display: none;">
+	    <form class="form-horizontal mg-lg">
+	      <div class="form-group">
+	        <label for="txt_ClassType" class="col-sm-2 control-label">分类类别:</label>
+	        <div class="col-sm-10">
+	          <div class="input-group input-group-sm">
+	            <input type="text" class="form-control" id="txt_ClassType" validatetype="NotEmpty" /> 
+	            <span class="input-group-addon" style="color: Red">*</span>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="form-group">
+	        <label for="txt_Parent_Class" class="col-sm-2 control-label">父类:</label>
+	        <div class="col-sm-10 ">
+	       		<div class="input-group input-group-sm">
+			        <input type="text" id="txt_Parent_Class" class="form-control selecttree" readonly onclick="popHiddenTree(el('divSubTree'), this);" validatetype="NotEmpty" /> 
+		            <input type="hidden" id="hidDialogTreeId" /> 
+		            <span class="input-group-addon" style="color: Red">*</span>
+		    	</div>
+	        </div>
+	      </div>
+	      <div class="form-group">
+	        <label for="txt_Class_Name" class="col-sm-2 control-label">名称:</label>
+	        <input type="hidden" id="ctrlWordCode" default="0" /> 
+	        <div class="col-sm-10 ">
+		        <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+					<input id="cw_Word_Type" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control input-sm" readonly="readonly" selectedvalue="-1"/>
+					<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+				</label>
+				<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+					<input id="cw_Word_Name" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control input-sm" readonly="readonly" selectedvalue="-1"/>
+					<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+				</label>
+	        </div>
+	      </div>
+	      <div class="form-group">
+	        <label for="txt_Class_Desc" class="col-sm-2 control-label">描述:</label>
+	        <div class="col-sm-10 ">
+	          <input type="text" class="form-control input-sm" id="txt_Class_Desc" maxlength="200" />
+	        </div>
+	      </div>
+	    </form>
+  	</div>
+  	<div id="divSubTree" style="display: none; border: solid 1px #ccc; background: #fff; height: 150px; overflow: auto" class="ztree" minWidth="200px">
+  	</div>
+</body>
+</html>

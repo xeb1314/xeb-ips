@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://TVNetwork/Schema/MAM/1.0" xmlns:nspubc="http://TVNetwork/Schema/CommonComplexTypes/1.0" targetNamespace="http://TVNetwork/Schema/MAM/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://TVNetwork/Schema/CommonComplexTypes/1.0" schemaLocation="../CommonTypes/CommonComplexTypes.xsd"/>
+	<xs:element name="mediaImportRequest" type="tns:MediaImportRequestType">
+		<xs:annotation>
+			<xs:documentation>导入允许输入参数</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="mediaImportResponse" type="tns:MediaImportResponseType">
+		<xs:annotation>
+			<xs:documentation>导入允许输出参数</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MediaImportRequestType">
+		<xs:sequence>
+			<xs:element name="mediaObject" type="tns:MediaObjectType" maxOccurs="unbounded"/>
+			<xs:element name="processInfo" type="tns:ProcessInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>目标相关信息</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="flowInstance" type="tns:FlowInstanceType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>流程信息</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MediaImportResponseType">
+		<xs:sequence>
+			<xs:element name="wsResult" type="nspubc:WsResultType"/>
+			<xs:element name="mediaObject" type="tns:MediaObjectType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="mediaImportCallbackRequest" type="tns:MediaImportCallbackRequestType">
+		<xs:annotation>
+			<xs:documentation>入库结果通知输入参数</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="mediaImportCallbackResponse" type="tns:MediaImportCallbackResponseType">
+		<xs:annotation>
+			<xs:documentation>入库结果通知输出参数</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MediaImportCallbackRequestType">
+		<xs:sequence>
+			<xs:element name="wsResult" type="nspubc:WsResultType"/>
+			<xs:element name="processID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>交互作业ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="materialID" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>节目(素材)ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MediaImportCallbackResponseType">
+		<xs:sequence>
+			<xs:element name="wsResult" type="nspubc:WsResultType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcessInfoType">
+		<xs:sequence>
+			<xs:element name="columnCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>栏目代码</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="targetProgramCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>目标节目代码，用于表明交换的文件给哪个节目代码使用</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="processType" type="xs:int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>导入业务类型</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="processID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>交互作业ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FlowInstanceType">
+		<xs:sequence>
+			<xs:element name="flowId" type="xs:int" minOccurs="0"/>
+			<xs:element name="flowType" type="xs:int" minOccurs="0"/>
+			<xs:element name="objName" type="xs:string" minOccurs="0"/>
+			<xs:element name="flowName" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AttributeItemType">
+		<xs:annotation>
+			<xs:documentation>扩展属性条目类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="itemCode" type="xs:string"/>
+			<xs:element name="itemValue" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfAttributeItemType">
+		<xs:sequence>
+			<xs:element name="attributeItem" type="tns:AttributeItemType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MetadataType">
+		<xs:annotation>
+			<xs:documentation>媒体对象元数据类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="mediaID" type="xs:int"/>
+			<xs:element name="mediaCode" type="xs:string"/>
+			<xs:element name="mediaType" type="xs:int"/>
+			<xs:element name="properTitle" type="xs:string"/>
+			<xs:element name="keyword" type="xs:string" minOccurs="0"/>
+			<xs:element name="contentInfo" type="xs:string" minOccurs="0"/>
+			<xs:element name="duration" type="xs:int"/>
+			<xs:element name="columnName" type="xs:string" minOccurs="0"/>
+			<xs:element name="createUser" type="xs:string"/>
+			<xs:element name="createTime" type="xs:string" minOccurs="0"/>
+			<xs:element name="extendAttributes" type="tns:ArrayOfAttributeItemType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AudioInfoType">
+		<xs:annotation>
+			<xs:documentation>音频格式类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="codeType" type="xs:string"/>
+			<xs:element name="sampleRate" type="xs:int"/>
+			<xs:element name="bitRate" type="xs:int"/>
+			<xs:element name="channels" type="xs:int"/>
+			<xs:element name="blockAlign" type="xs:int"/>
+			<xs:element name="bitsPerSample" type="xs:int"/>
+			<xs:element name="extendInfo" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VideoInfoType">
+		<xs:annotation>
+			<xs:documentation>视频格式类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="codeType" type="xs:string"/>
+			<xs:element name="width" type="xs:int"/>
+			<xs:element name="height" type="xs:int"/>
+			<xs:element name="frameRate" type="xs:int"/>
+			<xs:element name="rateScale" type="xs:int"/>
+			<xs:element name="bitRate" type="xs:int"/>
+			<xs:element name="chromaFormat" type="xs:int"/>
+			<xs:element name="aspectRatio" type="xs:int"/>
+			<xs:element name="fieldOrder" type="xs:int"/>
+			<xs:element name="extendInfo" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AVFileInfoType">
+		<xs:annotation>
+			<xs:documentation>音视频文件格式类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="fileType" type="xs:string"/>
+			<xs:element name="audioFileType" type="xs:string"/>
+			<xs:element name="duration" type="xs:int"/>
+			<xs:element name="muxBitRate" type="xs:int"/>
+			<xs:element name="extendInfo" type="xs:string" minOccurs="0"/>
+			<xs:element name="videoInfo" type="tns:VideoInfoType" minOccurs="0"/>
+			<xs:element name="audioInfo" type="tns:AudioInfoType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FileItemType">
+		<xs:annotation>
+			<xs:documentation>文件项类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="fileType" type="xs:int"/>
+			<xs:element name="fileSize" type="xs:long"/>
+			<xs:element name="filePath" type="xs:string"/>
+			<xs:element name="fileMD5" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfFileItemType">
+		<xs:sequence>
+			<xs:element name="fileItem" type="tns:FileItemType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FileGroupType">
+		<xs:annotation>
+			<xs:documentation>文件组类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="groupType" type="xs:int"/>
+			<xs:element name="avFileInfo" type="tns:AVFileInfoType"/>
+			<xs:element name="fileList" type="tns:ArrayOfFileItemType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfFileGroupType">
+		<xs:annotation>
+			<xs:documentation>媒体对象本体数据类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="fileGroup" type="tns:FileGroupType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MediaObjectType">
+		<xs:annotation>
+			<xs:documentation>媒体对象类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="metadata" type="tns:MetadataType"/>
+			<xs:element name="essenceData" type="tns:ArrayOfFileGroupType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ExtendAttributes" type="tns:ArrayOfAttributeItemType">
+		<xs:annotation>
+			<xs:documentation>扩展属性</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

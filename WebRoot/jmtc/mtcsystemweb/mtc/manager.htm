@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JMTC PORTAL</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../../jetsenclient/javascript/jbase.js" apppath="../"></script>
+    <script type="text/javascript" src="../javascript/base.js"></script>
+    <script type="text/javascript" src="../javascript/mtc/manager.js"></script>
+    <link href="../css/base.css" rel="stylesheet" type="text/css" />
+    <link href="../css/mtc/manager.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        function pageInit() {
+            initNav();
+            showData();
+        }
+    </script>
+</head>
+<body onload="pageInit();">
+    <div id="all">
+        <div id="header">
+            <div class="logo">
+                <span>logo</span>
+            </div>
+            <div id="nav_wrap">
+                <div id="nav">
+                </div>
+                <!--nav-->
+                <div id="tmenu">
+                </div>
+            </div>
+            <!--nav_wrap-->
+            <div class="set">
+                <ul>
+                    <li><a href="javascript:void(0);">您好：<span id="divLoginName"></span></a> </li>
+                    <li class="set_1"><a href="javascript:void(0);"><span>设置</span></a> </li>
+                    <li class="quit"><a href="javascript:void(0);"><span>退出</span> </a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="content">
+            <div class="content01 clf">
+                <div class="clf-left">
+                    <div class="title">
+                        <div class="dess">
+                            <p>
+                                调度数据源</p>
+                        </div>
+                    </div>
+                    <div class="search-panel">
+                        <div class="search-left">
+                          
+                                <div class="content-top-1">
+                                    <ul>
+                                        <li>数据源名称：<input type="text" id="txt_dbname" disabled="disabled" class="input2"></input></li>
+                                        <li>数据库类型：<input type="text" id="txt_dbtype" disabled="disabled" class="input2"></input></li>
+                                    </ul>
+                                </div>
+                        </div>
+                        <div class="search-right">
+                            <input type="button" class="button" value="详  情" onclick="viewData();" /></div>
+                    </div>
+                </div>
+                <div class="cantent01 clf" id="divManagerView">
+                    <div class="manager-left">
+                        <div class="title">
+                            <div class="dess">
+                                <p>
+                                    主调度器</p>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <span>调度器</span></div>
+                        <div class="control-1">
+                            <ul>
+                                <li><span>IP地址：</span>
+                                    <div class="frsct">
+                                      <input id="txt_ip"    type="text" disabled="disabled"/>
+                                        
+                                    </div>
+                                </li>
+                                <li><span>端口号：</span>
+                                    <div class="frsct">
+                                      <input id="txt_port"    type="text" disabled="disabled"/>
+                                       
+                                    </div>
+                                </li>
+                                <li><span>状态：</span>
+                                    <div class="frsct">
+                                      <input id="txt_state"  type="text" disabled="disabled"/>
+                                       
+                                    </div>
+                                </li>
+                                <li><span>启动时间：</span>
+                                    <div class="frsct">
+                                    <input id="txt_time"   type="text" disabled="disabled"/>
+                                     </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="manager-right">
+                        <div class="title">
+                            <div class="dess">
+                                <p>
+                                    备调度器</p>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <span>调度器</span></div>
+                        <div class="control-1">
+                            <ul>
+                                  <li><span>IP地址：</span>
+                                    <div class="frsct">
+                                      <input id="txt_ip_bak"    type="text" disabled="disabled"/>
+                                        
+                                    </div>
+                                </li>
+                                <li><span>端口号：</span>
+                                    <div class="frsct">
+                                      <input id="txt_port_bak"    type="text" disabled="disabled"/>
+                                       
+                                    </div>
+                                </li>
+                                <li><span>状态：</span>
+                                    <div class="frsct">
+                                      <input id="txt_state_bak"  type="text" disabled="disabled"/>
+                                       
+                                    </div>
+                                </li>
+                                <li><span>启动时间：</span>
+                                    <div class="frsct">
+                                    <input id="txt_time_bak"   type="text" disabled="disabled"/>
+                                     </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div></div>
+        <div id="footer">
+            <p class="copyright">
+                © 2013 北京捷成世纪科技股份有限公司
+            </p>
+        </div>
+        <div id="divDatascource" style="display: none;">
+            <div style="padding:5px 15px 0px 5px">
+                <table border="0" cellpadding="0" cellspacing="0" class="table-info" style="width: 100%;height: 100%">
+                    <colgroup>
+                        <col class="width-5w" />
+                        <col width="auto" />
+                    </colgroup>
+                    <tr>
+                        <td class="field-head">
+                            数据源名称：
+                        </td>
+                        <td>
+                            <input type="text" id="txt_DATASOURCE_NAME" disabled="disabled" class="input3" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field-head">
+                            数据库类型：
+                        </td>
+                        <td>
+                            <input id="txt_DATASOURCE_TYPE" class="input3" type="text" disabled="disabled" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field-head">
+                            数据库URL：
+                        </td>
+                        <td>
+                            <textarea id="txt_DATASOURCE_URL" class="textarea3" disabled="disabled"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field-head">
+                            用户名：
+                        </td>
+                        <td>
+                            <input type="text" id="txt_DATASOURCE_USER" class="input3" disabled="disabled" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field-head">
+                            密码：
+                        </td>
+                        <td>
+                            <input type="password" id="txt_DATASOURCE_PASSWD" class="input3" disabled="disabled" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field-head">
+                            初始连接数：
+                        </td>
+                        <td>
+                            <input type="text" id="txt_DATASOURCE_COUNT" class="input3" disabled="disabled" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field-head">
+                            最大连接数：
+                        </td>
+                        <td>
+                            <input type="text" id="txt_DATASOURCE_MAXCOUNT" class="input3" disabled="disabled" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+</body>
+</html>

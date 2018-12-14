@@ -1,0 +1,64 @@
+.viewer {
+    -ms-touch-action: none;
+}
+
+.iviewer_common {
+    position:absolute;
+    bottom:10px;
+    border: 1px  solid #000;
+    height: 22px;
+    z-index: 5000;
+}
+
+.iviewer_cursor {
+    cursor: url(img/hand.cur) 6 8, pointer;
+}
+
+.iviewer_drag_cursor {
+    cursor: url(img/grab.cur) 6 8, pointer;
+}
+
+.iviewer_button {
+    width: 22px;
+    cursor: pointer;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.iviewer_zoom_in {
+    left: 20px;
+    background: url(img/iviewer.zoom_in.png) center center no-repeat;
+}
+
+.iviewer_zoom_out {
+    left: 55px;
+    background: url(img/iviewer.zoom_out.png) center center no-repeat;
+}
+
+.iviewer_zoom_zero {
+    left: 90px;
+    background: url(img/iviewer.zoom_zero.png) center center no-repeat;
+}
+
+.iviewer_zoom_fit {
+    left: 125px;
+    background: url(img/iviewer.zoom_fit.png) center center no-repeat;
+}
+
+.iviewer_zoom_status {
+    left: 160px;
+    font: bold 14px/23px 微软雅黑;
+    color: #787878;
+    text-align: center;
+    width: 45px;
+}
+
+.iviewer_rotate_left {
+    left: 227px;
+    background: url(img/iviewer.rotate_left.png) center center no-repeat;
+}
+
+.iviewer_rotate_right {
+    left: 262px;
+    background: url(img/iviewer.rotate_right.png) center center no-repeat;
+}

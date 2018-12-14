@@ -1,0 +1,57 @@
+.look-1{background:url(../images/trup1_07.png) no-repeat center; margin: 0  auto; width:24px ; height:22px;cursor:pointer;}
+.look-1 span{ display:none;}
+.look-1 a{ display:none;}
+
+.see01{background:url(../images/rtsey_03.png) no-repeat center; margin: 0  auto; width:24px ; height:24px;cursor:pointer;}
+.see01 span{ display:none;}
+
+
+.see3{background:url(../images/ytupp_03.png) no-repeat center; margin: 0  auto; width:24px ; height:22px;cursor:pointer;}
+.see3 span{ display:none;}
+
+
+.see05{background:url(../images/rtsey_06.png) no-repeat center; margin: 0  auto; width:24px ; height:22px;cursor:pointer;}
+.see05 span{ display:none;}
+
+.see07{background:url(../images/info.gif) no-repeat center; margin: 0  auto; width:24px ; height:24px;cursor:pointer;}
+.see07 span{ display:none;}
+
+
+.look{background:url(../images/trup1_03.png) no-repeat center; margin: 0  auto; width:24px ; height:22px;cursor:pointer;}
+.look  a{ display:none;}
+/**停止*/
+.look-2{background:url(../images/iup08-8_22.png) no-repeat center; margin: 0  auto; width:24px ; height:22px;cursor:pointer;}
+.look-2  a{ display:none;}
+
+.look-3{background:url(../images/iup08-8_25.png) no-repeat center; margin: 0  auto; width:24px ; height:22px;cursor:pointer;}
+.look-3 a{ display:none;}
+
+.rightAlign{text-align: right;}
+
+.checkboxMid{vertical-align: middle;}
+
+.div-collapse{
+	 padding: 20px 0 26px 0;
+}
+
+.div-collapse > table{
+	border: 0;
+}
+.tableRowHeight40{height: 40px;}
+.tableRowHeight50{height: 50px;}
+.tableRowHeight60{height: 60px;}
+.tableRowHeight80{height: 80px;}
+
+
+.fontWord{font-weight: bold;}
+
+.tablehead{
+	background-image: linear-gradient(#eff3f6, #eff3f6, #eff3f6, #eff3f6);
+	padding-left: 10px;
+}
+
+#detailTab tr td{
+	border: 1px solid #d0d4e0;
+}
+
+.divXsltContent{min-height:20px; max-height:60px; overflow: hidden;word-wrap: normal;text-overflow: ellipsis;}

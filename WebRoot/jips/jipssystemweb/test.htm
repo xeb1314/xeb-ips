@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>JQuery Grid ComboBox Multi Selection</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="keywords" content="JQuery ComboBox Plugin"/>
+
+<link href="../../jetsenclient/javascript/magicgrid/css/default.css" type="text/css" rel="stylesheet">
+<link href="../../jetsenclient/javascript/magicgrid/css/grid.css" type="text/css" rel="stylesheet">
+<link href="../../jetsenclient/javascript/magicgrid/css/combo.css" type="text/css" rel="stylesheet">
+
+ <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.js"></script>
+
+<script type="text/javascript" src="../../jetsenclient/javascript/magicgrid/mousewheel.js"></script>
+<script type="text/javascript" src="../../jetsenclient/javascript/magicgrid/core.js"></script>
+<script type="text/javascript" src="../../jetsenclient/javascript/magicgrid/pager.js"></script>
+<script type="text/javascript" src="../../jetsenclient/javascript/magicgrid/grid.js"></script>
+
+<style type="text/css">
+.multiHeadersGrid>.main>.head { height: 48px; }
+.multiHeadersGrid>.ybar { margin-top: 48px; }
+.multiHeadersGrid>.main>.head .th { height: 48px; }
+.multiHeadersGrid>.main>.head .th .sizer { height: 48px; }
+.multiHeadersGrid>.main>.head .th[group] { height: 24px; }
+<!--  -->
+.money { text-align: right; }
+</style>
+
+</head>
+<body>
+
+<script type="text/javascript">
+$(function(){
+	var hd1 = $('<div class="tth"></div>');
+	var hdt = $('<div style="height: 25px"><div class="title">'
+		+ '&nbsp;Account</div></div>').appendTo(hd1);
+	var hdb = $('<div style="height: 25px"></div>').appendTo(hd1);
+	$('.view').mac('grid', {
+		sortLocally: true,
+		headerHeight: 48,
+		cols : [{
+			field: 'subject', title : 'Subject', width: 140,
+		},{
+			field: 'summary', title : 'Summary', width: 150
+		},{
+			field: 'account', title : 'account', header: hd1,
+			width: 162, isGroup: true
+		},{
+			field: 'debit', title : 'Debit', width: 80,
+			sort: true, parent: hdb, group: 'account',
+			render: function(r, tr){
+				return '<div class="money">$'+r.debit + '</div>';
+			}
+		},{
+			field: 'credit', title : 'Credit', width: 80,
+			sort: true, parent: hdb, group: 'account',
+			render: function(r, tr){
+				return '<div class="money">$'+r.credit + '</div>';
+			}
+		}],
+		loader: {
+			url: 'data_format_sample.js',
+			params: { pageNo: 1, pageSize: 50 },
+			autoLoad: true
+		},
+		pagerLength: 10
+	});
+});
+</script>
+<div class="viewPort demoPanel">
+	<div class="view grid multiHeadersGrid"></div>
+</div>
+</body>
+</html>

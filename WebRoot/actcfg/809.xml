@@ -1,0 +1,6 @@
+﻿<?xml version="1.0"?>
+<!--告警-->
+<actConfig>
+  <item name="cmIndex" desc="存储对象源" visible="true" deafult="CM801" title="扫描出的文件存放的数据源" allowEmpty="false" dataType="string" maxLength="0" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/>
+  <item name="alarmType" desc="告警类型" deafult="801" allowEmpty="false" dataType="int"  source="1" sourceString="邮件~801|话音~808"/>
+</actConfig>

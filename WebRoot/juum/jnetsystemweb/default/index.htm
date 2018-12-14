@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Jetsennet 网络系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- 基础js,来源框架 -->
+    <script type="text/javascript" src="../../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../../jetsenclient/javascript/jbase.js" apppath="../" apptype="1"></script>
+    <!-- 通用js，来源uum -->
+    <script type="text/javascript" src="../public/javascript/inout.js"></script>
+    <script type="text/javascript" src="../public/javascript/datasource.js"></script>
+   <!--  <script type="text/javascript" src="../../../dwr/util.js"></script>
+	<script type="text/javascript" src="../../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../../dwr/interface/UUMPUSHER.js"></script> -->
+	<script type="text/javascript" src="plugins/utils.js"></script>
+	<script type="text/javascript" src="plugins/menu-dropdown.js"></script>
+	<script type="text/javascript" src="plugins/calendarwidget.js"></script>
+	<!-- <script type="text/javascript" src="plugins/onlineuserlist.js"></script> -->
+	<script type="text/javascript" src="plugins/toolbar.js"></script>
+	<!-- 模板js -->
+	<script type="text/javascript" src="javascript/index.js"></script>
+	<script type="text/javascript" src="javascript/config.js"></script>
+	<script type="text/javascript" src="javascript/myApp.js"></script><!-- 请放到最后 -->
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	        <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+	        <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+	<![endif]-->
+	
+	<link rel="stylesheet" href="css/index.css" />
+	<link rel="stylesheet" href="css/plugins.css" />
+	
+	<script type="text/javascript">
+	
+		var head = document.getElementsByTagName('title').item(0);
+		head.innerHTML = TempDefault.name; 
+		var TOP_LEFT_WIDTH = TempDefault.layout.topLeft;
+	    var TOP_SPACER_WIDTH = 1;
+	    var TOP_RIGHT_WIDTH = TempDefault.layout.topRight;
+	    var BOTTOM_LEFT_WIDTH = 71;
+		Layoutit("#divPageFrame", {vLayout:[{value: 60, hLayout: [TOP_LEFT_WIDTH, TOP_SPACER_WIDTH, "auto", TOP_RIGHT_WIDTH]}, 
+		                                    {hLayout: [{value: BOTTOM_LEFT_WIDTH, vLayout: [{vLayout: [30, "auto", 30]}, 50]}, {vLayout:["auto", 30]}]}]});
+	</script>
+</head>
+<body onload="pageInit();" >
+    <div id="divPageFrame">
+        <div id="divTop" class="frame-top" style="overflow: visible;">
+	        <div id="divTopLeft" class="frame-top-left"></div>
+	        <div id="divTopSpacer" class="frame-top-spacer"></div>
+	        <div id="divTopMiddle" class="frame-top-middle" style="overflow: visible;"></div>
+        	<div id="divTopRight" class="frame-top-right">
+        		<ul id="msgBox" class="ul-msg-box"></ul>
+			</div>
+	    </div>
+        <div id="divBottom" class="frame-bottom">
+            <div id="divBottomLeft" class="frame-bottom-left">
+            	<ul class="ul-bottom-left">
+            		<li id="storeUp" class="li-store-up"><i id="chevronUp" style="display: none;" class="fa fa-chevron-up"></i></li>
+            		<li id="store" class="li-store">
+            			<ul id="ulStore" class="ul-store"></ul>
+            		</li>
+            		<li id="storeDown" class="li-store-down"><i id="chevronDown" style="display: none;" class="fa fa-chevron-down"></i></li>
+            	</ul>
+           		<div id="storeConfig" class="store-config-btn">
+            		<ul>
+	            		<li><i class="fa fa-cog"></i></li>
+	            		<li>设置</li>
+            		</ul>
+           		</div>
+            </div>
+            <div id="divBottomRight" class="frame-bottom-right">
+            	<div id="divIframeContainer" class="frame-window-container"></div>
+            	<div id="divToolbox" class="frame-toolbox-container" style="overflow: visible;">
+            		<ul id="ul-tabs" class="ul-iframe-tabs" style="float:left;"></ul>
+            		<div id="div-right"></div>
+				    <ul id="ul-tools" class="ul-tool-tabs"></ul>
+            	</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close btnCancleSaveConfig"></button>
+	        <h4 class="modal-title" id="myModalLabel">收藏夹配置</h4>
+	      </div>
+	      <div class="modal-body">
+	       <div class="container-fluid">
+			  <div class="row">
+			    <div class="col-md-4">
+			    	<ul id="ulAllFunctions" class="ul-store-items"></ul>
+			    </div>
+  				<div class="col-md-8">
+  					<ul class="ul-my-store-title">
+  						<li class="row">
+			    			<span class="col-md-6">功能名称</span>
+			    			<span class="col-md-5">显示名称(&lt;=4个字)</span>
+			    			<span class="col-md-1 btns">操作</span>
+		    			</li>
+  					</ul>
+			    	<ul id="ulMyFunctions" class="ul-my-store">
+			    	</ul>
+  				</div>
+			  </div>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default btn-sm btnCancleSaveConfig">取&nbsp;&nbsp;消</button>
+	        <button id="btnSaveConfig" type="button" class="btn btn-primary btn-sm">保&nbsp;&nbsp;存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    
+    <!-- 修改用户信息弹出窗 -->
+    <div id="editMyInfoDialog" style="display: none;">
+    	<form class="form-horizontal mg-sm">
+          <div class="form-group">
+            <label for="txt_USER_NAME" class="col-sm-3 control-label">用户名称:</label>
+            <div class="col-sm-8">
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" id="txt_USER_NAME"  validatetype="NotEmpty"/> 
+                <span class="input-group-addon" style="color: Red">*</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="ddl_PageTheme" class="col-sm-3 control-label">页面样式:</label>
+            <div class="col-sm-8">
+              <select id="ddl_PageTheme" class="form-control input-sm">
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="ddl_PageStyle" class="col-sm-3 control-label">页面模板:</label>
+            <div class="col-sm-8">
+              <select id="ddl_PageStyle" class="form-control input-sm">
+              </select>
+            </div>
+          </div>
+        </form>
+    </div>
+    
+    <!-- 修改用户密码 -->
+    <div id="editMyPwdDialog" style="display: none;">
+    	<form class="form-horizontal mg-sm">
+          <div class="form-group">
+            <label for="txt_USER_OLD_PWD" class="col-sm-3 control-label">当前密码:</label>
+            <div class="col-sm-8">
+              <div class="input-group input-group-sm">
+                <input type="password" class="form-control" id="txt_USER_OLD_PWD" validatetype="NotEmpty" /> 
+                <span class="input-group-addon" style="color: Red">*</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="txt_USER_NEW_PWD" class="col-sm-3 control-label">新密码:</label>
+            <div class="col-sm-8">
+              <div class="input-group input-group-sm">
+	              <input type="password" class="form-control" id="txt_USER_NEW_PWD" validatetype="NotEmpty" /> 
+	              <span class="input-group-addon" style="color: Red">*</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="txt_USER_NEW_CHK_PWD" class="col-sm-3 control-label">确认密码:</label>
+            <div class="col-sm-8">
+              <div class="input-group input-group-sm">
+	              <input type="password" class="form-control" id="txt_USER_NEW_CHK_PWD" validatetype="NotEmpty" /> 
+	              <span class="input-group-addon" style="color: Red">*</span>
+	          </div>
+            </div>
+          </div>
+        </form>
+    </div>
+</body>
+</html>

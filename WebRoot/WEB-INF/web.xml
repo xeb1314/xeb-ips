@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="mosgw" version="2.5">
+	<display-name>JUUM</display-name>
+	<servlet>
+		<description>Apache CXF Endpoint</description>
+		<display-name>cxf</display-name>
+		<servlet-name>cxf</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<init-param>
+			<param-name>config-location</param-name>
+			<param-value>classpath:/applicationConfig.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>cxf</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>default.htm</welcome-file>
+	</welcome-file-list>
+	
+	<servlet>
+		<servlet-name>downloadFile</servlet-name>
+		<servlet-class>jetsennet.wfm.servlet.DownloadFile</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>uploadFile</servlet-name>
+		<servlet-class>jetsennet.wfm.servlet.UploadFile</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>exportImportFlowDefine</servlet-name>
+		<servlet-class>jetsennet.wfm.servlet.ExportImportFlowDefine</servlet-class>
+	</servlet>
+  <servlet>
+    <servlet-name>templateImport</servlet-name>
+    <servlet-class>jetsennet.wfm.servlet.TemplateImport</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>StationPathImport</servlet-name>
+    <servlet-class>jetsennet.wfm.servlet.StationPathImport</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AutoQcTemplateImport</servlet-name>
+    <servlet-class>jetsennet.wfm.servlet.AutoQcTemplateImport</servlet-class>
+  </servlet>
+ <servlet>
+    <servlet-name>SyncTempaleServlet</servlet-name>
+    <servlet-class>jetsennet.wfm.SyncTempaleServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <!-- dwr -->
+  <servlet>
+		<servlet-name>dwr-invoker</servlet-name>
+		<servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<!-- 使用polling和comet的方式 -->
+		<init-param>
+			<param-name>pollAndCometEnabled</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dwr-invoker</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+  
+   <!--jdma -->
+   <servlet>
+	    <description>EsbWebServiceHandler</description>
+	    <display-name>EsbWebServiceHandler</display-name>
+	    <servlet-name>EsbWebServiceHandler</servlet-name>
+	    <servlet-class>
+	      jetsennet.jdma.webservices.EsbWebServiceHandler
+	    </servlet-class>
+  	</servlet> 
+  	<servlet-mapping>
+    	<servlet-name>EsbWebServiceHandler</servlet-name>
+    	<url-pattern>/esb/*</url-pattern>
+  	</servlet-mapping>
+  
+	<servlet-mapping>
+		<servlet-name>downloadFile</servlet-name>
+		<url-pattern>/downloadFile</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>uploadFile</servlet-name>
+		<url-pattern>/uploadFile</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>exportImportFlowDefine</servlet-name>
+		<url-pattern>/exportImportFlowDefine</url-pattern>
+	</servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>templateImport</servlet-name>
+    <url-pattern>/templateImport</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>StationPathImport</servlet-name>
+    <url-pattern>/StationPathImport</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AutoQcTemplateImport</servlet-name>
+    <url-pattern>/AutoQcTemplateImport</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 策略业务 -->
+	<servlet>
+		<servlet-name>OrderServlet</servlet-name>
+		<servlet-class>jetsennet.ips.servlet.OrderServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- 消息 -->
+	<servlet>
+		<servlet-name>msgServlet</servlet-name>
+		<servlet-class>jetsennet.ips.servlet.MsgServer</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>msgServlet</servlet-name>
+		<url-pattern>/msgServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>importUserServlet</servlet-name>
+		<servlet-class>jetsennet.ips.servlet.ImportUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>importUserServlet</servlet-name>
+		<url-pattern>/importUserServlet</url-pattern>
+	</servlet-mapping>
+	<!--流程告警
+	<servlet>
+		<servlet-name>ProcessAlarm</servlet-name>
+		<servlet-class>jetsennet.ips.servlet.AlarmServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet> -->
+	
+</web-app>

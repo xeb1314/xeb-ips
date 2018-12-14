@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<!--子流程-->
+<actConfig>
+  <item name="flowId" desc="流程" deafult="" allowEmpty="false" dataType="String" maxLength="5"  source="2" sourceTable="WFM_PROCESS" keyField="PROC_ID" nameField="PROC_NAME" typeField="PROC_STATE" typeValue="11"/>
+  <item name="procType" desc="流程类型" deafult="" allowEmpty="false" dataType="String" maxLength="5" source="2" sourceTable="WFM_PROCESSTYPE" keyField="PROC_TYPE " nameField="TYPE_NAME" typeField="" typeValue=""/>
+  <item name="flowObjId" desc="流程对象ID" deafult="" allowEmpty="false" dataType="String" maxLength="5" source="3"/>
+  <item name="flowObjName" desc="流程对象名称" deafult="" allowEmpty="false" dataType="String" maxLength="5" source="3"/>
+  <!-- <item name="cmIndex" desc="存储对象" deafult="" allowEmpty="false" dataType="string" maxLength="0" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/>
+   --><item name="commitType" desc="节点提交方式" deafult="1" allowEmpty="false" dataType="string"  source="1" sourceString="子流程创建即提交~1|子流程完成再提交~2"/>
+</actConfig>

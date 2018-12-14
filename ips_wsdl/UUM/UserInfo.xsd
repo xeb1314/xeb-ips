@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://TVNetwork/Schema/UUM/2.0" targetNamespace="http://TVNetwork/Schema/UUM/2.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="UserItemType">
+		<xs:annotation>
+			<xs:documentation>用户条目类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="userID" type="xs:int"/>
+			<xs:element name="userCode" type="xs:string"/>
+			<xs:element name="loginName" type="xs:string"/>
+			<xs:element name="password" type="xs:string"/>
+			<xs:element name="userName" type="xs:string"/>
+			<xs:element name="userType" type="xs:int"/>
+			<xs:element name="userSex" type="xs:int"/>
+			<xs:element name="dutyTitle" type="xs:string"/>
+			<xs:element name="extendInfo" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfUserItemType">
+		<xs:sequence>
+			<xs:element name="userItem" type="tns:UserItemType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserGroupType">
+		<xs:annotation>
+			<xs:documentation>用户组类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="groupID" type="xs:int"/>
+			<xs:element name="parentID" type="xs:int"/>
+			<xs:element name="groupCode" type="xs:string"/>
+			<xs:element name="groupName" type="xs:string"/>
+			<xs:element name="groupType" type="xs:int"/>
+			<xs:element name="extendInfo" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfUserGroupType">
+		<xs:sequence>
+			<xs:element name="userGroup" type="tns:UserGroupType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserGroupMapType">
+		<xs:annotation>
+			<xs:documentation>用户与用户组关系类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="userID" type="xs:int"/>
+			<xs:element name="groupID" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfUserGroupMapType">
+		<xs:sequence>
+			<xs:element name="userGroupMap" type="tns:UserGroupMapType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserAllInfoType">
+		<xs:annotation>
+			<xs:documentation>用户与用户组全部信息类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="userList" type="tns:ArrayOfUserItemType"/>
+			<xs:element name="groupList" type="tns:ArrayOfUserGroupType"/>
+			<xs:element name="mapList" type="tns:ArrayOfUserGroupMapType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserRoleType">
+		<xs:annotation>
+			<xs:documentation>用户角色类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="roleID" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>角色ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="roleName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>角色名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="roleType" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>角色类型</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="roleDesc" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>描述</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserToRoleType">
+		<xs:annotation>
+			<xs:documentation>用户所属角色类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="roleID" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>角色ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="userID" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>用户ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserAllRoleInfoType">
+		<xs:annotation>
+			<xs:documentation>用户与角色全部信息类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="roleList" type="tns:UserRoleType" maxOccurs="unbounded"/>
+			<xs:element name="userToRoleList" type="tns:UserToRoleType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SysFunctionType">
+		<xs:annotation>
+			<xs:documentation>系统功能权限信息类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ID" type="xs:int"/>
+			<xs:element name="parentID" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>为0，代表是系统</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="param" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>操作参数,url 或 权限代号</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="state" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>状态,0 可能 1 禁用</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="type" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>类型,0 功能，1权限</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="viewPos" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>显示位置</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>描述</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfSysFunctionType">
+		<xs:sequence>
+			<xs:element name="sysFunction" type="tns:SysFunctionType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserRoleAuthorityType">
+		<xs:annotation>
+			<xs:documentation>用户角色授权信息类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="roleID" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>角色ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="functionID" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>功能权限ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfRoleAuthorityType">
+		<xs:sequence>
+			<xs:element name="roleAuthority" type="tns:UserRoleAuthorityType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserOnlineInfoType">
+		<xs:annotation>
+			<xs:documentation>在线用户信息</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="loginId" type="xs:string"/>
+			<xs:element name="requestIP" type="xs:string"/>
+			<xs:element name="loginTime" type="xs:date"/>
+			<xs:element name="userGroups" type="xs:string"/>
+			<xs:element name="userId" type="xs:int"/>
+			<xs:element name="userName" type="xs:string"/>
+			<xs:element name="userParam" type="xs:string"/>
+			<xs:element name="userRoles" type="xs:string"/>
+			<xs:element name="userToken" type="xs:string"/>
+			<xs:element name="userType" type="xs:int"/>
+			<xs:element name="extendInfo" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

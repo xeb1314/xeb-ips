@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JMTC PORTAL</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+    <script type="text/javascript" src="../../jetsenclient/javascript/gridlist.js"></script>
+    <script type="text/javascript" src="../../jetsenclient/javascript/crud.js"></script>
+     
+    <script type="text/javascript">
+    	/* jetsennet.require(["layoutit"]);
+    	Layoutit("#divPageFrame", {vLayout:[40, 'auto']});
+    	Layoutit("#divDSPageFrame", {vLayout:[{value:250,vLayout:[35, 'auto', 35]}, 
+    	                                      {value:'auto',hLayout:[35, 'auto']},
+    	                                      {value:150,hLayout:[500,'auto']}
+    	                                     ]});
+ 		//Layoutit("#divTaskPageFrame",{vLayout:[{value:310,hLayout:[{vLayout:[35,'auto'],{vLayout:[vLayout:[35, 'auto', 35],490]}]}]});
+ 		Layoutit("#divTaskPageFrame",{hLayout:[
+ 		                                       {value:310,vLayout:[35,'auto']},
+ 		                                       {value:'auto',vLayout:[{value:'auto',vLayout:[35, 'auto', 35]},490]}
+ 		                                      ]}); */
+    </script>
+    <link href="css/base.css" rel="stylesheet" type="text/css" />
+   	<style type="text/css">
+        .span8.ani {
+            transition: width 1s;
+            -moz-transition: width 1s; /* Firefox 4 */
+            -webkit-transition: width 1s; /* Safari and Chrome */
+            -o-transition: width 1s; /* Opera */
+        }
+        .main {
+            height: 400px;
+            overflow: hidden;
+            padding : 5px;
+            margin-bottom: 5px;
+            border: 1px solid #e3e3e3;
+            -webkit-border-radius: 4px;
+               -moz-border-radius: 4px;
+                    border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+               -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+                    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body onload="pageInit();">
+	<div id="divPageFrame">
+	    <div class="panel-head1">
+	    	<ul id="tabPane" style="padding-top: 0px; padding-left: 0px;">
+		      	<li style="font-size: 15px;padding-top: 0px; font-weight: bolder;" onclick="onDSView();">数据源视角</li>
+		      	<li style="font-size: 15px;padding-top: 0px; font-weight: bolder;"><b>任务视角</b></li>
+	    	</ul>
+		</div>
+	    <div id="tabPage">
+		    <div id="divDSPageFrame">
+		    	<div id="divRightTop" class="panel panel-sm panel-default">
+					<div class="panel-heading" style="padding: 5px 15px;">
+						<div class="pull-left">
+				        	<!-- <span>数据源列表</span> -->
+				        	<div class="input-group input-group-xs pull-left input3">
+					          	<input type="text" class="form-control" id="txtDSName" onkeydown="jetsennet.keyEvent(searchDSList)" placeholder="数据源名称/参数">
+					            <span class="input-group-btn">
+					              <button type="submit" class="btn btn-default" onclick="searchDSList();">
+					                <span class="glyphicon glyphicon-search"></span>
+					              </button>
+					            </span>
+					          </input>
+					        </div>
+				        </div>
+			      	</div>
+			      	<div id="divDataSourceList" class="table-unbordered" style="height:100%;"></div>
+			        <div id="divDataSourcePage" class="panel-footer"></div>
+				</div>
+			    <div id="divRightCenter" class="panel panel-sm panel-default">
+			    	<div class="panel-heading" style="padding: 10px 15px;">
+			        	<span>总体概括图</span>
+			        </div>
+			        <div id="divtotalPic" class="table-unbordered">
+				      	<div class="container-fluid" idx="1">
+	            			<div md="graphic" class="span8">
+		                		<div md="main" class="main" id="divtotalPic"></div>
+   							</div>
+				      	</div>
+		    		</div>
+		    	</div>
+			    <div id="divDesignPanel">
+			    	<div id="divRightCenterRight" class="panel panel-sm panel-default">
+					      <div class="panel-heading" style="padding: 10px 15px;">
+					        <span>任务列表</span>
+					      </div>
+					      <div id="divTaskList" class="table-unbordered"></div>
+					      <!-- <div class="panel-sm">
+					        <div id="divTaskPage" class="panel-footer"></div>
+					      </div> -->
+				     </div>
+				     <div id="divDesignPanelRight" class="panel panel-sm panel-default">
+				    	<div class="panel-heading" style="padding: 10px 15px;">
+							<span>流程展现</span>
+					    </div>
+					    <div class="drawing" id="divDesign" style="height:100%; width:100%;" ></div>
+				    </div>
+			    </div>
+		    </div>
+		    <div id="divTaskPageFrame">
+		    	<div id="divLeftTask" class="panel panel-sm panel-default">
+		    		<div class="panel-heading" style="padding: 1px 10px;">
+		    			<div class="pull-left" style="padding:3px;">
+							<span>分类树</span>
+						</div>
+					</div>
+		    		<div id="divTaskTree" style="overflow: auto;"></div>
+		    	</div>
+		    	<div id="rightTasskView">
+		    		<div id="divProcexecTaskTop" class="panel panel-sm panel-default">
+						<div class="panel-heading" style="padding: 1px 15px;">
+							<!-- <span>任务列表</span> -->
+							<div id="searchProcess" class="input-group input-group-xs pull-left input3" style="padding: 4px 5px;">
+					          <input type="text" class="form-control" id="txtTaskName" onkeydown="jetsennet.keyEvent(searchTask)" placeholder="任务名称">
+					            <span class="input-group-btn">
+					              <button type="submit" class="btn btn-default" onclick="searchTask();">
+					                <span class="glyphicon glyphicon-search"></span>
+					              </button>
+					            </span>
+					          </input>
+					        </div>
+					        <div id="searchColloc" style="display: none" class="center-wrapper">
+						        <div class="center-area">
+							        <form class="form-inline margin-bottom-sm center-content">
+								        <span class="margin-left-md">任务名称:</span>
+								        <div class="form-group">
+								        	<input id="txtTaskCollocName" type="text" class="form-control input-sm input-date"/>
+								        </div>
+								        <span class="margin-left-md">创建时间:</span>
+								        <div class="form-group">
+								        	<input id="txtCollocTime" type="text" class="form-control input-sm input-date" readonly="readonly"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								        </div>
+								        <a href="javascript:void(0)" onclick="el('txtCollocTime').value='';el('txtTaskCollocName').value='';">清空</a>&nbsp;&nbsp;&nbsp;
+								        <button type="button" class="btn btn-primary btn-sm" onClick="searchTask();">
+								     		<span class="glyphicon glyphicon-search"></span> 查询
+							  			</button>
+							        </form>
+							     </div>
+					        <!-- <table  align="center" cellpadding="0" cellspacing="0" >
+			                <tr class="tableRowHeight30" >
+			                   <td><span>任务列表</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					           <td class="rightAlign">
+					        	<span>任务名称:&nbsp;</span>
+						       </td>
+						       <td width="170px;">
+							   	<input id="txtTaskCollocName" type="text" class="form-control input-sm input-date"/>
+					           </td>
+					           <td class="rightAlign">
+					           	<input type="checkbox" name="chkResult" value="-1" class="checkboxMid" />&nbsp;<span class="checkboxMid">有返回结果</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					           </td>
+					           <td class="rightAlign">
+						           <span>数据时间:&nbsp;</span>
+						        </td>
+						        <td class="rightAlign">
+						         <input id="txtCollocTime" type="text" class="form-control input-sm input-date" readonly="readonly" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							         <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+							            <input id="txtCollocStartTime" type="text" class="form-control input-sm input-date">
+							            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+							        </label>
+							         &nbsp;<span>至</span>&nbsp;
+							        <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+							            <input id="txtCollocEndTime" type="text" class="form-control input-sm input-date">
+							            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+							        </label>
+							        &nbsp;<a href="javascript:void(0)" ><span onclick="el('txtCollocStartTime').value=el('txtCollocEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+				                          <a href="javascript:void(0)" onclick="el('txtCollocStartTime').value=gLastWeekDate.toDateString();el('txtCollocEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+				                          <a href="javascript:void(0)" onclick="el('txtCollocStartTime').value=el('txtCollocEndTime').value='';">清空</a>&nbsp;&nbsp;&nbsp;
+					            </td>
+					            <td rowspan="2" class="rightAlign">
+					               <button type="button" class="btn btn-primary btn-sm" onClick="searchTask();">
+								        <span class="glyphicon glyphicon-search"></span> 查询
+								   </button>
+					            </td>
+						    </tr>
+					        </table> -->
+					        </div>
+						</div>
+						<div id="frameDataDicList">
+							<div id="divProcexecTaskList" class="table-unbordered" style="height:100%;"></div>
+							<div class="table-unbordered" id= "divDataCollocList" style="display:none;overflow: auto;height:100%;"></div>
+						</div>
+						<div class="panel-sm" >
+					    	<div id="divProcexecTaskPage" class="panel-footer" ></div>
+					    	<div class="panel-footer" id="divDataCollocPage" style="display:none;"></div>
+						</div>
+					</div>
+					<div id="divTaskCountDown" class="panel panel-default panel-sm" >
+				    	<div class="panel-heading" style="padding: 1px 15px;">
+					    	<div id="totalName" class="pull-left" style="padding:3px;">
+								<span>任务统计&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+							</div>
+					    	<div id="colocTotalDivId" class="center-wrapper" style="display: none">
+					    		<div class="center-area">
+							        <form class="form-inline margin-bottom-sm center-content">
+								        <span class="margin-left-md">周期:</span>
+								        <div class="form-group">
+								        	<input id="txtCollocTotalTime" type="text" class="form-control input-sm input-date" readonly="readonly"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								        </div>
+								        <button type="button" class="btn btn-primary btn-sm" onClick="collectTaskToCount();">
+								     		<span class="glyphicon glyphicon-search"></span> 统计
+							  			</button>
+							        </form>
+							     </div>
+								<!-- <table  align="center" cellpadding="0" cellspacing="0" >
+					                <tr class="tableRowHeight30" >
+					                   <td><span>任务统计</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+							           <td class="rightAlign">
+								           <span>周期:&nbsp;</span>
+								        </td>
+								        <td colspan="3">
+								        
+									        <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+									            <input id="txtStartTime" type="text" class="form-control input-sm input-date">
+									            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+									        </label>
+									         &nbsp;<span>至</span>&nbsp;
+									        <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+									            <input id="txtEndTime" type="text" class="form-control input-sm input-date">
+									            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+									        </label>
+									        &nbsp;<a href="javascript:void(0)" ><span onclick="el('txtStartTime').value=el('txtEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+						                          <a href="javascript:void(0)" onclick="el('txtStartTime').value=gLastWeekDate.toDateString();el('txtEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							            </td>
+							            <td rowspan="2" class="rightAlign">
+							               <button type="button" class="btn btn-primary btn-sm" onClick="collectTaskToCount();">
+										        <span class="glyphicon glyphicon-search"></span> 统计
+										   </button>
+							            </td>
+							        </tr>
+							    </table> -->
+							</div>
+							<div id="processTotalDivId" class="pull-center" style="display: none;">
+								<div class="center-area" >
+							        <form class="form-inline margin-bottom-sm center-content" style="padding-left:450px;">
+								        <span class="margin-left-md">周期:</span>
+								        <div class="form-group">
+								        	<input id="txtprocessTotalTime" type="text" class="form-control input-sm input-date" readonly="readonly"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								        </div>
+								        <button type="button" class="btn btn-primary btn-sm" onClick="procTaskToCount();">
+								     		<span class="glyphicon glyphicon-search"></span> 统计
+							  			</button>&nbsp;&nbsp;&nbsp;&nbsp;
+							  			<button type="button" class="btn btn-primary btn-sm" onClick="delProcessCount();">
+								     		<span class="glyphicon glyphicon"></span> 重置
+							  			</button>
+							        </form>
+							     </div>
+							</div>
+						</div>
+						<div id="divTaskCount" style="padding: 1px; padding-top: 1px" >
+							<div class="container-fluid" idx="1">
+	            				<div md="graphic" class="span8">
+		                			<div md="main" class="main" id="main"></div>
+    						    </div>
+							</div>
+						</div>	
+		    		</div>
+		    	</div>
+	    	</div>
+		</div>   
+    </div>
+    
+	<div id="divSelectUser" style="display: none">
+	    <form class="form-inline mg-sm">
+	    	<span>用户姓名:</span>
+	      	<div class="form-group">
+	        	<input id="txtUserName" type="text" class="form-control input-sm"/>
+	      	</div>
+	      	<span class="margin-left-md">登录名称:</span>
+	      	<div class="form-group">
+	        	<input id="txtLoginName" type="text" class="form-control input-sm"/>
+	      	</div>
+	      	<button type="button" class="btn btn-primary btn-sm" onClick="searchSelectUserData();">
+	        <span class="glyphicon glyphicon-search"></span> 查询
+	      	</button>
+	    </form>
+    	<div id="divSelectUserList" style="height: 250px;">    数据正在加载...</div>
+    	<div id="divSelectUserPage" class="ml-sm"></div>
+	</div>
+	<!-- 模板详情 -->
+	<div id="divLabelDetail" style="display: none">
+		<form class="form-horizontal mg-lg">
+	    	<div class="form-group">
+	    		<label for="txtSourcePathDetail" class="col-sm-3 control-label">参数:</label>
+		        <div class="col-sm-6 ">
+		        	<div class="input-group input-group-sm">
+		        		<input id="txtSourcePathDetail" type="text" class="form-control input-sm" style="width: 300px;" readonly/>
+		        	</div>
+		        </div>
+	      	</div>
+	      	<div class="form-group">
+	    		<label for="lableClassDetails" class="col-sm-3 control-label">所属标签:</label>
+		        <div class="col-sm-6 ">
+		        	<div class="input-group input-group-sm">
+		        		<select id="lableClassDetails" style="width: 300px; height: 150px" class="form-control" name="selectClass" multiple></select>
+		        	</div>
+		        </div>
+	      	</div>
+	      	<div class="form-group" id="userDisplay" >
+	    		<label for="lableUserDetails" class="col-sm-3 control-label">所属用户:</label>
+		        <div class="col-sm-6 ">
+		        	<div class="input-group input-group-sm">
+		        		<select id="lableUserDetails"  style="width: 300px; height: 150px" class="form-control" name="selectUser" multiple></select>
+		        	</div>
+		        </div>
+	      	</div>
+   		</form>
+	</div>
+	<div id="divDialog" style="display: none">
+    	<div>
+		    <ul id="tabPane2">
+		      <li>流程监控</li>
+			  <li>流程记录</li>
+		    </ul>
+		</div>
+		<div id="tabPage2">
+	   		<!-- 流程监控 -->
+	      	<div id="divProcDesign">
+	      	</div>
+	      	<!-- 流程记录 -->
+	      	<div id="processList">
+	      	</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="javascript/base.js"></script>
+    <script type="text/javascript" src="javascript/mytask.js"></script>
+    <script type="text/javascript" src="javascript/echartsUtil.js"></script>
+    <script type="text/javascript" src="javascript/classtods.js"></script>
+    <script type="text/javascript" src="javascript/taskcount.js"></script>
+</body>
+</html>

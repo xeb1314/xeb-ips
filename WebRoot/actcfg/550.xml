@@ -1,0 +1,7 @@
+﻿<?xml version="1.0"?>
+<!--语种识别-->
+<actConfig>
+  <item name="delXml" desc="是否删除结果XML"  source="4" deafult="true"/>
+</actConfig>
+
+<!--allowInput 是否显示文本框   true：显示， false：不显示， 默认为false -->

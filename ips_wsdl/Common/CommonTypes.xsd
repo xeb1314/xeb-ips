@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://TVNetwork/Schema/Common/2.0" targetNamespace="http://TVNetwork/Schema/Common/2.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="requestHead" type="tns:RequestHeadType">
+		<xs:annotation>
+			<xs:documentation>Web服务请求消息头</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RequestHeadType">
+		<xs:annotation>
+			<xs:documentation>Web服务消息头类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="sourceCode" type="xs:string"/>
+			<xs:element name="targetCode" type="xs:string"/>
+			<xs:element name="requestID" type="xs:string"/>
+			<xs:element name="userName" type="xs:string"/>
+			<xs:element name="userToken" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WSResultType">
+		<xs:annotation>
+			<xs:documentation>Web服务返回结果头类型，服务返回类型都包含此结构</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="errorCode" type="xs:int"/>
+			<xs:element name="errorString" type="xs:string" nillable="true"/>
+			<xs:element name="resultVal" type="xs:string" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

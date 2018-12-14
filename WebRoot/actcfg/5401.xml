@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<!--关键帧提取-->
+<actConfig>
+  <item name="groupType" desc="码流组" deafult="1" allowEmpty="false" dataType="int" maxLength="5" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="2203"/>  
+  <!-- <item name="cmIndex" desc="数据对象" deafult="" allowEmpty="false" dataType="string" maxLength="0" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/>
+  --> <item name="destPath" desc="目标路径" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0"/>
+  <item name="imageFormat" desc="文件格式" deafult="jpg" allowEmpty="false" dataType="string" maxLength="50" source="1" sourceString="png~png|bmp~bmp|jpg~jpg|tif~tif|tga~tga"/>
+  <item name="detectType" desc="提取类型" deafult="0" allowEmpty="false" dataType="string" maxLength="50" source="1" sourceString="场景关键帧~0|固定帧间隔关键帧~1|指定帧关键帧~2" controlFlag="1"/>
+  <item name="frameInterval" desc="固定帧间隔" deafult="10" allowEmpty="false" dataType="int" maxLength="5" source="0" controlValue="detectType~1"/>
+  <item name="frameItem" desc="指定帧" deafult="" allowEmpty="false" dataType="string" title="以逗号分隔如：1,5,20,30" maxLength="100" source="0" controlValue="detectType~2"/>
+  <!-- <item name="subDirMode" desc="子目录格式" deafult="1" allowEmpty="false" dataType="int" maxLength="5" source="1" sourceString="年月日/~1|GUID/~2|ID/~3|年/月/日/~4|年月/~5|年/月/~6|年/~7|任务名称/~8|年月日/ID/~9|年月日/任务名称/~10"/>  -->
+</actConfig>

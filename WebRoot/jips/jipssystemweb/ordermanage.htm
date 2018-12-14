@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>订阅管理</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/crud.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/gridlist.js"></script>
+  <script type="text/javascript" src="javascript/base.js"></script>
+  <script type="text/javascript" src="javascript/ordermanage.js"></script>
+  <script type="text/javascript" src="javascript/class.js"></script>
+  
+  <link href="css/base.css" rel="stylesheet" type="text/css" />
+  <link href="css/ctrlclass.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="pageInit();">
+	<div id="divPageFrame" >
+	    <div class="panel panel-default panel-sm" style="border-bottom-width:0;">
+        	<div class="panel-heading-1">
+        		<div>
+        			<b>分类树 </b>
+        			<label style="position: relative; font-weight: normal; margin-bottom: 0;">
+			  			<input id="dataManageOptions" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px;" class="form-control input-sm" selectedvalue="-1" />
+			  			<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 10px;right: 10px;"></i>
+					</label>
+        		</div>
+      		</div>
+      		<div id="divDataSourceTree" style="overflow: auto;"></div>
+		</div>
+	    <div>
+		    <div class="panel panel-sm  panel-default" style="border-bottom-width:0">
+		    	<div class="panel-heading-1" style="padding-top:10px">
+			      	<div class="pull-left">
+			     		<b>数据源列表 </b>
+			      	</div>
+		    	</div>
+		    	<div id="divDataSourceList" style="  overflow: auto;">数据加载中...</div>
+		    	<div class="panel-sm">
+         	    	<div id="divDataSourcePage" class="panel-footer"></div>
+	   			</div> 
+	    	</div>
+	    	<div class="panel panel-sm  panel-default">
+	    		<div class="panel-heading-1" style="padding-top:10px">
+			      	<div class="pull-left">
+			     		<b>订单列表 </b>
+			      	</div>
+		     		<div class='pull-right'>
+			        	<span style="cursor:pointer;margin-right: 10px;" title="新建" onclick="gOrderCrud.add();">
+          					<i class="fa fa-plus"></i>
+          					<span>&nbsp;新建</span>
+       					</span>
+	        		</div> 
+		    	</div>
+	    		<div class="panel panel-sm  panel-default">
+			      	<div id="divOrderList" style="  overflow: auto;">数据加载中...</div>
+	    		</div>
+	    		<div class="panel-sm">
+         	    	<div id="divOrderPage" class="panel-footer"></div>
+	   			</div> 
+	    	</div>
+    	</div>
+	</div>
+	<!-- 模板详情 -->
+	<div id="divLabelDetail" style="display: none">
+		<form class="form-inline mg-sm">
+			<span>&nbsp;&nbsp;&nbsp;源路径:</span>
+	      	<div class="input-group">
+	        	<input id="txtSourcePathDetail" type="text" class="form-control input-sm" style="width: 300px;">
+	      	</div>
+	      	<br />
+	        <br />
+			<span>所属分类:</span>
+			<div class="input-group">
+					<select id="lableClassDetails" style="width: 300px; height: 150px" class="form-control" name="selectClass" multiple></select>
+	        </div>
+	        <br />
+	        <br />
+	        <span>所属用户:</span>
+	        <div class="input-group">
+					<select id="lableUserDetails"  style="width: 300px; height: 150px" class="form-control" name="selectUser" multiple></select>
+			</div> 
+   		</form>
+	</div>
+	<div id="divOrderDialog" style="display: none">
+		<form class="form-horizontal mg-lg">
+			<div class="form-group">
+        		<label for="txt_DataSourceName" class="col-sm-2 control-label">数据源名称:</label>
+        		<div class="col-sm-10">
+          		<div class="input-group input-group-sm">
+            		<input type="text" class="form-control" id="txt_DataSourceName" validatetype="NotEmpty" /> 
+            		<span class="input-group-addon" style="color: Red">*</span>
+          		</div>
+        		</div>
+      		</div>
+      		<div class="form-group">
+        		<label for="txt_OrderName" class="col-sm-2 control-label">订单名称:</label>
+        		<div class="col-sm-10">
+          		<div class="input-group input-group-sm">
+            		<input type="text" class="form-control" id="txt_OrderName" validatetype="NotEmpty" /> 
+            		<span class="input-group-addon" style="color: Red">*</span>
+          		</div>
+        		</div>
+      		</div>
+      		<div class="form-group">
+	      		<label for="txt_OrderDesc" class="col-sm-2 control-label">订单描述:</label>
+	      		<div class="col-sm-10 ">
+	      			<textarea name="sysDesc" id="txt_OrderDesc" style="width: 100%;height: 50px" class="xml"></textarea>
+	      		</div>
+   	  		</div>
+   	  		<div class="form-group">
+		        <label for="lableName" class="col-sm-2 control-label">订阅规则:</label>
+		        <div class="col-sm-5 ">
+			        <label style="position: relative; font-weight: normal; margin-bottom: 0;">
+			        	<input type="hidden" id="hidlableType" /> 
+						<input id="lableNamesType" onclick="jetsennet.ui.DropDownList.show(this)" style="width:200px" class="form-control selecttree" selectedvalue="-1"/>
+						<i class="fa fa-lg fa-caret-down" style="position: absolute;top: 35%;right: 5%;"></i>
+					</label>
+		    	</div>
+		    	 <div class="col-sm-5 " align="left" style="padding-top:40px;">
+					 <label >白名单:</label> 
+		    	</div>
+	        </div>
+	        <div class="form-group">
+	        	<div class="col-sm-5 " align="left">
+	        		<select id="selectInfo" style="width: 220px; height: 200px;" multiple ></select>
+	        	</div>
+	        	<div class="col-sm-2 " align="center" style="padding-top:70px;">
+	        		<img src="images/toRight.png" onclick="moveRight(el('selectInfo'),'selectedInfo');" /><br /><br/><br /><br/>
+	                <img src="images/toLeft.png"  onclick="selectOptionsDel(el('selectedInfo'));" />
+	        	</div> 
+	        	<div class="col-sm-5 " align="right">
+	        		<select id="selectedInfo" style="width: 220px; height: 200px;" multiple></select>
+	        	</div>
+	        </div>
+	        <div class="form-group" id="gratFunToUsers">
+		        <label for="gratFunToUsers" class="col-sm-2 control-label">抄送用户:</label>
+		        <div class="col-sm-10 ">
+		        	 <div class="input-group">
+	                	 <select id="selMember" class="form-control" name="select" multiple></select> 
+	                     <span class="input-group-addon"> 
+	                     <input type="button" value=" 添加 " class="btn btn-primary btn-sm margin-bottom-xs" id="btnAdd" onclick="gUserCrud.showSelectDlg('divSelectUser', 'selMember', {size : {width : 520, height : 400}});" style="display: block;" /> 
+	                     <input type="button" value=" 删除 " class="btn btn-danger btn-sm" id="btnDel" onclick="jetsennet.Crud.selectOptionsDel('selMember');" />
+	                     </span>
+              		 </div>
+		        </div>
+	      	</div>
+		</form>
+	</div>
+	<!-- 选择用户结束 -->
+	<div id="divSelectUser" style="display: none">
+	    <form class="form-inline mg-sm">
+	    	<span>用户姓名:</span>
+	      	<div class="form-group">
+	        	<input id="txtUserName" type="text" class="form-control input-sm"/>
+	      	</div>
+	      	<span class="margin-left-md">登录名称:</span>
+	      	<div class="form-group">
+	        	<input id="txtLoginName" type="text" class="form-control input-sm"/>
+	      	</div>
+	      	<button type="button" class="btn btn-primary btn-sm" onClick="searchSelectUserData();">
+	        <span class="glyphicon glyphicon-search"></span> 查询
+	      	</button>
+	    </form>
+    	<div id="divSelectUserList" style="height: 250px;">    数据正在加载...</div>
+    	<div id="divSelectUserPage" class="ml-sm"></div>
+	</div>
+</body>
+</html>

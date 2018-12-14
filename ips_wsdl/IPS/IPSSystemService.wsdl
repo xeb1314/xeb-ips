@@ -1,0 +1,93 @@
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://TVNetwork/IPS/IPSSystemService/1.0" xmlns:nsdata="http://TVNetwork/Schema/IPS/1.0" xmlns:nspub="http://TVNetwork/Schema/Common/2.0" targetNamespace="http://TVNetwork/IPS/IPSSystemService/1.0">
+	<types>
+		<xs:schema targetNamespace="http://TVNetwork/IPS/IPSSystemService/1.0" elementFormDefault="qualified">
+			<xs:import namespace="http://TVNetwork/Schema/Common/2.0" schemaLocation="../Common/CommonTypes.xsd"/>
+			<xs:import namespace="http://TVNetwork/Schema/IPS/1.0" schemaLocation="DataInfo.xsd"/>
+			<xs:element name="getDataSourceRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="loginName" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getDataSourceResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WSResult" type="nspub:WSResultType"/>
+						<xs:element name="dataSourceList" type="nsdata:ArrayOfDataSourceType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="orderRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="orderMsg" type="nsdata:OrderMsgType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="orderResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WSResult" type="nspub:WSResultType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</types>
+	<message name="RequestHeadMsg">
+		<part name="RequestHead" element="nspub:requestHead"/>
+	</message>
+	<message name="GetDataSourceRequest">
+		<part name="requestHead" element="nspub:requestHead"/>
+		<part name="getDataSourceRequest" element="tns:getDataSourceRequest"/>
+	</message>
+	<message name="GetDataSourceResponse">
+		<part name="getDataSourceResponse" element="tns:getDataSourceResponse"/>
+	</message>
+	<message name="OrderRequest">
+		<part name="requestHead" element="nspub:requestHead"/>
+		<part name="orderRequest" element="tns:orderRequest"/>
+	</message>
+	<message name="OrderResponse">
+		<part name="orderResponse" element="tns:orderResponse"/>
+	</message>
+	<portType name="IPSSystemServicePort">
+		<operation name="getDataSource">
+			<input message="tns:GetDataSourceRequest"/>
+			<output message="tns:GetDataSourceResponse"/>
+		</operation>
+		<operation name="order">
+			<input message="tns:OrderRequest"/>
+			<output message="tns:OrderResponse"/>
+		</operation>
+	</portType>
+	<binding name="IPSSystemServiceBinding" type="tns:IPSSystemServicePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="getDataSource">
+			<soap:operation soapAction="http://TVNetwork/IPS/IPSSystemService/1.0/getDataSource"/>
+			<input>
+				<soap:body parts="getDataSourceRequest" use="literal"/>
+				<soap:header message="tns:GetDataSourceRequest" part="requestHead" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="order">
+			<soap:operation soapAction="http://TVNetwork/IPS/IPSSystemService/1.0/orderMail"/>
+			<input>
+				<soap:body parts="orderRequest" use="literal"/>
+				<soap:header message="tns:OrderRequest" part="requestHead" use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="IPSSystemService">
+		<port name="IPSSystemServiceSoap" binding="tns:IPSSystemServiceBinding">
+			<soap:address location="http://localhost:8080/TVNetwork/IPS/IPSSystemService"/>
+		</port>
+	</service>
+</definitions>

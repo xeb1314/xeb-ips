@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<!-- 迁移 -->
+<actConfig>
+  <item name="groupType" desc="迁移文件组" deafult="1" allowEmpty="false" dataType="int" maxLength="5" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="2203"/>
+  <!-- <item name="cmIndex" desc="迁移文件源" deafult="CM1" allowEmpty="false" dataType="string" maxLength="0" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/>
+   -->
+   <item name="executeType" desc="执行方式" deafult="1" allowEmpty="false" dataType="int" maxLength="5" source="1" sourceString="拷贝~1|剪切~40|删除~30" controlFlag="1"/>
+  <item name="execMode" desc="执行模式" deafult="0" allowEmpty="false" dataType="int" maxLength="5" source="1" sourceString="普通模式~0|分片模式~10" controlValue="executeType~1_40"/>
+  <item name="destPath" desc="目标路径" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0" allowVariable="true" controlValue="executeType~1_40"/>
+  <item name="readLimit" desc="磁盘读限速" deafultValue="30000"  unit="KB" title="1000~500000" allowInput="true" deafult="false" dataType="int"  minValue="1000" maxValue="500000"  source="4" controlValue="executeType~1_40" />
+  <item name="writeLimit" desc="磁盘写限速" deafultValue="30000"  unit="KB" title="1000~500000" allowInput="true" deafult="false" dataType="int"  minValue="1000" maxValue="500000" source="4" controlValue="executeType~1_40"/>
+  <item name="md5Count" desc="MD5计算"  source="4" controlValue="executeType~1_40" deafult="false"/>
+</actConfig>
+<!--soure 0:自输入，1：下拉自定义，2：受控词，3：变量   4：多选框-->
+<!--allowVariable 是否显示变量弹出框   true：显示， false：不显示， 默认为false -->

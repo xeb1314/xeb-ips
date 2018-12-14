@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>JMTC PORTAL</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script type="text/javascript"
+			src="../../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript"
+			src="../../../jetsenclient/javascript/jbase.js" apppath="../"></script>
+		<script type="text/javascript" src="../javascript/base.js"></script>
+		<link href="../css/base.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mtc/manager.css" rel="stylesheet"
+			type="text/css" />
+		<script type="text/javascript">
+			function pageInit() {
+				loadWfmServerInfo();
+			}
+
+			function loadWfmServerInfo(){
+				var sqlQuery = new jetsennet.SqlQuery();
+			    var queryTable = jetsennet.createQueryTable("NET_SERVER", "p");
+			    jQuery.extend(sqlQuery, { IsPageResult: 0, QueryTable: queryTable,ResultFields:"HOST_IP,HOST_PORT,SET_MODE,WORK_MODE,WORK_STATE,CREATE_TIME"});
+			    var sqlCollection = new jetsennet.SqlConditionCollection();
+			    sqlCollection.SqlConditions.push(jetsennet.SqlCondition.create("SERVER_TYPE", "10", jetsennet.SqlLogicType.And, jetsennet.SqlRelationType.Equal, jetsennet.SqlParamType.Numeric));
+			    sqlQuery.Conditions = sqlCollection;
+			    
+			    jetsennet.request(jetsennet.appPath+"../../wfmsystem", { command: "query", query: sqlQuery.toXml() }, function (result) {
+			    	result = jQuery.parseJSON(result);
+			    	if (result && result.Record && result.Record.length > 0){
+						$.each(result.Record, function (index, item){
+							if (item.WORK_MODE == "1"){
+								$("#hostDiv").show();
+								$("#txt_ip").val(item.HOST_IP);
+								$("#txt_port").val(item.HOST_PORT);
+								$("#txt_state").val(item.WORK_STATE == "1" ? "工作，任务空闲状态" : item.WORK_STATE == "2" ? "工作，任务执行状态" : "停止状态（正常关闭）");
+								$("#txt_time").val(item.CREATE_TIME);
+							}
+							else {
+								$("#bakDiv").show();
+								$("#txt_ip_bak").val(item.HOST_IP);
+								$("#txt_port_bak").val(item.HOST_PORT);
+								$("#txt_state_bak").val(item.WORK_STATE);
+								$("#txt_time_bak").val(item.CREATE_TIME);
+							}
+						});
+			    	}
+			    }, function (ex) { jetsennet.error(ex); });
+			}
+		</script>
+	</head>
+	<body onload="pageInit();">
+     <div id="all">
+		<div id="content">
+            <div class="content01 clf">
+                <div class="cantent01 clf">
+                    <div class="manager-left" id="hostDiv">
+                        <div class="title">
+                            <div class="dess">
+                                <p>
+                                    主工作流引擎</p>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <span>调度器</span></div>
+                        <div class="control-1">
+                            <ul>
+                                <li><span>IP地址：</span>
+                                    <div class="frsct">
+                                        <input id="txt_ip" type="text"  disabled="disabled"/>
+                                    </div>
+                                </li>
+                                <li><span>端口号：</span>
+                                    <div class="frsct">
+                                        <input id="txt_port" type="text"   disabled="disabled"/>
+                                    </div>
+                                </li>
+                                <li><span>状态：</span>
+                                    <div class="frsct">
+                                        <input id="txt_state" type="text"   disabled="disabled"/>
+                                    </div>
+                                </li>
+                                <li><span>启动时间：</span>
+                                    <div class="frsct">
+                                        <input id="txt_time" type="text"   disabled="disabled"/>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="manager-right" id="bakDiv">
+                        <div class="title">
+                            <div class="dess">
+                                <p>
+                                    备工作流引擎</p>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <span>调度器</span></div>
+                        <div class="control-1">
+                            <ul>
+                                <li><span>IP地址：</span>
+                                    <div class="frsct">
+                                        <input id="txt_ip_bak" type="text"   disabled="disabled"/>
+                                    </div>
+                                </li>
+                                <li><span>端口号：</span>
+                                    <div class="frsct">
+                                        <input id="txt_port_bak" type="text"   disabled="disabled"/>
+                                    </div>
+                                </li>
+                                <li><span>状态：</span>
+                                    <div class="frsct">
+                                        <input id="txt_state_bak" type="text"   disabled="disabled"/>
+                                    </div>
+                                </li>
+                                <li><span>启动时间：</span>
+                                    <div class="frsct">
+                                        <input id="txt_time_bak" type="text"   disabled="disabled"/>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+	</body>
+</html>

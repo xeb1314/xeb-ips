@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema name="emailv4" version="1.5" desc="邮件表">
+	<fields>
+		<!-- 数据源ID -->
+		<field name="SSourceID" type="string" length="100" desc="数据源ID"/>
+		<!-- IP版本 -->
+		<field name="NIPVERSION" type="int" mode="rw"  desc="IP版本"/>
+		<!-- 源IP地址 -->
+		<field name="SSRCIP" type="hipaddr" required="true"  mode="ro" length="48" desc="源IP地址"/>
+		<!-- 目的IP地址 -->
+		<field name="SDESTIP" type="hipaddr" required="true" mode="ro" length="48" desc="目的IP地址"/>
+		<!-- 源IP地区属性 -->
+		<field name="SFROMIP" type="string" mode="ro" length="200" desc="源IP地区属性"/>
+		<!-- 目的IP地区属性 -->
+		<field name="STOIP" type="string" mode="ro" length="200" desc="目的IP地区属性"/>
+		<!-- 源端口号 -->
+		<field name="NSOURCE_PORT" type="int" mode="ro" desc="源端口号"/>
+		<!-- 目的端口号 -->
+		<field name="NDEST_PORT" type="int" mode="ro" desc="目的端口号"/>
+		<!-- 邮件类型 -->
+		<field name="SEmailType" type="string" mode="ro" length="10" desc="邮件类型"/>
+		<!-- 光层 -->
+		<field name="NLineNo1" type="int" mode="ro"  desc="光层"/>
+		<!-- 电层 -->
+		<field name="NLineNo2" type="int" mode="ro" desc="电层"/>
+		<!-- 时隙 -->
+		<field name="NLineNo3" type="int"  mode="ro" multiValued="false" desc="时隙"/>
+		<!-- 虚属性 -->
+		<field name="NLineNo4" type="int" mode="ro" desc="虚属性"/>
+		<!-- 光层值 -->
+		<field name="SLineNo1Char" type="string" mode="ro" length="50" desc="光层值"/>
+		<!-- 电层值 -->
+		<field name="SLineNo2Char" type="string"  mode="ro" length="50" desc="电层值"/>
+		<!-- 等级 -->
+		<field name="NLINEGRADE" type="int" mode="ro" desc="等级"/>
+		<!-- 发方用户名 -->
+		<field name="SFromUser" type="string" mode="ro" length="100" desc="发方用户名"/>
+		<!-- 收方用户名 -->
+		<field name="SToUser" type="text" desc="收方用户名"/>
+		<!-- 抄送 -->
+		<field name="SCC" type="text" multiValued="true" desc="抄送"/>
+		<!-- 暗送 -->
+		<field name="SBCC" type="text" multiValued="true" desc="暗送"/>
+		<!-- 附件个数 -->
+		<field name="NAFFIXNUM" type="int" mode="ro" desc="附件个数"/>
+		<!-- 附件类型-->
+		<field name="SAFFIXTYPE" type="string" length="50" multiValued="true" desc="附件类型"/>
+		<!-- 附件文件名 -->
+		<field name="SAFFIXNAME" type="string" multiValued="true" desc="附件文件名"/>
+		<!-- 语（文）种编码 -->
+		<field name="SLANGCODE" type="string" length="3" mode="ro" desc="语（文）种编码"/>
+		<!-- 文种 -->
+		<field name="SLANG" type="string" length="50" mode="ro" desc="文种"/>
+		<!-- 编码集 -->
+		<field name="SCHARSET" type="string" length="16" mode="ro" desc="编码集"/>
+		<!-- 关键词 -->
+		<field name="SKEYWORDS" type="string" length="100" multiValued="true" desc="关键词"/>
+		<!-- 文摘 -->
+		<field name="SABSTRACT" type="text" language="cn" multiValued="true" desc="文摘"/>
+		<!-- 是否完整 -->
+		<field name="NIsMiss" type="int" indexed="true" mode="ro" desc="是否完整"/>
+				<!-- 是否包含未知附件 -->
+		<field name="NUnknownAffix" type="int" mode="ro" desc="是否包含未知附件"/>
+		<!-- 任务ID -->
+		<field name="TASKID" type="int" mode="rw" desc="任务ID"/>
+		<!-- 正文 -->
+		<field name="SText" type="text" language="cn" multiValued="false" desc="正文"/>
+		<field name="SMessageType" length="50" type="string" mode="ro" required="true" desc=""/>
+		<!-- 单位编码 -->
+		<field name="SINUNIT" type="string" length="50" mode="rw" desc="单位编码"/>
+		<!-- 单位 -->
+		<field name="SUnit" type="string" length="50" mode="rw" desc="单位"/>
+		<!-- 人员编码 -->
+		<field name="SINPERSON" type="string" length="50" mode="rw" desc="人员编码"/>
+		<!-- 位置编码 -->
+		<field name="SINPOSITION" type="string" required="true"  length="50" mode="rw" desc="位置编码"/>
+		<!-- 位置 -->
+		<field name="SPosition" type="string" length="200" mode="rw" desc="位置"/>
+		<!-- 系统编码 -->
+		<field name="SINSYSTEMTYPE" type="string" required="true" length="50" mode="rw" desc="系统编码"/>
+		<!-- 设备标识 -->
+		<field name="SINEQUIPMENT" required="true" length="8" type="string" mode="rw" desc="设备标识"/>
+		<!-- 设备 -->
+		<field name="SEquipment" type="string" indexed="true" length="50" mode="rw" desc="设备"/>
+		<!-- 存储目录 -->
+		<field name="SSTOREADDRESS" type="string" required="true" length="50" mode="rw" desc="存储目录"/>
+		<!-- 文件名 -->
+		<field name="SFILENAME" type="string" required="true" mode="rw" desc="文件名"/>
+		<!-- 文件号 -->
+		<field name="SFileNo" type="string" length="100" mode="rw" desc="文件号"/>
+		<!-- 国家代码 -->
+		<field name="SCOUNTRYCODE" type="string" mode="rw" desc="国家代码"/>
+		<!-- 国家 -->
+		<field name="SCountry" length="50" type="string" mode="rw" desc="国家"/>
+		<!-- 机构简称 -->
+		<field name="SORGCODE" length="20" type="string" mode="rw" desc="机构简称"/>
+		<!-- 机构 -->
+		<field name="SORG" length="50" type="string" mode="rw" desc="机构"/>
+		<!-- 人 -->
+		<field name="SREADER" length="20" type="string" mode="rw" desc="人"/>
+		<!-- 序号 -->
+		<field name="SSerialNum" length="50" type="string" mode="rw" desc="序号"/>
+		<!-- 采集系统 -->
+		<field name="SCollectSys" length="50" type="string" mode="rw" desc="采集系统"/>
+		<!-- 采集用户 -->
+		<field name="SCollectUser" length="50" type="string" mode="rw" desc="采集用户"/>
+		<!-- 采集任务号 -->
+		<field name="SCollectCode" type="string" mode="rw" desc="采集任务号"/>
+		<!-- 数据处理用户 -->
+		<field name="SProcUser" length="50" type="string" mode="rw" desc="数据处理用户"/>
+		<!-- 数据处理任务号 -->
+		<field name="SProcCode" length="50" type="string" mode="rw" desc="数据处理任务号"/>
+		<!-- 重复邮件ID -->
+		<field name="SRepeatMailID" type="string" mode="rw" desc="重复邮件ID"/>
+		<!-- 是否重报 -->
+		<field name="NIsRepeat" type="int" mode="rw" desc="是否重报"/>
+		<!-- 附件大小 -->
+		<field name="NAffixSize" type="int" multiValued="true" desc="附件大小"/>
+		<!-- 数据源父ID -->
+		<field name="SSourcePID" type="string" mode="rw" length="100" desc="数据源父ID"/>
+		<!-- 标题 -->
+		<field name="SSUBJECT" type="text" desc="标题"/>
+		<!-- 时间 -->
+		<field name="DINTIME" type="date" required="true" mode="rw" desc="时间"/>
+		<!-- 时间 -->
+		<field name="DREADTIME" type="date" mode="rw" desc="时间"/>
+		<!-- 采集时间 -->
+		<field name="DCollectTime" type="date" mode="rw" desc="采集时间"/>
+		<!-- 数据处理时间 -->
+		<field name="DProcTime" type="date" mode="rw" desc="数据处理时间"/>
+		<!-- 发送时间 -->
+		<field name="DSendTime" type="date" mode="rw" desc="发送时间"/>
+		<!-- 父ID -->
+		<field name="SPID" type="string" mode="rw" length="100" desc="父ID "/>
+		<!-- 报文长度 -->
+		<field name="NFILELEN" type="int" mode="ro" desc="报文长度"/>
+		<field name="SINSYSTEM" type="string" mode="rw" length="100" desc=""/>
+		<!-- 报文标识号 -->
+		<field name="SID" type="string" length="100" unique="true" desc="报文标识号"/>		
+		<!-- 是否有附件 -->
+		<field name="NHASAFFUX" type="int" mode="rw" desc="是否有附件"/>
+		<!-- 发件地址 -->
+		<field name="SFROMEMAIL" type="string" mode="rw" length="60" required="true" desc="发件地址"/>
+		<!-- 收件地址 -->
+		<field name="STOEMAIL" type="text" required="true" multiValued="true" desc="收件地址"/>
+		<!-- 邮件类型代码 -->
+		<field name="NXTYPE" type="int" mode="rw" multiValued="false" desc="邮件类型代码"/>
+		<!-- 人员 -->
+		<field name="Person" type="string" length="200" mode="rw" desc="人员"/>
+		<field name="AffixType1" type="string" length="50" mode="rw" desc=""/>
+		<field name="AffixName1" type="text"  desc=""/>
+		<field name="AffixPath1" type="text"  desc=""/>
+		<field name="DataStatus" type="int" mode="rw" desc=""/>
+		<!-- 性质 -->
+		<field name="IsEncrypt" type="int" mode="rw"  desc="性质"/>
+		<field name="NENCRYPTTIMES" type="int" mode="rw" desc=""/>
+		<field name="SENCRYPTTYPE" length="64" type="string" mode="rw" desc=""/>
+		<field name="SNETATTOBJNUM" length="12" type="string" mode="rw" desc=""/>
+		<field name="NProcessflag" type="int" mode="rw" desc=""/>
+		<!-- 原始附件 -->
+		<field name="AffixDat" type="hblob" multiValued="true" desc="原始附件"/>
+		<field name="SLINENUM" length="40" type="string" mode="rw" desc=""/>
+		<field name="SPassword" length="36" type="string" mode="rw" desc=""/>
+		<!-- 素材类型 -->
+		<field name="NMESSAGETYPE" type="int" required="true" mode="rw" desc="素材类型"/>
+		<field name="NSECRET" type="int" multiValued="true" desc=""/>
+		<field name="SAFFIXPATH" type="text" desc=""/>
+		<!-- 附件文本 -->
+		<field name="AffixText" type="text" language="cn" combine="true" multiValued="true" desc="附件文本"/>
+		<!--文本分类-->
+		<field name="CATName" type="string" multiValued="true" desc=""/>
+		<field name="V" type="string" multiValued="true" desc=""/>
+		<!-- 自动摘要-->
+		<field name="Abs" type="text" multiValued="true" desc=""/>
+		<field name="WordList" type="text" multiValued="true" desc=""/>
+		<!-- 信息抽取-->
+		<field name="Word" type="text" multiValued="true" desc=""/>
+		<field name="Pos" type="text" multiValued="true" desc=""/>
+		<field name="Type" type="text" multiValued="true" desc=""/>
+	</fields>
+</schema>

@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>系统配置管理</title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+<script type="text/javascript">
+	Layoutit("#divPageFrame", {vLayout: [46, "auto", 40]});
+</script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+<![endif]-->
+</head>
+<body onload="pageInit()" class="panels">
+
+<div id="divPageFrame" class="v-panel">
+  
+    <div class="panel-heading">
+    	<div class="form-group pull-left">
+	      <div class="input-group input-group-xs input3">
+            <input type="text" class="form-control" id="txt_ROLE_NAME" onkeydown="jetsennet.keyEvent(searchSysConfig)" placeholder="参数名称">
+	           <span class="input-group-btn">
+	             <button type="submit" class="btn btn-default" onclick="javascript:searchSysConfig();">
+	               <span class="glyphicon glyphicon-search"></span>
+	             </button>
+	           </span>
+	         </input>
+	      </div>
+      	</div>
+      
+      <div class='btn-group btn-group-sm pull-right'>
+        <span style="cursor:pointer;margin-right: 10px;" title="新建" onclick="gCrud.add();">
+          <i class="fa fa-plus"></i>
+          <span>&nbsp;新建</span>
+        </span>
+          	<span style="cursor:pointer;margin-right: 10px;" title="编辑" onclick="gCrud.edit();">
+          	  <i class="fa fa-pencil-square-o"></i>
+          <span>&nbsp;编辑</span>
+        </span>
+          	<span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gCrud.remove();">
+          <i class="fa fa-times"></i>
+          <span>&nbsp;删除</span>
+        </span>
+          	<span style="cursor:pointer;margin-right: 10px;" title="刷新" onclick="document.location.reload();">
+          <i class="fa fa-refresh"></i>
+          <span>&nbsp;刷新</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="table-unbordered" id= "divContent">数据加载中...</div>
+    
+    <div class="panel-footer" id="divPage" style="overflow: hidden;"></div>
+</div>
+
+  <!-- 新增、编辑前端开始 -->
+  <div id="divSysConfig" style="display: none;">
+    <form class="form-horizontal mg-lg">
+      <div class="form-group">
+        <label for="txtName" class="col-sm-3 control-label">参数名称:</label>
+        <div class="col-sm-9">   
+            <input type="text" class="form-control input-sm" id="txtName" validatetype="NotEmpty" maxlength="64" placeholder="必填项"/> 
+            <input type="hidden" id="txtOldName" /> 
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtConfigData" class="col-sm-3 control-label">参数值:</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control input-sm" id="txtConfigData" validatetype="NotEmpty" maxlength="64" placeholder="必填项"/> 
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtConfigType" class="col-sm-3 control-label">类型:</label>
+        <div class="col-sm-9">
+          <select id="txtConfigType" class="form-control input-sm" default="0">
+            <option value="0" title="统一用户系统">统一用户系统</option>
+            <option value="1" title="其他系统">其他系统</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtView_pos" class="col-sm-3 control-label">排序:</label>
+        <div class="col-sm-9 ">
+            <input type="text" class="form-control input-sm" id="txtView_pos" validatetype="notempty,uinteger" maxlength="10" placeholder="必填项"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtDescription" class="col-sm-3 control-label">参数描述:</label>
+        <div class="col-sm-9">
+          <textarea class="form-control input-sm" id="txtDescription" validatetype="notempty" rows="3" placeholder="必填项"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- 新增、编辑前端结束 -->
+<script type="text/javascript" src="javascript/sysconfig.js"></script>
+</body>
+</html>

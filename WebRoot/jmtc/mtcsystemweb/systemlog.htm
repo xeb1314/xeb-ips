@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>MTC&流程日志</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+  <script type="text/javascript">
+ 		Layoutit("#divPageFrame", {vLayout:[200, {vLayout:[45, 'auto', 35]}]});
+    </script>
+  <link href="css/base.css" rel="stylesheet" type="text/css" />
+  <!--[if lt IE 9]> 
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+  <![endif]-->
+</head>
+<body onload="pageInit();">
+      <!-- <div class="panel-group" role="panel-group" desc="面板组" > -->
+      <div id="divPageFrame" class="panels">
+	    <div class="v-panel">
+	        <div class="panel-heading">
+	            <span>查询条件</span>
+	        </div>
+	        <div class="panel-collapse div-collapse">
+	           <table  align="center" cellpadding="0" cellspacing="0" >
+	                <tr class="tableRowHeight60" >
+			           <td class="rightAlign">
+				           <span>时间:&nbsp;</span>
+				        </td>
+				        <td colspan="3">
+				        
+				        <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+				            <input id="txtStartTime" type="text" class="form-control input-sm input-date" readonly>
+				            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+				        </label>
+				         &nbsp;<span>至</span>&nbsp;
+				        <label style="position: relative; font-weight: normal;  margin-bottom: 0;">
+				            <input id="txtEndTime" type="text" class="form-control input-sm input-date" readonly>
+				            <i class="fa fa-lg fa-calendar" style="position: absolute;top: 10px;right: 10px;"></i>
+				        </label>
+				        &nbsp;<a href="javascript:void(0)" ><span onclick="el('txtStartTime').value=el('txtEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=gLastWeekDate.toDateString();el('txtEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=el('txtEndTime').value='';">清空</a>
+
+				        <!-- 
+				           <input id="txtStartTime" type="text" class="input-sm input-date selectdate"/>
+	                            &nbsp;<span>至</span>&nbsp;
+	                            <input id="txtEndTime" class="input-sm input-date selectdate"/>
+	                            &nbsp;<a href="javascript:void(0)" ><span onclick="el('txtStartTime').value=el('txtEndTime').value=gCurDate.toDateString();">今天</span></a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=gLastWeekDate.toDateString();el('txtEndTime').value=gCurDate.toDateString();">一周内</a>&nbsp;
+	                            <a href="javascript:void(0)" onclick="el('txtStartTime').value=el('txtEndTime').value='';">清空</a> -->
+			            </td>
+			            <td rowspan="2">
+			               <button type="button" class="btn btn-primary btn-sm" onClick="searchlog();">
+						        <span class="glyphicon glyphicon-search"></span> 查询
+						   </button>
+						   <!--  <button type="button" class="btn btn-info btn-sm" onClick="exportData(true);">
+						        <span class="glyphicon glyphicon-export"></span> 导出
+						   </button>-->
+			            </td>
+			        </tr>
+			        <tr class="tableRowHeight60">
+			             <td class="rightAlign" width="100px">
+				            <span>关键字:&nbsp;</span>
+				         </td>
+				         <td width="240px;">
+					        <input id="txtKeyWord" type="text" class="form-control input-sm " onkeydown="jetsennet.keyEvent(searchlog)"/>
+			             </td>
+			            <td class="rightAlign" width="80px">
+			             	<span>日志级别:&nbsp;</span>
+			            </td>
+			            <td width="250px;">
+	                            <input type="checkbox" name="txt_logLevel" value="2" class="checkboxMid"  />&nbsp;<span class="checkboxMid">信息   </span>&nbsp;&nbsp;
+	                            <input type="checkbox" name="txt_logLevel" value="3" class="checkboxMid" checked />&nbsp;<span class="checkboxMid">警告</span>&nbsp;&nbsp;
+	                            <input type="checkbox" name="txt_logLevel" value="4" class="checkboxMid" checked />&nbsp;<span class="checkboxMid">错误 </span>&nbsp;&nbsp;
+			            </td>
+			        </tr>
+	           </table>
+	        </div>
+	    </div>
+	    
+	   <div class="v-panel panel-border-top table-unbordered">
+		      <div class="panel-heading">
+		            <div class="pull-left">
+		                <span>数据信息 </span>
+		            </div>
+			        <div class='pull-right'>
+			           <span style="cursor:pointer;" onclick="gCrud.remove()"><img src="images/del.png" style="height:18px;">&nbsp;删除</img></span>
+			        </div> 
+		      </div>
+		      <div id="divList" >数据加载中...</div>
+		      <div id="logPageBar" class="panel-footer"></div>
+	    </div>
+	    
+    </div>
+  
+       <div id="divLogDetail" style="display: none">
+        <!-- logDetail -->
+        <div id="taskxmlContent" style="padding: 3px 5px 0px 5px">
+            <textarea id="logDetail" name="txtTaskXml" readonly="readonly" style="width: 100%;
+                height: 350px" class="xml"></textarea>
+        </div>
+    </div>
+    <script type="text/javascript" src="javascript/systemlog.js"></script>
+</body>
+</html>

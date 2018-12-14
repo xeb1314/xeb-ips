@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://cxf.apache.org/jaxrs
+	http://cxf.apache.org/schemas/jaxrs.xsd 
+	http://cxf.apache.org/jaxws 
+	http://cxf.apache.org/schemas/jaxws.xsd 
+	http://cxf.apache.org/core 
+	http://cxf.apache.org/schemas/core.xsd">
+	
+	<!-- mtcBaseDao -->
+	<bean id="mtcBaseDao" class="jetsennet.frame.dataaccess.BaseDao">
+		<constructor-arg ref="mtcDBBuilderProp"/>
+	</bean>
+	
+	<!-- mtcBaseBusiness -->
+	<bean id="mtcBaseBusiness" class="jetsennet.frame.business.BaseBusiness">
+		<property name="classLoader" ref="baseClassLoader" />
+		<property name="dao" ref="mtcBaseDao" />
+	</bean>
+	
+	<!-- wfmBaseDao -->
+	<bean id="wfmBaseDao" class="jetsennet.frame.dataaccess.BaseDao">
+		<constructor-arg ref="wfmDBBuilderProp"/>
+	</bean>
+
+	<!-- BaseBusiness -->
+	<bean id="wfmBaseBusiness" class="jetsennet.frame.business.BaseBusiness">
+		<property name="classLoader" ref="baseClassLoader" />
+		<property name="dao" ref="wfmBaseDao" />
+	</bean>
+	
+	<!-- BaseDao -->
+	<bean id="baseDao" class="jetsennet.frame.dataaccess.BaseDao">
+		<constructor-arg ref="defaultDBBuilderProp"/>
+	</bean>
+
+	<!-- BaseBusiness -->
+	<bean id="baseBusiness" class="jetsennet.frame.business.BaseBusiness">
+		<property name="classLoader" ref="baseClassLoader" />
+		<property name="dao" ref="baseDao" />
+	</bean>
+	
+	<!-- BaseService -->
+	<bean id="/BaseService" class="jetsennet.frame.service.BaseService">
+		<property name="baseBusiness" ref="baseBusiness" />
+	</bean>
+
+	<!-- Business aop配置 -->
+	<bean id="businessInterceptor" class="jetsennet.frame.business.BusinessInterceptor"/> 
+	<bean id="businessAutoproxy" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="proxyTargetClass" value="true"/>
+		<property name="beanNames">
+			<list>
+				<value>*Business</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>businessInterceptor</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- cxf Service自动导出 -->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	<!-- <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature">
+		<constructor-arg value="&lt;stdout&gt;" />
+		<constructor-arg value="&lt;stdout&gt;" />
+	</bean>
+	<cxf:bus>
+		<cxf:features>
+			<ref bean="loggingFeature" />
+		</cxf:features>
+	</cxf:bus> -->
+	<bean id="wsInvoker" class="jetsennet.frame.service.WSInvoker" scope="prototype" >
+		<constructor-arg ref="propertyConfig"></constructor-arg>
+	</bean>
+	<bean id="wsDataBinding" name="rsDataBinding" class="org.apache.cxf.aegis.databinding.AegisDatabinding" scope="prototype" />
+	<bean id="rsInvoker" class="jetsennet.frame.service.RSInvoker" scope="prototype" />
+	<bean id="rsProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider" />
+	<bean id="serviceExporter" class="jetsennet.frame.service.ServiceExporter">
+		<property name="wsInvoker" ref="wsInvoker"></property>
+		<!--<property name="wsDataBinding" ref="wsDataBinding"></property>-->
+		<property name="rsInvoker" ref="rsInvoker"></property>
+		<property name="rsDataBinding" ref="rsDataBinding"></property>
+		<property name="rsProvider" ref="rsProvider"></property>
+	</bean> 
+</beans>

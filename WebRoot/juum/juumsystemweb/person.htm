@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>人员管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+<script type="text/javascript" src="javascript/person.js"></script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+<![endif]-->
+</head>
+<body onload="pageInit();">
+
+<div id="divPageFrame" class="panels" style="overflow: hidden;">
+    <div class="panel left-panel col-md-2" style="overflow: hidden;">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="display:inline-block;">人员类型</h3>
+        </div>
+        <div id="divTree" class="table-unbordered ztree" style="overflow: auto;"></div>
+    </div>
+    <div class="panel right-panel col-md-10" style="overflow: hidden;">
+        <div class="panel-heading">
+            
+            <div class="input-group input-group-xs pull-left input3">
+	          <input type="text" class="form-control" id="txtUserName" onkeydown="jetsennet.keyEvent(searchPerson)" placeholder="姓名/代号">
+	            <span class="input-group-btn">
+	              <button type="submit" class="btn btn-default" onclick="javascript:searchPerson();">
+	                <span class="glyphicon glyphicon-search"></span>
+	              </button>
+	            </span>
+	          </input>
+	        </div>
+            
+            <div id="divButtons" class="pull-right" style=" display: inline-block; margin-top: -2px; ">
+            	<span style="cursor:pointer;margin-right: 10px;" title="注册" onclick="regUser();">
+		          <i class="fa fa-key"></i>
+		          <span>&nbsp;注册</span>
+		        </span>
+            	<span style="cursor:pointer;margin-right: 10px;" title="新建" onclick="gCrud.add();">
+		          <i class="fa fa-plus"></i>
+		          <span>&nbsp;新建</span>
+		        </span>
+            	<span style="cursor:pointer;margin-right: 10px;" title="编辑" onclick="gCrud.edit();">
+            	  <i class="fa fa-pencil-square-o"></i>
+		          <span>&nbsp;编辑</span>
+		        </span>
+            	<span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gCrud.remove();">
+		          <i class="fa fa-times"></i>
+		          <span>&nbsp;删除</span>
+		        </span>
+            	<span style="cursor:pointer;margin-right: 10px;" title="刷新" onclick="document.location.reload();">
+		          <i class="fa fa-refresh"></i>
+		          <span>&nbsp;刷新</span>
+		        </span>
+            </div>
+        </div>
+        
+        <div class="table-unbordered" id="divPersonList">内容加载中......</div>
+        
+        <div class="panel-footer" id="divPersonPage"></div>
+    </div>
+</div>
+
+  <!-- 编辑/添加用户 -->
+  <div id="divPerson" style="display: none">
+    <form class="form-horizontal mg-lg">
+      <div class="form-group">
+        <label for="txtName" class="col-sm-2 control-label">姓名:</label>
+        <div class="col-sm-4">
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" id="txtName" validatetype="NotEmpty" /> 
+            <span class="input-group-addon" style="color: Red">*</span>
+          </div>
+        </div>
+        <label for="txtCode" class="col-sm-2 control-label">代号:</label>
+        <div class="col-sm-4">
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" id="txtCode" validatetype="NotEmpty" /> 
+            <span class="input-group-addon" style="color: Red">*</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtBirthday" class="col-sm-2 control-label">出生日期:</label>
+        <div class="col-sm-4">
+          <input type="text" id="txtBirthday" class="form-control input-sm" readonly="readonly"></input>
+        </div>
+        <label for="txtDutyTitle" class="col-sm-2 control-label">职务:</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control input-sm" id="txtDutyTitle" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ddlSex" class="col-sm-2 control-label">性别:</label>
+        <div class="col-sm-4">
+          <select id="ddlSex" class="form-control input-sm">
+            <option value="0" selected="selected">男</option>
+            <option value="1">女</option>
+          </select>
+        </div>
+        <label for="ddlState" class="col-sm-2 control-label">状态:</label>
+        <div class="col-sm-4">
+          <select id="ddlState" class="form-control input-sm">
+            <option value="0" selected="selected">活动</option>
+            <option value="1">冻结</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtJoinDate" class="col-sm-2 control-label">入职日期:</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control input-sm" id="txtJoinDate" readonly />
+        </div>
+        <label for="txtMobilePhone" class="col-sm-2 control-label">移动电话:</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control input-sm" id="txtMobilePhone" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtOfficePhone" class="col-sm-2 control-label">办公电话:</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control input-sm" id="txtOfficePhone" />
+        </div>
+        <label for="txtHomePhone" class="col-sm-2 control-label">住宅电话:</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control input-sm" id="txtHomePhone" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtUserCard" class="col-sm-2 control-label">用户卡:</label>
+        <div class="col-sm-10">
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" id="txtUserCard" validatetype="NotEmpty" /> 
+            <span class="input-group-addon" style="color: Red">*</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtEmail" class="col-sm-2 control-label">邮箱:</label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control input-sm" id="txtEmail" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtAddress" class="col-sm-2 control-label">地址:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control input-sm" id="txtAddress" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtDescription" class="col-sm-2 control-label">描述:</label>
+        <div class="col-sm-10">
+          <textarea id="txtDescription" class="form-control" rows="4"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- 注册为系统用户 -->
+  <div id="divRegUser" style="display: none">
+    <!-- 页签头 -->
+    <ul class="nav nav-tabs mt-sm" id="myTab">
+      <li class="active"><a href="#normal" data-toggle="tab">常规</a></li>
+      <li><a href="#groups" data-toggle="tab">隶属组</a></li>
+      <li><a href="#roles" data-toggle="tab">角色管理</a></li>
+    </ul>
+    <!-- 页签主体 -->
+    <div class="tab-content">
+      <!-- 常规 -->
+      <div class="tab-pane fade in active" id="normal">
+        <form class="form-horizontal mg-lg">
+          <div class="form-group">
+            <label for="txt_LOGIN_NAME" class="col-sm-2 control-label">登录名称:</label>
+            <div class="col-sm-4">
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" id="txt_LOGIN_NAME" validatetype="NotEmpty" /> 
+                <span class="input-group-addon" style="color: Red">*</span>
+              </div>
+            </div>
+            <label for="txt_USER_NAME" class="col-sm-2 control-label">用户名称:</label>
+            <div class="col-sm-4">
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" id="txt_USER_NAME" validatetype="NotEmpty" /> 
+                <span class="input-group-addon" style="color: Red">*</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="txt_STATE" class="col-sm-2 control-label">用户状态:</label>
+            <div class="col-sm-4">
+              <select id="txt_STATE" default="0" class="form-control input-sm">
+                <option value="0" selected="selected">启用</option>
+                <option value="1">停用</option>
+              </select>
+            </div>
+            <label for="txt_RIGHT_LEVEL" class="col-sm-2 control-label">用户密级:</label>
+            <div class="col-sm-4">
+              <select id="txt_RIGHT_LEVEL" default="0" class="form-control input-sm">
+                <option value="0" selected="selected">公开</option>
+                <option value="1">内部</option>
+                <option value="2">秘密</option>
+                <option value="3">机密</option>
+                <option value="4">绝密</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="ddl_PageTheme" class="col-sm-2 control-label">页面样式:</label>
+            <div class="col-sm-4">
+              <select id="ddl_PageTheme" class="form-control input-sm">
+                <option value="jmac">灰色星空</option>
+                <option value="jsnet">蓝色天空</option>
+              </select>
+            </div>
+            <label for="ddl_PageStyle" class="col-sm-2 control-label">页面布局:</label>
+            <div class="col-sm-4">
+              <select id="ddl_PageStyle" class="form-control input-sm">
+                <option value="desktop.htm">桌面风格</option>
+                <option value="default.htm">系统默认</option>
+                <option value="jetsen.htm">苹果风格</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="txt_DESCRIPTION" class="col-sm-2 control-label">描述信息:</label>
+            <div class="col-sm-10">
+              <textarea id="txt_DESCRIPTION" class="form-control" rows="4"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- 隶属组 -->
+      <div class="tab-pane fade" id="groups">
+        <form class="form-horizontal mg-lg">
+          <div class="form-group">
+            <label for="ddl_PageTheme" class="col-sm-2 control-label">隶属组:</label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <select name="select" id="selectGroup" multiple size="6" class="form-control"></select> 
+                <span class="input-group-addon"> 
+                  <input type="button" value=" 添加 " class="btn btn-primary btn-sm margin-bottom-xs" id="btnSelGroup" onclick="gGroupCrud.showSelectDlg('divSelectUserGroup', 'selectGroup');" style="display: block;" /> 
+                  <input type="button" value=" 删除 " class="btn btn-danger btn-sm" id="btnDel" onclick="jetsennet.Crud.selectOptionsDel('selectGroup');" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- 角色管理 -->
+      <div class="tab-pane fade" id="roles">
+        <form class="form-horizontal mg-lg">
+          <div class="form-group">
+            <label for="ddl_PageTheme" class="col-sm-2 control-label">隶属角色:</label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <select name="select" id="selectRole" multiple size="6" class="form-control"></select> 
+                <span class="input-group-addon"> 
+                  <input type="button" value=" 添加 " class="btn btn-primary btn-sm margin-bottom-xs" id="selRole" onclick="gRoleCrud.showSelectDlg('divSelectUserRole', 'selectRole');" style="display: block;" /> 
+                  <input type="button" value=" 删除 " class="btn btn-danger btn-sm " id="delRole" onclick="jetsennet.Crud.selectOptionsDel('selectRole');" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- 选择用户组  -->
+  <div id="divSelectUserGroup" style="display: none">
+    <div id="divSelectUserGroupList"></div>
+  </div>
+  <!-- 选择用户角色  -->
+  <div id="divSelectUserRole" style="display: none">
+    <div id="divSelectUserRoleList"></div>
+  </div>
+</body>
+</html>

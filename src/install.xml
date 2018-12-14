@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<setting>
+ 
+  <property name="axtype">Sqlserver</property>
+    
+  <param name="dbtype" desc="数据库类型" tips="SQLServer、MySQL、Oracle">Oracle</param>  
+  <param name="dbserverip" desc="数据库服务器IP" tips="server ip">192.168.8.35</param>  
+  <param name="dbname" desc="数据库名称" tips="database name">UUMTest</param>  
+  <param name="dbusername" desc="数据库用户名" tips="username">jetsennet</param>  
+  <param name="dbpassword" desc="数据库密码" tips="password">jetsennet</param>  
+  
+  <param name="UserAuthType" desc="用户验证类型" tips="UserAuthType">1</param>  
+  <param name="MaxLoginNum" desc="最大在线人数" tips="MaxLoginNum">100</param>  
+  <param name="EncryptUserPassword" desc="密码加密情况(0：不加密、1：加密)" tips="EncryptUserPassword">1</param>  
+  
+  <param name="isOpenSSO" desc="开启SSO服务" tips="isOpenSSO">false</param>  
+  <param name="SSOWsdlAddress" desc="SSO服务地址" tips="SSOWsdlAddress">http://sso.jetsen.com/sso/services/SSOService?wsdl</param>  
+  <param name="UserAuthAddress" desc="用户中心地址" tips="UserAuthAddress">http://192.168.8.180:8086/uum/services/UUMSystemService?wsdl</param>  
+  <param name="SessionTimeOut" desc="session过期时间()单位:分钟)" tips="SessionTimeOut">30</param>  
+  <param name="SessionCheckInterval" desc="session检查间隔(单位:秒)" tips="SessionCheckInterval">300</param>  
+  
+  <param name="BatchSaveLogs" desc="日志是否延迟批量记录" tips="BatchSaveLogs">true</param>  
+  <param name="SaveLogInterval" desc="日志延迟几秒记录" tips="SaveLogInterval">10</param>  
+  
+  <folder path="WEB-INF/classes"> 
+    <file name="dbconfig.properties" type="properties"> 
+      <node name="db.driver" ref="${DBDriver}"/>  
+      <node name="db.url" ref="${DBUrl}"/>  
+      <node name="db.user" ref="dbusername"/>  
+      <node name="db.pwd" ref="dbpassword"/> 
+    </file>
+    <file name="config.properties" type="properties">
+      <node name="UserAuthType" ref="UserAuthType" />
+      <node name="MaxLoginNum" ref="MaxLoginNum" />
+      <node name="EncryptUserPassword" ref="EncryptUserPassword" />
+      <node name="isOpenSSO" ref="isOpenSSO" />
+      <node name="SSOWsdlAddress" ref="SSOWsdlAddress" />
+      <node name="UserAuthAddress" ref="UserAuthAddress" />
+      <node name="SessionTimeOut" ref="SessionTimeOut" />
+      <node name="SessionCheckInterval" ref="SessionCheckInterval" />
+      <node name="BatchSaveLogs" ref="BatchSaveLogs" />
+      <node name="SaveLogInterval" ref="SaveLogInterval" />
+    </file> 
+  </folder> 
+</setting>

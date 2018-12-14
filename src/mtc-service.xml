@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://cxf.apache.org/jaxrs
+	http://cxf.apache.org/schemas/jaxrs.xsd 
+	http://cxf.apache.org/jaxws 
+	http://cxf.apache.org/schemas/jaxws.xsd">
+	
+	<bean id="mtsBusiness" name="Mts"  class="jetsennet.mtc.business.MtsBusiness" parent="mtcBaseBusiness">
+	</bean>
+	
+	<bean id="taskBusiness" name="Task"  class="jetsennet.mtc.business.TaskBusiness" parent="mtcBaseBusiness">
+	</bean>
+	
+	<bean id="taskExecBusiness" name="TaskExecBusiness"  class="jetsennet.mtc.business.TaskExecBusiness" parent="mtcBaseBusiness">
+	</bean>
+	
+	
+	<bean id="wfmBusiness" name="jetsennet.mtc.schema.NetWfmMtcOperatorlog"  class="jetsennet.mtc.business.WfmMtcBusiness" parent="mtcBaseBusiness">
+	</bean>
+	
+	<bean id="processBusiness" name="ProcessBusiness"  class="jetsennet.wfm.business.ProcessBusiness" parent="mtcBaseBusiness">
+	</bean>
+	
+	<!-- MTCSystemService -->
+	<bean id="/MTCSystemService" class="jetsennet.mtc.services.MTCSystemService" parent="/BaseService">
+	    <property name="baseBusiness" ref="mtcBaseBusiness" />
+		<property name="mtsBusiness" ref="mtsBusiness"/>
+		<property name="taskBusiness" ref="taskBusiness"/>
+	</bean>
+	
+	<bean id="/MtcWebService" class="jetsennet.mtc.webservices.MtcWebService" parent="/BaseService">
+	    <property name="baseBusiness" ref="mtcBaseBusiness" />
+		<property name="mtsBusiness" ref="mtsBusiness"/>
+		<property name="processBusiness" ref="processBusiness"/>
+	</bean>
+	
+</beans>

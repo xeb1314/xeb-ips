@@ -1,0 +1,32 @@
+
+.clf-left{ width:100%;}
+
+.proccontrol input{ background:#27a9e3; width:100px; height:30px; border:none;font-size:14px; color:#FFF; font-weight:600;}
+.proccontrol input:hover{ background: #ea5455;}
+
+.cantent03{background:#2f2d2e;-moz-box-shadow:1px 1px 2px #090808;              /* For Firefox3.6+ */
+	-webkit-box-shadow: 1px 1px 2px #090808;box-shadow: 1px 1px 2px #090808;            /* For Latest Opera */ width:100%; height:300px; width:100%; margin-bottom:10px; overflow: hidden;}
+
+
+/**ͼ�갴ť*/
+.imgbutton {position:absolute;right: 20px;}
+.imgbutton input{ border:none; width:80px; line-height:33px; color:#fff;}
+.imgbutton-1{ background:url(../../images/process_start.png) no-repeat left; height:33px; text-indent:25px;color:#fff;cursor: pointer; }
+.imgbutton-2{ background:url(../../images/process_stop.png) no-repeat left;  height:33px;text-indent:25px; color:#fff;cursor: pointer;}
+.imgbutton-3{ background:url(../../images/process_pause.png) no-repeat left;  height:33px;text-indent:25px; color:#fff;cursor: pointer;}
+.imgbutton-4{ background:url(../../images/tr88o_03.png) no-repeat left;  height:33px;text-indent:25px; color:#fff;cursor: pointer;}
+
+
+
+
+.stopflow{background:url(../../images/flowstop.png) no-repeat center; margin: 0  auto; width:18px ; height:18px;cursor:pointer;}
+.stopflow span{ display:none;}
+.stopflow a{ display:none;}
+
+.startflow{background:url(../../images/flowstart.png) no-repeat center; margin: 0  auto; width:18px ; height:18px;cursor:pointer;}
+.startflow span{ display:none;}
+.startflow a{ display:none;}
+
+.pauseflow{background:url(../../images/flowpause.png) no-repeat center; margin: 0  auto;width:18px ; height:18px;cursor:pointer;}
+.pauseflow span{ display:none;}
+.pauseflow a{ display:none;}

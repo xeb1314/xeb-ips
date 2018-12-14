@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://cxf.apache.org/jaxrs
+	http://cxf.apache.org/schemas/jaxrs.xsd 
+	http://cxf.apache.org/jaxws 
+	http://cxf.apache.org/schemas/jaxws.xsd">
+	
+	<bean id="ipsJobBusiness" name="IpsJobBusiness"  class="jetsennet.ips.business.IpsJobBusiness" parent="baseBusiness">
+	</bean>
+	<bean id="ipsTaskBusiness" name="IpsTaskBusiness"  class="jetsennet.ips.business.IpsTaskBusiness" parent="baseBusiness">
+	</bean>
+	<bean id="ctrlClassBusiness" name="CtrlClassBusiness"  class="jetsennet.ips.business.CtrlClassBusiness" parent="baseBusiness">
+	</bean>
+	<bean id="ctrlWordBusiness" name="CtrlWordBusiness"  class="jetsennet.ips.business.CtrlWordBusiness" parent="baseBusiness">
+	</bean>
+	<bean id="autoAddID" name="AutoAddID"  class="jetsennet.util.AutoAddID" parent="baseBusiness">
+	</bean>
+	<bean id="collecBusiness" name="CollecBusiness"  class="jetsennet.ips.business.CollecBusiness" parent="baseBusiness">
+	</bean>
+	
+	<bean id="ipsOrderBusiness" name="IpsOrderBusiness"  class="jetsennet.ips.business.IpsOrderBusiness" parent="baseBusiness">
+	</bean>
+	
+	<!-- <bean id="jfBussiness" name="jfBussiness"  class="jetsennet.ips.business.JFBusiness" parent="baseBusiness">
+	</bean> -->
+	
+	<bean id="gatherTaskStatBusiness" name="gatherTaskStatBusiness"  class="jetsennet.ips.business.GatherTaskStatBusiness" parent="baseBusiness">
+	</bean>
+	
+	<bean id="reportBusiness" name="reportBusiness"  class="jetsennet.ips.business.ReportBusiness" parent="baseBusiness">
+	</bean>
+	
+	<bean id="ipsDsLabelToUserGroupBuiness" name="ipsDsLabelToUserGroupBuiness"  class="jetsennet.ips.business.IpsDsLabelToUserGroupBusiness" parent="baseBusiness">
+	</bean>
+	
+	<bean id="chatServer" name="chatServer" scope="singleton"  class="jetsennet.ips.websocket.ChatServer" init-method="init" destroy-method="destory">
+	</bean>
+		
+	<bean id="/IPSSystemService" class="jetsennet.ips.services.IPSSystemService" parent="/BaseService">
+		<property name="ipsJobBusiness" ref="ipsJobBusiness"/>
+		<property name="ipsTaskBusiness" ref="ipsTaskBusiness"/>
+		<property name="ctrlWordBusiness" ref="ctrlWordBusiness"/>
+		<property name="autoAddID" ref="autoAddID"/>
+		<property name="collecBusiness" ref="collecBusiness"/>
+		<property name="ipsDataSourceBusiness" ref="ipsDataSourceBusiness"/>
+		<property name="ipsDsLabelToUserGroupBuiness" ref="ipsDsLabelToUserGroupBuiness"/>
+	</bean>
+	
+	<!-- UUM对外接口 -->
+	<bean id="noAuthuserBusiness" class="jetsennet.juum.iface.NoAuthUserBusiness" parent="userBusiness"/>
+	<bean id="UUMSystemExtService" class="jetsennet.juum.iface.UUMSystemExtService">
+		<property name="userBusiness" ref="noAuthuserBusiness" />
+	</bean>
+	
+	<!-- IPS对外接口 -->
+	<bean id="ipsDataSourceBusiness" name="IpsDataSourceBusiness" class="jetsennet.ips.business.IpsDataSourceBusiness" parent="baseBusiness"/>
+	<bean id="ipsOrderBus" class="jetsennet.ips.business.IpsOrderBusiness" parent="baseBusiness"/>
+		<bean id="IPSSystemServicePort" class="tvnetwork.ips.ipssystemservice._1_0.IPSSystemServiceSoapImpl">
+			<property name="ipsDataSourceBusiness" ref="ipsDataSourceBusiness" />
+			<property name="userBusiness" ref="noAuthuserBusiness" />
+			<property name="ipsOrderBus" ref="ipsOrderBus" />
+		</bean>
+	
+</beans>

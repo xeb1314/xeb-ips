@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>角色管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+<script type="text/javascript">
+	Layoutit("#divPageFrame", {vLayout: [46, "auto", 40]});
+</script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+<![endif]-->
+</head>
+<body onload="pageInit();" class="panels">
+
+<div id="divPageFrame" class="panel middle-panel panel-sm">
+  
+    <div class="panel-heading">
+    	<div class="form-group pull-left">
+	      <div class="input-group input-group-xs input3">
+            <input type="text" class="form-control" id="txt_ROLE_NAME" onkeydown="jetsennet.keyEvent(searchRole)" placeholder="角色名称">
+	           <span class="input-group-btn">
+	             <button type="submit" class="btn btn-default" onclick="javascript:searchRole();">
+	               <span class="glyphicon glyphicon-search"></span>
+	             </button>
+	           </span>
+	         </input>
+	      </div>
+      	</div>
+      
+      <div class='btn-group btn-group-sm pull-right'>
+        <span style="cursor:pointer;margin-right: 10px;" title="新建" onclick="gCrud.add();">
+          <i class="fa fa-plus"></i>
+          <span>&nbsp;新建</span>
+        </span>
+          	<span style="cursor:pointer;margin-right: 10px;" title="编辑" onclick="gCrud.edit();">
+          	  <i class="fa fa-pencil-square-o"></i>
+          <span>&nbsp;编辑</span>
+        </span>
+          	<span style="cursor:pointer;margin-right: 10px;" title="删除" onclick="gCrud.remove();">
+          <i class="fa fa-times"></i>
+          <span>&nbsp;删除</span>
+        </span>
+          	<span style="cursor:pointer;margin-right: 10px;" title="刷新" onclick="document.location.reload();">
+          <i class="fa fa-refresh"></i>
+          <span>&nbsp;刷新</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="table-unbordered" id= "divContent">数据加载中...</div>
+    
+    <div class="panel-footer" id="divPage"></div>
+</div>
+
+  <!-- 新增、编辑角色开始 -->
+  <div id="divRole" style="display: none">
+    <!-- 页签头 -->
+    <ul class="nav nav-tabs mt-sm" id="myTab">
+      <li class="active"><a href="#normal" data-toggle="tab">常规</a></li>
+      <li><a href="#functions" data-toggle="tab">所属功能</a></li>
+    </ul>
+    <!-- 页签主体 -->
+    <div class="tab-content">
+      <!-- 常规 -->
+      <div class="tab-pane fade in active" id="normal">
+        <form class="form-horizontal mg-lg">
+          <div class="form-group">
+            <label for="txtRoleName" class="col-sm-2 control-label">名称:</label>
+            <div class="col-sm-10">
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" id="txtRoleName" validatetype="NotEmpty,filenameext,removespaces" maxlength="15"/> 
+                <span class="input-group-addon" style="color: Red">*</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="txtType" class="col-sm-2 control-label">状态:</label>
+            <div class="col-sm-10">
+              <div class="input-group input-group-sm">
+                <select id="txtType" class="form-control" validatetype="NotEmpty" default="0">
+                  <option value="0" title="启用">启用</option>
+                  <option value="1" title="禁用">禁用</option>
+                </select> <span class="input-group-addon" style="color: Red">*</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="txtDescription" class="col-sm-2 control-label">描述:</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" id="txtDescription" maxlength="50" validatetype="notempty" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="selMember" class="col-sm-2 control-label">成员:</label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <select id="selMember" class="form-control" name="select" multiple></select> 
+                <span class="input-group-addon"> 
+                  <input type="button" value=" 添加 " class="btn btn-primary btn-sm margin-bottom-xs" id="btnAdd" onclick="gUserCrud.showSelectDlg('divSelectUser', 'selMember', {size : {width : 500, height : 400}});" style="display: block;" /> 
+                  <input type="button" value=" 删除 " class="btn btn-danger btn-sm" id="btnDel" onclick="jetsennet.Crud.selectOptionsDel('selMember');" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- 功能 -->
+      <div class="tab-pane fade" id="functions">
+        <div id="divFunction" style="height:302px;overflow: auto;" class="ztree"></div>
+      </div>
+    </div>
+  </div>
+  <!-- 新增、编辑角色结束 -->
+  <!-- 选择用户结束 -->
+  <div id="divSelectUser" style="display: none">
+  	<div>
+	  	<div class="center-wrapper">
+			<div class="center-area">
+			    <form class="form-inline">
+			      <span>用户姓名:</span>
+			      <div class="form-group">
+			        <input id="txtUserName" type="text" class="form-control input-xs" style="width: 120px;" />
+			      </div>
+			      <span class="margin-left-md">登录名称:</span>
+			      <div class="form-group">
+			        <input id="txtLoginName" type="text" class="form-control input-xs" style="width: 120px;" />
+			      </div>
+			      <button type="button" class="btn btn-primary btn-xs" style="margin-left: 10px;" onclick="searchSelectUserData();">
+			        <span class="glyphicon glyphicon-search"></span> 查询
+			      </button>
+			    </form>
+		    </div>
+	    </div>
+    </div>
+    <div id="divSelectUserList">数据正在加载...</div>
+    <div id="divSelectUserPage" style="padding-top: 5px;"></div>
+  </div>
+  <!-- 选择用户结束 -->
+<script type="text/javascript" src="javascript/userrole.js"></script>  
+</body>
+</html>

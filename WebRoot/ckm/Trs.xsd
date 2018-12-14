@@ -1,0 +1,863 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <schema targetNamespace="urn:TrsCKM"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:Trs="urn:TrsCKM"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="unqualified"
+  attributeFormDefault="unqualified">
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+  <complexType name="authentication">
+   <sequence>
+     <element name="userid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="passwd" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="RevHold">
+   <sequence>
+     <element name="revNum" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="threshold" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="RevDetail">
+   <sequence>
+     <element name="id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="simv" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="SimUpdateResult">
+   <sequence>
+     <element name="details" type="Trs:ArrayOfRevDetail" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="flag" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="AlignTextResult">
+   <sequence>
+     <element name="enSen" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="enSenId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="enSenPos" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="cnSen" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="cnSenId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="cnSenPos" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="nScore" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluWordInfo">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tf" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="td" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="SimMD5Result">
+   <sequence>
+     <element name="digest" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="theme" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="intval" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="doclist" type="Trs:ArrayOfRevDetail" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="RuleCATField">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="field" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="CATRevDetail">
+   <sequence>
+     <element name="CATName" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="v" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="RuleSegment">
+   <sequence>
+     <element name="catResult" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="resultInfo" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="BatchCATField">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="field" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="BatchCATModel">
+   <sequence>
+     <element name="ruleCATModelName" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="CATModelName" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="nType" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="BatchCATResultDetail">
+   <sequence>
+     <element name="XResult" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="YResult" type="Trs:ArrayOfCATRevDetail" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="WordInfo">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="pos" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CollErrorInfoDetail">
+   <sequence>
+     <element name="errtype" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="errinfo" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="wordcount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="wordlist" type="Trs:ArrayOfWordInfo" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="CollKeyWord">
+   <sequence>
+     <element name="errword" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="colword" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="errtype" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CollListKeyWordResult">
+   <sequence>
+     <element name="wordcount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pageindex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pagecount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="wordlist" type="Trs:ArrayOfCollKeyWord" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="CollNameTitle">
+   <sequence>
+     <element name="cname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="cgroupno" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="corder" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="ctitles" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="CollListNameTitleResult">
+   <sequence>
+     <element name="namecount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pageindex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pagecount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="namelist" type="Trs:ArrayOfCollNameTitle" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="ContrastWord">
+   <sequence>
+     <element name="cself" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="cpoll" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="coption" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="cresult" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="SegDictWord">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="cate" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="SegListDictWordResult">
+   <sequence>
+     <element name="wordcount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pageindex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pagecount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="wordlist" type="Trs:ArrayOfSegDictWord" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="ABSHold">
+   <sequence>
+     <element name="numOfSub" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="percent" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="numOfAbs" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="ABSResult">
+   <sequence>
+     <element name="abs" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="wordlist" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="AbsTheme">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="rword" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="wordType" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="wordSeg" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="wordSen" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="wordLen" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pfq" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="value" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="ABSDictWord">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tag" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="rword" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="ABSListDictWordResult">
+   <sequence>
+     <element name="wordcount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pageindex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pagesize" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pagecount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="wordlist" type="Trs:ArrayOfABSDictWord" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="PLOResult">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="pos" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="type" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="extra" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="SEGWord">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="posNum" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="senNum" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="cate" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="PLODictWordInfo">
+   <sequence>
+     <element name="tag" type="xsd:short" minOccurs="1" maxOccurs="1"/>
+     <element name="handle" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="value" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="PLODictWord">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="value" type="Trs:Array4Ofxsd__float" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="listInfo" type="Trs:ArrayOfPLODictWordInfo" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="PLOListDictWordResult">
+   <sequence>
+     <element name="wordcount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pageindex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pagesize" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pagecount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="wordlist" type="Trs:ArrayOfPLODictWord" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluDocInfo">
+   <sequence>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="content" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docdate" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluWordWeight">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="weight" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluParam">
+   <sequence>
+     <element name="docsimv" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+     <element name="clusimv" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+     <element name="minnum" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="bigram" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="mincls" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="wordweight" type="Trs:ArrayOfCluWordWeight" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="maxcls" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="stop" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="dict" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluClsInfo">
+   <sequence>
+     <element name="theme" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="doclist" type="Trs:ArrayOfstring" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="parent" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluClsPos">
+   <sequence>
+     <element name="x" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="y" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="clsindex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="clsgroup" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluClsGraph">
+   <sequence>
+     <element name="clslist" type="Trs:ArrayOfCluClsInfo" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="poslist" type="Trs:ArrayOfCluClsPos" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="xmlresult" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluClsRelation">
+   <sequence>
+     <element name="clsindex1" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="clsindex2" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="x1" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="y1" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="x2" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="y2" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="simvalue" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluGroupInfo">
+   <sequence>
+     <element name="timedesc" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="x1" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="y1" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="x2" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="y2" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluClsNode">
+   <sequence>
+     <element name="groupindx" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="clsindex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="theme" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="x1" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="y1" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="x2" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="y2" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="doclist" type="Trs:ArrayOfstring" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="relation" type="Trs:ArrayOfCluClsRelation" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluTimeGraph">
+   <sequence>
+     <element name="groups" type="Trs:ArrayOfCluGroupInfo" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="nodes" type="Trs:ArrayOfCluClsNode" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluTrsParam">
+   <sequence>
+     <element name="cid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsfilename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsserverhost" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsserverport" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsusername" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trspassword" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsbasename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsrowidcolumn" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trstitlecolumn" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsdoccolumn" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trswherexpr" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trssortexpr" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsmaxcount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="trsmaxcls" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="protoname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="CaseCluParam">
+   <sequence>
+     <element name="cid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsfilename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsserverhost" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsserverport" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsusername" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trspassword" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsbasename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsrowidcolumn" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trstitlecolumn" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsdoccolumn" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trswherexpr" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trssortexpr" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsmaxcount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="trsmaxcls" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="protoname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="recordWeight" type="Trs:ArrayOfstring" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="TrsPatentCluParam">
+   <sequence>
+     <element name="cid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsfilename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsserverhost" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsserverport" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsusername" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trspassword" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsbasename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsrowidcolumn" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trstitlecolumn" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsdoccolumn" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trswherexpr" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trssortexpr" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsmaxcount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="trsmaxcls" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="keywordnum" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="contournum" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="themedict" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="strSynonym" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="strAntonym" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="imask" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="protoname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsmincls" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="stopWord" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="themeWord" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="CluTrsResult">
+   <sequence>
+     <element name="cid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="status" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="xmlret" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="SimModelInfo">
+   <sequence>
+     <element name="createdate" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="type" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="recordCount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CATModelInfo">
+   <sequence>
+     <element name="createdate" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="type" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="xmlcatinfo" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="SynLog">
+   <sequence>
+     <element name="iVersion" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="iModelType" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="iOperation" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="iOption" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="args" type="Trs:ArrayOfstring" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="sTime" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="UserInfo">
+   <sequence>
+     <element name="userName" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="password" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="userRight" type="Trs:ArrayOfint" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="userRightDesc" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="allowedIp" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="publicKey" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="PyListWordResult">
+   <sequence>
+     <element name="DGId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="DGTotal" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="DGList" type="Trs:ArrayOfstring" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="PyModelInfo">
+   <sequence>
+     <element name="createDate" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="recordCount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="type" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="Pinyin">
+   <sequence>
+     <element name="shenmu" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="yunmu" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="ZhuyinResult">
+   <sequence>
+     <element name="smpy" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ympy" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="allpy" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ftpy" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="DyListWordResult">
+   <sequence>
+     <element name="DGId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="DGTotal" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="DGList" type="Trs:ArrayOfstring" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="DyModelInfo">
+   <sequence>
+     <element name="createDate" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="simRecordCount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="groupCount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="type" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="DyGroup">
+   <sequence>
+     <element name="DGId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="DGTotal" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="DGList" type="Trs:ArrayOfstring" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="PatentRetriveItem">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="count" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="value" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="PatentKeyWordsCatalog">
+   <sequence>
+     <element name="catalog" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="keywords" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="count" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="value" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="NLSearchResult">
+   <sequence>
+     <element name="trsExpression" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="phraseList" type="Trs:ArrayOfstring" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="FileInfo">
+   <sequence>
+     <element name="size" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+     <element name="createDate" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="modifyDate" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="type" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="FolderInfo">
+   <sequence>
+    <element name="item" type="Trs:FileInfo" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="LocalBatchCATResult">
+   <sequence>
+     <element name="xmlret" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="status" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="PatentNode">
+   <sequence>
+     <element name="pn" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="zhufen" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fufen" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="PatentReportStatus">
+   <sequence>
+     <element name="status" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="genDate" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="PatentReportResult">
+   <sequence>
+     <element name="xmlret" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="status" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="SlotNode">
+   <sequence>
+     <element name="lex" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="infotypeName" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="slotName" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="infotypeId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="relationId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="wrapperTag" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="rowPos" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+     <element name="columnPos" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+     <element name="pos" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+     <element name="param" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="SlotResult">
+   <sequence>
+     <element name="extraResult" type="Trs:ArrayOfSlotNode" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="rawText" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="TransactionInfo">
+   <sequence>
+     <element name="time" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="id" type="xsd:thread" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="TransactionInfoEx">
+   <sequence>
+     <element name="time" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="id" type="xsd:thread" minOccurs="1" maxOccurs="1"/>
+     <element name="server-id" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="StaAppDescription">
+   <sequence>
+     <element name="paraDescription" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="paraEnable" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="Resource">
+   <sequence>
+     <element name="name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="type" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="StaAppInfo">
+   <sequence>
+     <element name="cusname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="outparam" type="Trs:ArrayOfstring" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="parades" type="Trs:ArrayOfStaAppDescription" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="appdes" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="limited" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="FileOperationResult">
+   <sequence>
+     <element name="sData" type="xsd:base64Binary" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="flag" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="LogNode">
+   <sequence>
+     <element name="pageNo" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pageCount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pageSize" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="recordCount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="logstr" type="Trs:ArrayOfstring" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="SysParas">
+   <sequence>
+     <element name="simInter" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="simMaxCount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="simKeepDays" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="maxConnection" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="logKeepDays" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="absMaxWordsLen" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="servicePort" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="mysqlHost" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="mysqlPort" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="mysqlUser" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="mysqlPasswd" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="mysqlService" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="UsageInfo">
+   <sequence>
+     <element name="cpuUsage" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+     <element name="totalMem" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="availMem" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="totalSpace" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+     <element name="availSpace" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="RelationVertex">
+   <sequence>
+     <element name="flag" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="x" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+     <element name="y" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+     <element name="width" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="height" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="type" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fontName" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fontSize" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="forecolor" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="backcolor" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="status" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="picIndex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="graphIndex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="RelationEdge">
+   <sequence>
+     <element name="startVertex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="endVertex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="len" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+     <element name="type" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="direction" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="relation" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fontName" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fontSize" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="forecolor" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="graphIndex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="lineStyle" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="lineType" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="r" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="g" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="b" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="thick" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="RelationGraph">
+   <sequence>
+     <element name="vertexSize" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="vertexLst" type="Trs:ArrayOfRelationVertex" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="edgeSize" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="edgeLst" type="Trs:ArrayOfRelationEdge" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="graphNum" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="RelationInitPara">
+   <sequence>
+     <element name="width" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="height" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="rowSpace" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="colSpace" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="defaultPic" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="lineStyle" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="lineType" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="r" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="g" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="b" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="thick" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="RelationGraphResult">
+   <sequence>
+     <element name="graph" type="Trs:RelationGraph" minOccurs="1" maxOccurs="1"/>
+     <element name="backupGraph" type="Trs:RelationGraph" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="RelationTriple">
+   <sequence>
+     <element name="first" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="second" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="relation" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="RelationExpandResult">
+   <sequence>
+     <element name="graph" type="Trs:RelationGraph" minOccurs="1" maxOccurs="1"/>
+     <element name="backupGraph" type="Trs:RelationGraph" minOccurs="1" maxOccurs="1"/>
+     <element name="time" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="RelationTimeGraphResult">
+   <sequence>
+     <element name="graph" type="Trs:RelationGraph" minOccurs="1" maxOccurs="1"/>
+     <element name="backupGraph" type="Trs:RelationGraph" minOccurs="1" maxOccurs="1"/>
+     <element name="highThreshold" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="lowThreshold" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="CorrectResult">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="type" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="RelationInfo">
+   <sequence>
+     <element name="firstEntity" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="secondEntity" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="srelation" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="mod" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="sen" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="dvalue" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="AppraiseInfo">
+   <sequence>
+     <element name="scatname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="iscore" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="dvalue" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+     <element name="ssens" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="HotNewsTrsParam">
+   <sequence>
+     <element name="cid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsserverhost" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsserverport" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsusername" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trspassword" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsbasename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trstopname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trslstname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trswherexpr" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="hottag" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="HotTrsResult">
+   <sequence>
+     <element name="cid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="status" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="errmsg" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="xmlret" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="HotWordsTrsParam">
+   <sequence>
+     <element name="cid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsserverhost" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsserverport" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsusername" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trspassword" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsbasename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trsstopname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trshotname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="trswherexpr" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="hotdate" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docnum" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="wordnum" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="InfoTextItem">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="len" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="type" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="tag" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pos" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="count" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="INFOTextDictWord">
+   <sequence>
+     <element name="word" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tag" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="rword" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="INFOTextListDictWordResult">
+   <sequence>
+     <element name="wordcount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pageindex" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pagesize" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="pagecount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="wordlist" type="Trs:ArrayOfINFOTextDictWord" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="MessageStruct">
+   <sequence>
+     <element name="id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parent-id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="msg-content" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="project-id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="prodcut-id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="catalog-id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="resource-id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="resource-name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="custom-id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="custom-key" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="sub-count" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="top-count" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="middle-count" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="bottom-count" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="prov" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="city" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="msg-type" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="create-time" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="update-time" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="audit-time" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="UrlLocation">
+   <sequence>
+     <element name="location" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="meta" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="Array4Ofxsd__float">
+   <complexContent>
+    <restriction base="SOAP-ENC:Array">
+     <attribute ref="SOAP-ENC:arrayType" WSDL:arrayType="xsd:float[]"/>
+    </restriction>
+   </complexContent>
+  </complexType>
+  <element name="credentials" type="Trs:authentication"/>
+ </schema>
+

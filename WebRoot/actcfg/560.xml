@@ -1,0 +1,8 @@
+﻿<?xml version="1.0"?>
+<!--IP数据 Worker 模板-->
+<actConfig>
+   <item name="destPath" desc="目标路径" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0" allowVariable="true"/>
+   <item name="delXml" desc="是否删除结果XML" source="4" deafult="true"/>
+</actConfig>
+
+<!--allowInput 是否显示文本框   true：显示， false：不显示， 默认为false -->

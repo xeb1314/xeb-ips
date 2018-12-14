@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+<!-- 视频内容检测 -->
+<actConfig>
+  <item name="destPath" desc="目标路径" deafult="" allowEmpty="false" dataType="string" maxLength="100" source="0"/>
+  <!-- <item name="cmIndex" desc="数据对象" deafult="" allowEmpty="false" dataType="string" maxLength="0" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/>
+  --> <item name="groupType" desc="检索码流组" deafult="1" allowEmpty="false" dataType="int" maxLength="5" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="2203"/>
+  <item name="execMode" desc="检索方式" deafult="0" allowEmpty="false" dataType="int" maxLength="5" source="1" sourceString="普通~0|分布式~10"/> 
+</actConfig>
+<!--soure 0:自输入，1：下拉自定义，2：受控词，3：变量-->

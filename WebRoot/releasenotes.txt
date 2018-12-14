@@ -1,0 +1,421 @@
+﻿JetsenNet-IPS 信息化平台
+
+20150505
+1.新增根据在线用户名获取该用户所有信息。
+2.增加修改数据源时，同步修改数据源绑定的处理任务对应流程中的数据源路径。
+
+20160429
+1.修改数据源时增加提示保存任务对应流程的功能。
+
+20160428
+1.更改任务节点参数同步更改数据源的参数。
+
+20160422
+1.我的任务界面初始化每页大小改为20
+
+20160421
+1.数据源增加对数据的权限控制的功能，给数据源指派用户。
+2.数据处理任务解决存在流程模板无法删除任务。
+3.更改数据源路径后流程路径也相应修改。
+4.平台数据库换成oracle。
+5.协助客户编写短信入库工作流节点。
+6.新增数据源对应组的表
+CREATE TABLE IPS_DATATOGROUP (
+   DS_ID                VARCHAR(40)          NOT NULL,
+   GROUP_ID              NUMERIC(15)          NOT NULL,
+   CONSTRAINT P_IPS_DATATOGROUP PRIMARY KEY (DS_ID, GROUP_ID)
+);
+
+20160405
+1.eml表中添加附件的类型
+2.文本扫描添加分隔符
+
+20160324
+1.文本流程新增文本数据源（扩展）。
+2.数据处理数据源拖拽兼容新增的文本数据源。
+
+20160318
+1.文本扫描节点配控参数添加类似话音扫描。
+王旭东
+
+2016-01-05 JMTC21 Portal V2.1.0.16865版本
+1.更新web   JMTC21 Portal V2.1.0.16865版本。
+2.应客户要求用户登录的session由30分钟改为1天。
+
+2015-12-28  JMTC-update
+1.隐藏流程设计界面的部分按钮。
+2.修改调度日志页面默认加载日期。
+3.增加各场景入库oracle的sql脚本。
+
+2015-12-20
+1.我的任务-数据处理任务增加按时间统计数据量以及重置删除按钮。
+2.修改订阅场景因消息格式的统一归整而重新更改了消息格式。
+
+2015-12-09
+1.话音和传真数据源增加目标目录配置项。
+
+2015-12-01
+1.话音数据源节点配置增加动态获取编码格式的功能。
+
+2015-11-11
+1.数据权限分发zTree树暂时不展开。(展开会将同div下radio样式生效)
+2.修复ips_sqlserver脚本中，CM801_OBJECT字段OBJ_ID->OBJ_TYPE。
+
+2015-10-28
+1.添加 数据处理 继承数据源标签 支持分支流程
+2.修改 UUM-分组管理 新增/编辑分组-loadGroupTree()加载所有分组
+3.修改 UUM-分组管理 新增/编辑分组-分组描述 变为非必填
+
+2015-10-27
+1.添加 数据源管理 数据权限分发功能
+2.调整 数据源管理 标签功能独立，命名为 标签管理
+3.添加 数据处理 标签功能独立，命名为 标签管理
+4.添加 数据处理 继承数据源标签
+5.修改 接口GetDataSource 获取数据源标签权限
+6.删除 数据源管理和数据处理 添加、修改数据源时 分配用户 和 状态
+7.删除 数据源管理 查询条件 状态相关检索项：全部、公共、指派、未分配
+8.修改 数据字典管理 类别标识作为映射字段
+9.修改 UUM-分组管理 分组代号 可手段输入
+
+---IPS_DSLABELTOUSERGROUP
+CREATE TABLE IPS_DSLABELTOUSERGROUP (
+ DS_LABELID VARCHAR(40)  NOT NULL ,
+ GROUP_ID NUMERIC(15,0)  NOT NULL ,
+ CONSTRAINT PK__IPS_DSLABELTOUSERGROUP PRIMARY KEY (DS_LABELID,GROUP_ID )
+ );
+
+INSERT INTO WFM_ACTIVITY(ACT_ID,ACT_NAME,ACT_TYPE,ACT_CLASS,ACT_DESC,ACTION,CONCURRENT_NUM) VALUES(809,'告警',2,200102,'告警','Alarm',10);
+
+2015-10-21
+1.在流程处理中，文件数据源的标签将会被继承到数据库数据源标签中。
+2.数据库数据源可以分配数据权限
+3.uum用户分组添加基础数据,根据客户需要修改'组织代号'为手填项。
+INSERT INTO NET_CTRLWORD (CW_ID,CW_SYS,CW_TYPE,CW_NAME,CW_CODE,CW_DESC)VALUES (2003, 20, -1, '分组类型', '2003', '分组类型');
+INSERT INTO NET_CTRLWORD (CW_ID,CW_SYS,CW_TYPE,CW_NAME,CW_CODE,CW_DESC)VALUES (2003001, 20, 2003, '部分', '0', '部分');
+INSERT INTO NET_CTRLWORD (CW_ID,CW_SYS,CW_TYPE,CW_NAME,CW_CODE,CW_DESC)VALUES (2003002, 20, 2003, '栏目', '1', '栏目');
+INSERT INTO NET_CTRLWORD (CW_ID,CW_SYS,CW_TYPE,CW_NAME,CW_CODE,CW_DESC)VALUES (2003003, 20, 2003, '分组', '2', '分组');
+INSERT INTO NET_CTRLWORD (CW_ID,CW_SYS,CW_TYPE,CW_NAME,CW_CODE,CW_DESC)VALUES (2003004, 20, 2003, '频道', '3', '频道');
+
+2015-10-13
+1.ALTER TABLE CM801_OBJECT ADD MAINCMOBJ_ID VARCHAR(40);
+ALTER TABLE CM801_OBJECT ADD OBJ_TYPE INT;
+
+2015-10-10
+1.CZ、HY场景逻辑的拆分，扫描和入库，web增加两场景的入库节点xml。
+2.平台与采集系统通信，增加状态的返回，0正常，1错误。
+3.采集任务管理中与采集系统的通信增加连接异常描述的提示功能而不会提示代码error。
+4.解决hy、cz入库节点不能保存的bug。
+5.节点配置中增加hy、cz入库节点的sql语句如下：
+	INSERT INTO WFM_ACTIVITY(ACT_ID,ACT_NAME,ACT_TYPE,ACT_CLASS,ACT_DESC,ACTION,CONCURRENT_NUM) VALUES(892,'话音入库',2,200103,'话音入库','VoiceImportExtendDB',10);
+	INSERT INTO WFM_ACTIVITY(ACT_ID,ACT_NAME,ACT_TYPE,ACT_CLASS,ACT_DESC,ACTION,CONCURRENT_NUM) VALUES(893,'传真入库',2,200103,'传真入库','FAXImportExtendDB',10);
+
+2015-09-16
+1.修复 数据处理 刷新后点击保存报错.
+
+2015-08-20
+1.修复 数据处理 邮件数据源节点可绑定文本数据源Bug.
+2.修复 数据处理 绑定话音、传真数据源Bug.
+3.修复分类管理删除历史记录的bug。
+4.修复数据字段删除历史记录的bug。
+5.修复 我的任务 数据源视角-流程展现 节点显示不全Bug.
+
+2015-08-14
+1.解决我的任务数据处理不能默认选择tree的bug。
+2.解决服务日志输入框没有对齐的bug。
+
+2015-08-12
+1.修复了服务管理中的采集系统管理和服务管理中输入框没对齐的bug。
+2.修复了我的任务中初始化数据处理任务不显示搜索框的bug。
+3.微调了数据源管理和分类管理由于浏览器版本不兼容导致控件框下移，显示不美观的bug。
+4.修复服务管理中按服务地址排序报错的bug。
+
+2015-08-11
+1.调整 数据处理 验证运行中的任务是否可以编辑逻辑。
+
+2015-08-10
+1.我的任务-任务视角 增加默认选中树、加载第一条任务的功能。
+2.修复 数据处理 任务正在运行时可以编辑问题。
+
+2015-08-07
+1.我的任务页面增加默认选中行的功能。
+2.采集管理页面增加默认选中行的功能。
+3.调整数据源列表的比例。
+
+2015-08-04
+1.修改涉及到描述输入框颜色样式不统一的bug。
+2.更新数据源管理页面的添加、修改指派用户。
+3.数据采集页面把条件查询单独放到页面的最上方。
+4.我的任务、数据采集更换了按时间查询的控件。
+5.工作管理增加运行中的任务不允许删除的功能。
+
+2015-07-31
+1.添加 正整数验证-jbase.js integer
+2.修复 调整gridlist列宽 宽度带小数导致gridlist不加载。
+
+2015-07-30
+1.添加 数据处理 删除单个任务验证。
+2.添加 数据处理 启动任务、停止任务、保存 时对空流程以及未绑定流程情况的验证。
+3.添加 数据处理 任务对应流程节点全部清空后变为空流程 允许保存，后续根据业务需要做调整。
+4.解决数据字典 右侧按钮不显示的bug。
+5.修复不能新建数据源的bug。
+
+
+2015-07-29
+1.数据源页面增加无效标签项的验证。
+2.数据处理页面布局由原来的px改为百分比。
+3.修复第一次新增数据采集新建成功后不显示的bug。
+4.修复 外部系统调用平台接口失败Bug.
+
+2015-07-28
+1.修复 分类管理、数据字典、服务管理页面的字体没有对齐的bug。
+2.修复我的任务页面 双击任务 弹出编辑窗和搜索页面卡死的bug。
+3.数据源页面增加判断标签项重复的功能。
+4.修复我的任务统计节点重复展现的bug。
+
+2015-07-27
+1.解决工作管理页面跳转没带参数过去的bug。
+
+2015-07-22
+1.修复 数据处理 展现跳转定位任务异常。
+2.修复 数据处理 创建、编辑任务 流程是否自动保存检测。
+3.修复 跳转数据采集 查找不到任务。
+
+INSERT INTO WFM_VARIABLE ( VAR_ID , VAR_NAME , VAR_VALUE , VAR_TYPE , VAR_DESC ) VALUES ( 5 , '@EML' , 0 , 0 , '邮件801' );
+INSERT INTO WFM_VARIABLE ( VAR_ID , VAR_NAME , VAR_VALUE , VAR_TYPE , VAR_DESC ) VALUES ( 6 , '@TXT' , 0 , 0 , '文本812' );
+INSERT INTO WFM_VARIABLE ( VAR_ID , VAR_NAME , VAR_VALUE , VAR_TYPE , VAR_DESC ) VALUES ( 7 , '@VOICE' , 0 , 0 , '话音808' );
+INSERT INTO WFM_VARIABLE ( VAR_ID , VAR_NAME , VAR_VALUE , VAR_TYPE , VAR_DESC ) VALUES ( 8 , '@KL', 0 , 0 , '口令802' );
+INSERT INTO WFM_VARIABLE ( VAR_ID , VAR_NAME , VAR_VALUE , VAR_TYPE , VAR_DESC ) VALUES ( 9 , '@RZ', 0 , 0 , '认证803' );
+INSERT INTO WFM_VARIABLE ( VAR_ID , VAR_NAME , VAR_VALUE , VAR_TYPE , VAR_DESC ) VALUES ( 10 , '@FAX', 0 , 0 , '传真811' );
+
+2015-07-21
+1.修复 数据处理 停止任务(取消激活) 流程无法编辑。
+
+2015-07-16
+1.修复 数据处理 任务没有流程时 无法删除任务Bug.
+2.修改数据源标签项的操作逻辑。
+3.调整主页面左上角的logo位置。
+
+2015-07-15
+1.修复 数据处理 多选删除任务 无法删除Bug.
+2.NET_SEQUENCE表中 WFM_PROCACT 注意大小
+3.解决数据采集查询框没有对齐的bug。
+4.采集统计去除了对并行分支条件节点的统计。
+5.解决新建数据源对话框中，访问方式字体大小和其他选项不一致。
+6.解决规则名称取值错误，所有规则名称都为‘sa’。
+7.数据库脚本更新：流程添加版本管理
+	CREATE TABLE WFM_PROCVER
+	(
+		PROC_ID int,
+		PROC_VER int,
+		VER_DESC nvarchar(200),
+		CREATE_TIME DATETIME NOT NULL DEFAULT GETDATE(),
+	  CONSTRAINT P_WFM_PROCVER PRIMARY KEY (PROC_ID,PROC_VER)
+	) ;
+	
+	ALTER TABLE WFM_PROCACT ADD PROC_VER INT;
+	ALTER TABLE WFM_PROCEXEC ADD PROC_VER INT;
+	ALTER TABLE WFM_PROCLOG ADD PROC_VER INT;
+	
+	UPDATE WFM_PROCEXEC set PROC_VER = 1;
+	UPDATE WFM_PROCACT set PROC_VER = 1;
+	UPDATE WFM_PROCLOG set PROC_VER = 1;
+	
+	INSERT INTO WFM_PROCVER (PROC_ID,PROC_VER ) SELECT PROC_ID,1 FROM WFM_PROCESS;
+
+2015-07-07
+1.业务平台相关页面增加名称特殊字符验证的功能。
+2.分类管理解决修改操作tree没刷新的bug。
+3.解决工作管理页面相关的bug。
+
+2015-07-01
+1.修复 数据处理-模板预览不能自适应
+2.修复 数据处理-任务名称特殊字符验证
+3.修复 数据处理-默认条目为20
+4.修复 数据处理-任务编辑 选择其他任务不提示保存
+5.修复 数据处理-任务查询过滤空格
+
+2015-06-30
+1.修复 数据分类-添加数据字典项目后选择该项添加分类导致页面卡死
+2.修复 数据处理-条件配置加载xslt文件失败
+3.修改autoComplete组件bug引起的标签项有缓存的bug。
+
+2015-06-29
+1.新增数据源打标签功能以及展现。
+2.服务管理--修改新增服务的create_time的bug。
+3.修改jetsenclient中的message部分属性。
+	数据源标签项表结构
+CREATE TABLE IPS_DATATSOURCELABEL(
+	ID varchar(40) NOT NULL,
+	DS_ID varchar(40) NULL,
+	TYPE INT NULL,
+	CW_IDS varchar(1000) NULL,
+	LAYER INT NULL,
+    CONSTRAINT PK_IPS_DATATSOURCELABEL PRIMARY KEY (ID)
+ );
+
+2015-06-24
+1.修复 数据处理-条件节点不能绑定节点参数
+
+2015-06-16
+1.增加通过token自动登录功能。
+
+2015-06-10
+1.解决数据处理统计图表没有执行到的节点不展现的bug。
+
+2015-06-09
+1.优化 我的任务 -- 数据采集 任务列表的查询效率。
+2.优化 大数据量统计图标的展现。
+3.IPSSystemServiceSoapImpl对外接口，获取用户数据源方法，数据源对象添加中文业务类型字段dsClassName
+4.数据处理-拖拽数据源并且绑定 优化，使用全局集合维护，新增数据源类型业务逻辑多处不需要修改。
+
+2015-06-02
+1.数据采集任务增加通过返回结果的时间查询任务以及显示统计的总量的功能。
+2.我的任务--数据采集中 增加通过返回结果的时间段统计处理量（选择一天按小时统计，选择多天按每天来统计，只统计有返回结果的小时/天数）。
+
+2015-05-27
+1：解决采集规则编辑框不能显示的bug。
+2：更改部分工作流节点的图标。
+
+2015-05-19
+1：隐藏 版权信息
+2：更换index页面背景
+3：jbase.js中增加验证url通信地址的功能。
+4：解决采集系统编号或名称不能重复的bug。
+5：解决工作管理中工作以及任务名称不能重复的bug。
+6：角色管理和分组返利页面中添加操作时 描述项改为非必填项。
+
+2015-05-18
+1：数据源管理和数据处理任务 新增和修改数据源，数据源名称改为必填。
+2：更改平台用到的所有页面的布局实现方式。
+
+2015-05-15
+1：工作流模板 添加选中线框。
+2：更改logo图片。更名为：局级业务服务平台
+
+2015-05-12
+1.有关数据源的页面都增加了通过数据源名称和参数检索数据源功能。
+2.添加 IP数据源 815 参数模板，IP数据提取Worker 560 参数模板
+3.数据处理 页面 支持 IP数据源 拖拽 绑定数据。
+
+2015-05-11
+1: 解决添加数据源时数据库类型插入失败的bug。
+2: 解决数据处理--启动任务和取消任务后DS_ID为null的bug。
+3：增加我的任务--通过数据源名称检索数据源的功能。
+
+2015-05-08
+1：添加数据处理任务、数据采集任务、我的任务   根据名称搜索任务的功能。
+
+2015-05-07
+1：解决分类管理编辑类别时的undefined的bug。
+2：解决删除分类类别是删除系统分类的bug。
+
+2015-04-30
+1：修改 数据采集 查询采集任务InnerJoin改为LeftJoin
+2：数据源管理和数据处理页面，添加 808 话音，811 传真。数据源类型.
+3: 我的任务-数据源视角-展示数据源对应总体概括图以及任务对应的流程等的调整。
+4：修改了统计图表的NaN的bug。
+4：数据处理页面
+
+2015-04-29
+1：801_GBase.txt 添加 文种识别 SLANDECT 字段 VARCHAR(32)
+
+2015-04-28
+1：添加 IPS_ORDER 添加 EXEC_TIME 字段。修改GBase数据源订阅拷贝数据的逻辑，按任务执行时间增量拷贝。
+
+2015-04-24
+1：添加 文种识别节点-550
+
+2015-04-23
+1:数据处理任务增加错误统计信息功能。
+
+2015-04-17
+1：实现采集任务的统计功能。
+2：修改了采集任务的一下bug。
+3：IPS_GATHTERSTAT表amount字段改为float类型。
+
+2015-04-15
+1：根据客户需求更改不同采集系统的任务名称可以重复以及细微调整。
+
+2015-04-10
+1：数据源添加 数据库类型
+2：添加 文本文件入库 节点 DocumentImportExtendDB 891节点，以及参数模版
+3：添加 IPS_ALARMCONTACTS 告警联系人表、IPS_TASKRULEPARAM 采集任务对应的配控规则表、IPS_GATHTERSTAT 存储采集系统反馈的采集状态信息表、
+IPS_GATHTERRESSTAT 存储采集系统收到采集任务后反馈信息表
+4：封装 TRS 相似性检索 节点，SimSearch 814，以及参数模版
+5：调整 采集配控模版以及逻辑
+
+2015-04-09
+1：增加数据采集页面，IP数据下载任务对应多个规则的功能。
+2：规范化与采集系统交互的xml。
+
+2015-04-07
+1:修正服务日志页面的bug。
+2:修正trs节点配控参数。
+
+2015-03-28
+1:添加 临时 告警联系人 页面
+2:修复 数据源不能编辑，UPDATE_TIME为空。
+3：实现 我的任务-数据采集任务 数据展现
+
+2015-03-27
+1:根据客户需求更改数据采集IP数据下载类型的两个配置面板分开以及更改一些操作逻辑-----xeb。
+
+2015-03-23
+修改ips_sqlserver.sql UPDATE_TIME字段为NULL，手动插入时间
+
+2015-03-17
+1: 更新UUM，jetsenclient和JMTC以及完善新旧版本替换带来的问题。
+
+2015-03-10
+1：升级平台各个组件，包括：UUM,UI,Portal,执行器,调度,工作流
+2：整合平台基础脚本。
+
+2015-02-07
+1：dbscript-ips_sqlserver.sql 添加 IPS_ALARMCONTACTS 表，用来临时存放 告警订单
+
+2015-02-06
+1：分类管理页面---完善分类编号只能为正整数。
+2：我的任务页面---不能清空统计图表和图表自动刷新的bug。
+3：其他页面一些小bug。
+
+2015-02-5
+1：我的任务页面--由实例化多条流程修改为指展现一条流程以及优化滚动条。
+
+2015-01-27
+1：更新订阅单建表时 邮件表 DataStatus字段默认为0.
+
+2015-01-22
+1：修改口令和身份数据源，这两个数据源可配置两个参数，文件和数据库表字段各作为当前数据源的输入和输出。
+2：修改802、803配置xml，由于需要输入两个参数scanPath和HMWTable，故修改为 allowEmpty="true"
+3：actconfig.js Line436--在值为空的状态下 添加"undenfied"判断.
+4: 新增邮件数据源2节点，应对直接扫描eml文件的方式。
+5: 更正数据源新增修改时的校验以及数据源详情显示错误的bug。
+6: 完善邮件入库节点插入冗余数据的bug。
+7: 新增数据采集任务配控参数的校验以及更改与采集系统的通信协议等功能。
+8: 完善身份认证和口令字下载入南通的功能。
+
+2015-01-23
+1：数据采集配控参数页面增加了IP校验格式的功能。
+2：根据客户需求更改了IP数据下载局部配控参数的规则。
+
+2015-01-21
+1：修改历史数据订阅逻辑，加入状态控制。
+2：IPS_ORDER表添加字段，STR_1，记录 新数据源头ID
+3：与MsgServer，Socket通讯添加包头，4字节消息长度。
+4：config.properties中配置 服务器是否包头
+
+2014-12-30
+1：添加历史数据订阅功能，IPS_ORDER表 添加INT_1字段，记录订阅单状态
+
+2014-12-12
+1：集成ESB
+2：修改IPS对外接口
+3：支持与MsgServer，Socket通讯。
+
+2014-12-05
+1：更新系统UUM WebService接口，在getUserItem和getAllUser方法中，返回的用户信息中， 添加用户是否在线标示。
+
+2014-12-03
+1：数据处理任务页面 拖拽数据源绑定数据源节点。
+2：eml数据源节点 绑定当前处理数据源ID
+3：添加IPSExtendService WebService服务接口，GetDataItemByUser，通过用户获取数据源接口

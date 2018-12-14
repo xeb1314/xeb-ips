@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>在线用户管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="../../jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../jetsenclient/javascript/jbase.js"></script>
+<script type="text/javascript">
+	Layoutit("#divPageFrame", {vLayout: [46, "auto"]});
+</script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="../../jetsenclient/javascript/bootstrap/html5shiv.min.js"></script> 
+  <script src="../../jetsenclient/javascript/bootstrap/respond.min.js"></script> 
+<![endif]-->
+</head>
+<body onload="searchOnlineUser();" class="panels">
+
+<div id="divPageFrame" class="panel middle-panel panel-sm">
+  
+    <div class="panel-heading">
+    	<div class="form-group pull-left">
+	      <div class="input-group input-group-xs input3">
+            <input type="text" class="form-control" id="txt_LOGIN_NAME" onkeydown="jetsennet.keyEvent(searchOnlineUser)" placeholder="用户名称">
+	           <span class="input-group-btn">
+	             <button type="submit" class="btn btn-default" onclick="javascript:searchOnlineUser();">
+	               <span class="glyphicon glyphicon-search"></span>
+	             </button>
+	           </span>
+	         </input>
+	      </div>
+      	</div>
+      
+      <div class='btn-group btn-group-sm pull-right'>
+        <span style="cursor:pointer;margin-right: 10px;" title="踢出" onclick="logoutUser();">
+          <i class="fa fa-times"></i>
+          <span>&nbsp;删除</span>
+        </span>
+          	<span style="cursor:pointer;margin-right: 10px;" title="刷新" onclick="document.location.reload();">
+          <i class="fa fa-refresh"></i>
+          <span>&nbsp;刷新</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="table-unbordered" id= "divContent">数据加载中...</div>
+</div>
+
+<script type="text/javascript" src="javascript/onlineuser.js"></script>
+</body>
+</html>

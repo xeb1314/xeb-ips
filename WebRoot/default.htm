@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<meta name="description" content="JetsenNet" />
+	<title>Jetsen Desktop Web [Demo]</title>
+	<script type="text/javascript" src="jetsenclient/javascript/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="jetsenclient/javascript/jbase.js" apptype=1></script>
+	<script type="text/javascript" src="jetsenclient/javascript/config.js" apptype=1></script>
+	<script type="text/javascript">
+	
+		//	获取首页地址				
+		function getIndexUrl()
+		{
+			var style = jetsennet.util.cookie("PageStyle");
+			if(!style)
+			{
+				style = jetsennet.util.cookie("UserPageStyle");
+			}
+			if(!style)
+			{
+				style = jetsennet["DEFAULT_STYLE"];
+			}
+			return "juum/jnetsystemweb/"+style+"/index.htm";
+		}
+		
+		function loadIndex()
+		{
+			//showwindow(getIndexUrl(), "JetsenNet框架平台-捷成世纪", screen.width, screen.height);
+			//CloseWin();
+			window.top.location = getIndexUrl();
+		}
+	</script>
+</HEAD>
+<BODY onload='loadIndex();'>
+
+</BODY>
+</HTML>

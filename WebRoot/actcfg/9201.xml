@@ -1,0 +1,5 @@
+﻿<?xml version="1.0"?>
+<!--延迟-->
+<actConfig>
+  <item name="Delay" desc="延迟时长（秒）" deafult="" allowEmpty="false" dataType="string" maxLength="20" source="0"/>
+</actConfig>

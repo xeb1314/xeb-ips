@@ -1,0 +1,18 @@
+.center-wrapper
+{
+	display:table; 
+	height:100%; 
+	width:100%; 
+	overflow:hidden;
+}
+.center-area
+{
+	display:table-cell; 
+	vertical-align:middle; 
+	text-align:center;
+}
+.center-content
+{
+	display:inline-block;
+}
+

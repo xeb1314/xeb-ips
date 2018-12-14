@@ -1,0 +1,41 @@
+﻿<?xml version="1.0"?>
+<!--话音数据源-->
+<actConfig>
+  <item name="dsID" desc="数据源ID" deafult="" allowEmpty="true" dataType="string" maxLength="100" source="0" visible="true"/>
+  <item name="scanPath" desc="扫描目录" deafult="" allowVariable="true"  allowEmpty="false" dataType="string" maxLength="100" source="0" visible="false"/>
+  <item name="destPath" desc="目标目录" deafult="" allowVariable="false"  allowEmpty="false" dataType="string" maxLength="100" source="0" visible="false"/>
+  <item name="nameFilter" desc="文件后缀" deafult="*.wav;*.pcm;" title="以英文分号隔开，不区分大小写，如：*.wav;" allowEmpty="false" dataType="string" maxLength="200" source="0"/>
+  <item name="fileNum" desc="扫描数量" deafult="10" allowEmpty="false" dataType="int" source="0"/>
+  <item name="scanTime" desc="扫描时间" filed="Start,End" deafult="00:00:00,23:59:59" allowEmpty="false" dataType="date" source="5"/>  
+  <item name="scanInterval" desc="扫描间隔" deafult="10" allowEmpty="false" unit="秒" dataType="int" source="0"/>
+  <!-- <item name="cmIndex" desc="存储对象源" deafult="CM801" title="扫描出的文件存放的数据源" allowEmpty="false" dataType="string" maxLength="0" source="2" sourceTable="NET_CTRLWORD" keyField="CW_CODE" nameField="CW_NAME" typeField="CW_TYPE" typeValue="12"/> -->
+ <!--  <item name="dbCode" desc="数据库" deafult="892" allowEmpty="false" dataType="int" maxLength="5" source="1" sourceString="飓风库~891|南通库~892"/>
+  <item name="HMWTable" desc="数据存储表" deafult="" allowEmpty="true" dataType="string" maxLength="20" source="0"/> -->
+  <item name="endChar" desc="分隔符"  allowEmpty="false" title="该文件名称的分隔符，如：_或者#等" dataType="string" source="0"/>
+  <item name="srcPhone" desc="主叫号码"  allowEmpty="true" dataType="int" source="0"/>
+  <item name="destPhone" desc="被叫号码"  allowEmpty="true" dataType="int" source="0"/>
+  <item name="phoneDate" desc="通话日期"  allowEmpty="true" dataType="string" source="0"/>
+  <item name="srcIp" desc="源IP位置"  allowEmpty="true" dataType="int" source="0"/>
+  <item name="destIp" desc="目的IP位置"  allowEmpty="true" dataType="int" source="0"/>
+  <item name="srcPort" desc="源端口位置"  allowEmpty="true" dataType="int" source="0"/>
+  <item name="destPort" desc="目的端口位置"  allowEmpty="true" dataType="int" source="0"/>
+  <item name="srcProperty" desc="源区域位置"  allowEmpty="true" dataType="int" source="0"/>
+  <item name="destProperty" desc="目的区域位置"  allowEmpty="true" dataType="int" source="0"/>
+  <item name="protocalType" desc="协议类型位置"  allowEmpty="true" dataType="int" source="0"/>
+  <item name="org" desc="机构位置"  allowEmpty="true" dataType="int" source="0"/>
+  <item name="fileNo" desc="文件序列号位置"  allowEmpty="true" dataType="int" source="0"/>
+  <item name="channelNum" desc="声道数" title="单声道:1;双声道:2;" allowEmpty="true" dataType="int" source="0" deafult="1"/>
+  <item name="samplesPerSec" desc="采样频率" deafult="8000" allowEmpty="true" dataType="int" source="0"/>
+  <item name="bitsPerSample" desc="采样bit数" deafult="16" allowEmpty="true" dataType="int" source="0"/>
+  <item name="formatTag" desc="编码格式" title="PCM:1;A-Law:6;" deafult="1" allowEmpty="true" dataType="int" source="0"/>
+  <item name="scanSub" desc="扫描子目录"  source="4" deafult="false"/>
+  <item name="isTransfer" desc="是否转码"  source="4" deafult="false"/>
+ <!--  <item name="wav" desc="WAV"  source="4" deafult="false"/>
+  <item name="pcm" desc="PCM"  source="4" deafult="false"/> -->
+</actConfig>
+
+<!-- visible是否显示  false:显示，  true：不显示，  默认为显示，   需有默认值default -->
+<!--soure 0:自输入，1：下拉自定义，2：受控词，3：变量   4：多选框   5:时间-->
+<!--allowVariable 是否显示变量弹出框   true：显示， false：不显示， 默认为false -->
+<!--allowDate 是否显示日期   true：显示， false：不显示， 默认为false -->
+<!--filed 用于保存时间段  保存为scanStartTime scanEndTime 不写默认保存一个scanTime  ","分割有多少个则显示多少个日期控件 依次显示保存-->

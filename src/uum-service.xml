@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://cxf.apache.org/jaxrs
+	http://cxf.apache.org/schemas/jaxrs.xsd 
+	http://cxf.apache.org/jaxws 
+	http://cxf.apache.org/schemas/jaxws.xsd">
+	
+	<!-- 用户管理 -->
+	<bean id="userBusiness" name="User" class="jetsennet.juum.business.UserBusiness" parent="baseBusiness">
+		<property name="userAuthentication" ref="userAuth"/>
+	</bean>
+	
+	<!-- 用户验证 -->
+	<bean id="userAuth" class="jetsennet.juum.UserLocalAuthentication" init-method="init" destroy-method="destory">
+		<property name="userBusiness" ref="userBusiness"></property>
+		<property name="logBusiness" ref="logBusiness" />
+	</bean>
+	
+	<!-- 日志持久化工具 -->
+	<bean id="logTool" class="jetsennet.jsystem.LogPersisteTool" init-method="init" destroy-method="destory">
+		<property name="logBusiness" ref="logBusiness" />
+	</bean>
+	
+	<!-- 用户组管理 -->
+	<bean id="userGroupBusiness" name="Usergroup" class="jetsennet.juum.business.UserGroupBusiness" parent="baseBusiness" >
+	</bean>
+	
+	<!-- 角色管理 -->
+	<bean id="roleBusiness" name="Role" class="jetsennet.juum.business.RoleBusiness" parent="baseBusiness">
+	</bean>
+	
+	<!-- 功能管理 -->
+	<bean id="functionBusiness" name="Function" class="jetsennet.juum.business.FunctionBusiness" parent="baseBusiness">
+	</bean>
+	
+	<!-- 权限管理 -->
+	<bean id="authBusiness" name="auth" class="jetsennet.juum.business.AuthBusiness" parent="baseBusiness">
+		<property name="userAuthentication" ref="userAuth"/>
+	</bean>
+	
+	<!-- UUMSystemService -->
+	<bean id="/UUMSystemService" class="jetsennet.juum.services.UUMSystemService" parent="/BaseService">
+		<property name="userBusiness" ref="userBusiness" />
+		<property name="userGroupBusiness" ref="userGroupBusiness" />
+	</bean>
+	<!-- RemoteAuthService -->
+	<bean id="/AuthService" class="jetsennet.juum.services.AuthService" parent="/BaseService">
+		<property name="authBusiness" ref="authBusiness" />
+	</bean>
+</beans>
